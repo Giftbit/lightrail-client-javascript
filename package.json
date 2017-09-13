@@ -1,0 +1,49 @@
+{
+  "name": "lightrail-client-javascript",
+  "version": "0.0.1",
+  "description": "A Javascript and Typescript client for Lightrail",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf ./dist",
+    "lint": "tslint --project tsconfig.json",
+    "prepublishOnly": "npm run clean && npm run build && npm run lint && npm run test",
+    "test": "mocha --recursive --throw-deprecation --require ts-node/register \"src/**/*.test.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Giftbit/lightrail-client-javascript.git"
+  },
+  "keywords": [
+    "lightrail"
+  ],
+  "contributors": [
+    "Jeffery Grajkowski <pushplay@gmail.com> (https://github.com/pushplay/)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Giftbit/lightrail-client-javascript/issues"
+  },
+  "homepage": "https://github.com/Giftbit/lightrail-client-javascript#readme",
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^8.0.28",
+    "@types/superagent": "^3.5.5",
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.2"
+  },
+  "dependencies": {
+    "superagent": "^3.6.0"
+  },
+  "optionalDependencies": {
+    "superagent-logger": "^1.1.0"
+  }
+}
