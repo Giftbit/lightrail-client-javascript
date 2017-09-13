@@ -1,5 +1,5 @@
 {
-  "name": "lightrail-client-javascript",
+  "name": "lightrail-client",
   "version": "0.0.1",
   "description": "A Javascript and Typescript client for Lightrail",
   "main": "dist/index.js",
@@ -36,6 +36,7 @@
     "@types/superagent": "^3.5.5",
     "chai": "^4.1.2",
     "mocha": "^3.5.3",
+    "rimraf": "^2.6.2",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "typescript": "^2.5.2"
