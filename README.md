@@ -8,6 +8,6 @@ This client is currently in *beta* and may have breaking changes before 1.0.0.
 
 ## Compiling for node with webpack
 
-This library uses superagent to make network requests.  To have webpack use the node-version your webpack config must include `target: 'node'`.
+This library uses superagent to facilitate network requests.  To have webpack use the node-version of superagent your webpack config must include `target: 'node'`.
 
-If when running your code you see the error `TypeError: undefined is not a function` then you must include the following in the plugins section of your webpack config: `plugins: [new webpack.DefinePlugin({"global.GENTLY": false})]`.  See https://github.com/felixge/node-formidable/issues/337 for an explanation.
+If when running your code you see the error `TypeError: undefined is not a function` then most likely you must include the following in the plugins section of your webpack config: `plugins: [new webpack.DefinePlugin({"global.GENTLY": false})]`.  See https://github.com/felixge/node-formidable/issues/337 for an explanation.
