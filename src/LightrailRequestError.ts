@@ -2,6 +2,7 @@ import * as superagent from "superagent";
 
 export class LightrailRequestError extends Error {
 
+    readonly isLightrailRequestError = true;
     readonly status: number;
     readonly body: any;
     readonly method: string;
