@@ -1,5 +1,6 @@
 export * from "./CreateCardParams";
 export * from "./CreateContactParams";
+export * from "./CreateTransactionParams";
 export * from "./CreateValueStoreParams";
 export * from "./GetCardsParams";
 export * from "./GetContactsParams";
