@@ -10,6 +10,8 @@ import {GetCardsParams} from "./params/GetCardsParams";
 import {PaginationParams} from "./params/PaginationParams";
 import {Pagination} from "./model/Pagination";
 import {Contact} from "./model/Contact";
+import {Transaction} from "./model/Transaction";
+import {CreateTransactionParams} from "./params/CreateTransactionParams";
 
 export {valueStores};
 
@@ -78,6 +80,21 @@ export async function updateCard(card: string | Card, params: UpdateCardParams):
     const resp = await lightrail.request("PATCH", `cards/${encodeURIComponent(cardId)}`).send(params);
     if (resp.status === 200) {
         return resp.body.card;
+    }
+    throw new LightrailRequestError(resp);
+}
+
+export async function createTransaction(card: string | Card, params: CreateTransactionParams): Promise<Transaction> {
+    if (!params) {
+        throw new Error("params not set");
+    } else if (!params.userSuppliedId) {
+        throw new Error("params.userSuppliedId not set");
+    }
+
+    const cardId = getCardId(card);
+    const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/transactions`).send(params);
+    if (resp.status === 200) {
+        return resp.body.transaction;
     }
     throw new LightrailRequestError(resp);
 }
