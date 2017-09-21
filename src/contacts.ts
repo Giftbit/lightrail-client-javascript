@@ -67,6 +67,9 @@ export async function updateContact(contact: string | Contact, params: UpdateCon
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * Get contactId from the string (as the ID itself) or Contact object.
+ */
 export function getContactId(contact: string | Contact): string {
     if (!contact) {
         throw new Error("contact not set");

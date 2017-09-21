@@ -1,5 +1,6 @@
 import * as lightrail from "./";
 import * as contacts from "./contacts";
+import * as transactions from "./cardTransactions";
 import * as valueStores from "./valueStores";
 import {CreateCardParams} from "./params/CreateCardParams";
 import {Card} from "./model/Card";
@@ -10,10 +11,8 @@ import {GetCardsParams} from "./params/GetCardsParams";
 import {PaginationParams} from "./params/PaginationParams";
 import {Pagination} from "./model/Pagination";
 import {Contact} from "./model/Contact";
-import {Transaction} from "./model/Transaction";
-import {CreateTransactionParams} from "./params/CreateTransactionParams";
 
-export {valueStores};
+export {transactions, valueStores};
 
 export async function createCard(params: CreateCardParams): Promise<Card> {
     if (!params) {
@@ -84,21 +83,9 @@ export async function updateCard(card: string | Card, params: UpdateCardParams):
     throw new LightrailRequestError(resp);
 }
 
-export async function createTransaction(card: string | Card, params: CreateTransactionParams): Promise<Transaction> {
-    if (!params) {
-        throw new Error("params not set");
-    } else if (!params.userSuppliedId) {
-        throw new Error("params.userSuppliedId not set");
-    }
-
-    const cardId = getCardId(card);
-    const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/transactions`).send(params);
-    if (resp.status === 200) {
-        return resp.body.transaction;
-    }
-    throw new LightrailRequestError(resp);
-}
-
+/**
+ * Get cardId from the string (as the ID itself) or Card object.
+ */
 export function getCardId(card: string | Card): string {
     if (!card) {
         throw new Error("card not set");

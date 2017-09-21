@@ -1,3 +1,4 @@
+export * from "./CapturePendingTransactionParams";
 export * from "./CreateCardParams";
 export * from "./CreateContactParams";
 export * from "./CreateTransactionParams";
@@ -5,7 +6,9 @@ export * from "./CreateValueStoreParams";
 export * from "./GetCardsParams";
 export * from "./GetContactsParams";
 export * from "./GetProgramParams";
+export * from "./GetTransactionsParams";
 export * from "./GetValueStoresParams";
 export * from "./PaginationParams";
 export * from "./UpdateCardParams";
 export * from "./UpdateContactParams";
+export * from "./VoidPendingTransactionParams";
