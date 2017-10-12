@@ -4,6 +4,7 @@ export class LightrailRequestError extends Error {
 
     readonly isLightrailRequestError = true;
     readonly status: number;
+    readonly messageCode: string;
     readonly body: any;
     readonly method: string;
     readonly path: string;
@@ -11,6 +12,7 @@ export class LightrailRequestError extends Error {
     constructor(response: superagent.Response) {
         super((response.body && response.body.message) || response.text);
         this.status = response.status;
+        this.messageCode = (response.body && response.body.messageCode) || null;
         this.body = response.body;
         this.method = response.error.method;
         this.path = response.error.path;
