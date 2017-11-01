@@ -12,5 +12,6 @@ export interface CreateCardParams {
     startDate?: string | Date;
     inactive?: boolean;
     metadata?: object;
+    programId?: string;
 
 }
