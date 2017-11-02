@@ -11,6 +11,7 @@ import {GetCardsParams} from "./params/GetCardsParams";
 import {PaginationParams} from "./params/PaginationParams";
 import {Pagination} from "./model/Pagination";
 import {Contact} from "./model/Contact";
+import {Transaction} from "./model/Transaction";
 
 export {transactions, valueStores};
 
@@ -103,6 +104,15 @@ export async function cancelCard(card: string | Card, userSuppliedId: string): P
     const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/cancel`).send({userSuppliedId: userSuppliedId});
     if (resp.status === 200) {
         return resp.body.card
+    }
+    throw new LightrailRequestError(resp)
+}
+
+export async function activeCard(card: string | Card, userSuppliedId: string): Promise<Transaction> {
+    const cardId = getCardId(card);
+    const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/activate`).send({userSuppliedId: userSuppliedId});
+    if (resp.status === 200) {
+        return resp.body.transaction
     }
     throw new LightrailRequestError(resp)
 }
