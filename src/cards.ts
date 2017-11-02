@@ -84,6 +84,24 @@ export async function updateCard(card: string | Card, params: UpdateCardParams):
     throw new LightrailRequestError(resp);
 }
 
+export async function cancelCard(card: string | Card, userSuppliedId: string): Promise<Card> {
+    const cardId = getCardId(card);
+    const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/cancel`).send({userSuppliedId: userSuppliedId});
+    if (resp.status === 200) {
+        return resp.body.card;
+    }
+    throw new LightrailRequestError(resp);
+}
+
+export async function activateCard(card: string | Card, userSuppliedId: string): Promise<Transaction> {
+    const cardId = getCardId(card);
+    const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/activate`).send({userSuppliedId: userSuppliedId});
+    if (resp.status === 200) {
+        return resp.body.transaction;
+    }
+    throw new LightrailRequestError(resp);
+}
+
 /**
  * Get cardId from the string (as the ID itself) or Card object.
  */
@@ -97,22 +115,4 @@ export function getCardId(card: string | Card): string {
     } else {
         throw new Error("card must be a string for cardId or a Card object");
     }
-}
-
-export async function cancelCard(card: string | Card, userSuppliedId: string): Promise<Card> {
-    const cardId = getCardId(card);
-    const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/cancel`).send({userSuppliedId: userSuppliedId});
-    if (resp.status === 200) {
-        return resp.body.card
-    }
-    throw new LightrailRequestError(resp)
-}
-
-export async function activeCard(card: string | Card, userSuppliedId: string): Promise<Transaction> {
-    const cardId = getCardId(card);
-    const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/activate`).send({userSuppliedId: userSuppliedId});
-    if (resp.status === 200) {
-        return resp.body.transaction
-    }
-    throw new LightrailRequestError(resp)
 }
