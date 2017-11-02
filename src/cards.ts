@@ -97,3 +97,12 @@ export function getCardId(card: string | Card): string {
         throw new Error("card must be a string for cardId or a Card object");
     }
 }
+
+export async function cancelCard(card: string | Card, userSuppliedId: string): Promise<Card> {
+    const cardId = getCardId(card);
+    const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/cancel`).send({userSuppliedId: userSuppliedId});
+    if (resp.status === 200) {
+        return resp.body.card
+    }
+    throw new LightrailRequestError(resp)
+}
