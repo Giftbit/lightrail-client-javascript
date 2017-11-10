@@ -29,17 +29,6 @@ export async function getContacts(params?: GetContactsParams & PaginationParams)
     throw new LightrailRequestError(resp);
 }
 
-/**
- * This assumes email is unique, which I think we're moving to.
- */
-export async function getContactByEmail(email: string): Promise<Contact> {
-    const resp = await this.getContacts({email});
-    if (resp.contacts.length > 0) {
-        return resp.contacts[0];
-    }
-    return null;
-}
-
 export async function getContactById(contactId: string): Promise<Contact> {
     const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(contactId)}`);
     if (resp.status === 200) {
