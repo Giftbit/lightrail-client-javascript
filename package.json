@@ -12,7 +12,7 @@
     "clean": "rimraf ./dist",
     "lint": "tslint --project tsconfig.json",
     "prepublishOnly": "npm run clean && npm run build && npm run lint && npm run test",
-    "test": "mocha --recursive --throw-deprecation --require ts-node/register \"src/**/*.test.ts\""
+    "test": "mocha --timeout=5000 --recursive --throw-deprecation --require ts-node/register \"src/**/*.test.ts\""
   },
   "repository": {
     "type": "git",
@@ -35,11 +35,13 @@
     "@types/node": "^8.0.28",
     "@types/superagent": "^3.5.5",
     "chai": "^4.1.2",
+    "dotenv": "^4.0.0",
     "mocha": "^3.5.3",
     "rimraf": "^2.6.2",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "typescript": "^2.5.2",
+    "uuid": "^3.1.0"
   },
   "dependencies": {
     "superagent": "^3.6.0"
