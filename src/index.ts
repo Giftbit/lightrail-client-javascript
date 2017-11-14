@@ -21,6 +21,9 @@ export const configuration: LightrailOptions = {
     logRequests: false
 };
 
+/**
+ * Configure the Lightrail client.
+ */
 export function configure(options: Partial<LightrailOptions>): void {
     if (!options) {
         return;
@@ -73,15 +76,26 @@ export function request(method: string, path: string): superagent.Request {
     return r;
 }
 
-export function generateShopperToken(contact: {contactId?: string, userSuppliedId?: string}, validityInSeconds: number = 43200): string {
+/**
+ * Generate a shopper token that can be used to make Lightrail calls
+ * restricted to that particular shopper.  The shopper can be defined by the
+ * contactId, userSuppliedId, or shopperId.
+ *
+ * eg: `generateShopperToken({shopperId: "user-12345"});`
+ *
+ * @param contact an object that defines one of: contactId, userSuppliedId or shopperId
+ * @param validityInSeconds the number of seconds the shopper token will be valid for
+ * @returns the shopper token
+ */
+export function generateShopperToken(contact: {contactId?: string, userSuppliedId?: string, shopperId?: string}, validityInSeconds: number = 43200): string {
     if (!configuration.apiKey) {
         throw new Error("apiKey not set");
     }
     if (!configuration.sharedSecret) {
         throw new Error("sharedSecret not set");
     }
-    if (!contact.contactId && !contact.userSuppliedId) {
-        throw new Error("contact.contactId or contact.userSuppliedId must be set");
+    if (!contact.contactId && !contact.userSuppliedId && !contact.shopperId) {
+        throw new Error("one of contact.contactId, contact.userSuppliedId or contact.shopperId must be set");
     }
     if (typeof validityInSeconds !== "number" || validityInSeconds <= 0) {
         throw new Error("validityInSeconds must be a number > 0");
@@ -99,7 +113,8 @@ export function generateShopperToken(contact: {contactId?: string, userSuppliedI
             g: {
                 gui: merchantJwtPayload.g.gui,
                 coi: contact.contactId || undefined,
-                cui: contact.userSuppliedId || undefined
+                cui: contact.userSuppliedId || undefined,
+                shi: contact.shopperId || undefined
             },
             iss: "MERCHANT",
             iat: nowInSeconds,
