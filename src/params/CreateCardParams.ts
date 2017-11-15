@@ -11,7 +11,7 @@ export interface CreateCardParams {
     expires?: string;
     startDate?: string | Date;
     inactive?: boolean;
-    metadata?: object;
+    metadata?: {[key: string]: any};
     programId?: string;
 
 }

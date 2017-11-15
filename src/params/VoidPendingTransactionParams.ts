@@ -1,4 +1,4 @@
 export interface VoidPendingTransactionParams {
     userSuppliedId: string;
-    metadata?: object;
+    metadata?: {[key: string]: any};
 }

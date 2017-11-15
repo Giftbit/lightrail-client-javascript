@@ -17,7 +17,7 @@ export interface Program {
     codeEngine: Program.CodeEngine;
     codeConfig: Program.CodeConfig;
     valueStoreType: ValueStore.ValueStoreType;
-    metadata: object | null;
+    metadata: {[key: string]: any} | null;
     timeZone: string;
     cardType: string;
 

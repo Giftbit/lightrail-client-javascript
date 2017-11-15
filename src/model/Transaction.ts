@@ -11,7 +11,7 @@ export interface Transaction {
     cardId: string;
     currency: string;
     transactionBreakdown: TransactionBreakdown[];
-    metadata: object;
+    metadata: {[key: string]: any};
 }
 
 export namespace Transaction {

@@ -1,4 +1,4 @@
 export interface CapturePendingTransactionParams {
     userSuppliedId: string;
-    metadata?: object;
+    metadata?: {[key: string]: any};
 }

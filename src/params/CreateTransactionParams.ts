@@ -1,7 +1,7 @@
 export interface CreateTransactionParams {
     value: number;
     currency: string;
-    metadata?: object;
+    metadata?: {[key: string]: any};
     pending?: boolean;
     userSuppliedId: string;
 }
