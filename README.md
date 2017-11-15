@@ -2,10 +2,6 @@
 
 Lightrail is a modern platform for digital account credits, gift cards, promotions, and points (to learn more, visit [Lightrail](https://www.lightrail.com/)). Lightrail Client Library is a basic library for developers to easily connect with the Lightrail API using Javascript or Typescript. If you are looking for specific use cases or other languages, check out the complete list of all [Lightrail libraries and integrations](https://github.com/Giftbit/Lightrail-API-Docs/blob/master/README.md#lightrail-integrations).
 
-## Important
-
-This client is currently in *beta* and may have breaking changes before 1.0.0.
-
 ## Compiling for node with webpack
 
 This library uses superagent to facilitate network requests.  To have webpack use the node-version of superagent your webpack config must include `target: 'node'`.
@@ -46,8 +42,7 @@ Before using this client, you'll need to configure it to use your API key:
 const Lightrail = require('lightrail');
 
 Lightrail.configure({
-  apiKey: <LIGHTRAIL API KEY>,
-  restRoot: 'https://api.lightrail.com/v1/'
+  apiKey: <LIGHTRAIL API KEY>
 })
 ```
 
@@ -408,3 +403,24 @@ The response object from these calls will be a new Transaction object with a new
       }
 }
 ```
+
+## Development
+
+**IMPORTANT: note that several environment variables are required for the tests to run.** After cloning the repo, `npm install` dependencies and set the following (either in a `.env` file in the root directory or however you prefer to set environment variables):
+
+- ` LIGHTRAIL_API_KEY`: find this in to the Lightrail web app -- go to your [account settings](https://www.lightrail.com/app/#/account/profile), then click 'API keys' and 'Generate Key.' **Note** that for running tests, you should use a test mode key.
+
+
+- `CARD_ID`: this is the `cardId` for a USD card with at least a few dollars on it.
+
+Then you can run `npm test`.
+
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at <https://github.com/Giftbit/lightrail-client-javascript>.
+
+
+## License
+
+This library is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
