@@ -31,20 +31,20 @@
   "homepage": "https://github.com/Giftbit/lightrail-client-javascript#readme",
   "devDependencies": {
     "@types/chai": "^4.0.4",
-    "@types/mocha": "^2.2.43",
-    "@types/node": "^8.0.28",
-    "@types/superagent": "^3.5.5",
+    "@types/mocha": "^2.2.44",
+    "@types/node": "^8.0.52",
+    "@types/superagent": "^3.5.6",
     "chai": "^4.1.2",
-    "mocha": "^3.5.3",
+    "mocha": "^4.0.1",
     "rimraf": "^2.6.2",
     "ts-node": "^3.3.0",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.1"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^7.2.3",
     "jsonwebtoken": "^8.1.0",
-    "superagent": "^3.6.0"
+    "superagent": "^3.8.1"
   },
   "optionalDependencies": {
     "superagent-logger": "^1.1.0"
