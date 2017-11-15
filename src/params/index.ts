@@ -9,6 +9,7 @@ export * from "./GetProgramParams";
 export * from "./GetTransactionsParams";
 export * from "./GetValueStoresParams";
 export * from "./PaginationParams";
+export * from "./SimulateTransactionParams";
 export * from "./UpdateCardParams";
 export * from "./UpdateContactParams";
 export * from "./VoidPendingTransactionParams";

@@ -11,7 +11,7 @@ import {Pagination} from "./model/Pagination";
 import {GetTransactionsParams} from "./params/GetTransactionsParams";
 import {SimulateTransactionParams} from "./params/SimulateTransactionParams";
 
-export async function createTransaction(card: string | Card, params: CreateTransactionParams | SimulateTransactionParams, dryRun = false): Promise<Transaction> {
+export async function createTransaction(card: string | Card, params: CreateTransactionParams | SimulateTransactionParams): Promise<Transaction> {
     if (!params) {
         throw new Error("params not set");
     } else if (!params.userSuppliedId) {
@@ -19,12 +19,7 @@ export async function createTransaction(card: string | Card, params: CreateTrans
     }
 
     const cardId = cards.getCardId(card);
-    let resp;
-    if (dryRun) {
-        resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/transactions/dryRun`).send(params);
-    } else {
-        resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/transactions`).send(params);
-    }
+    const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/transactions`).send(params);
     if (resp.status === 200) {
         return resp.body.transaction;
     }
@@ -32,7 +27,18 @@ export async function createTransaction(card: string | Card, params: CreateTrans
 }
 
 export async function simulateTransaction(card: string | Card, params: SimulateTransactionParams): Promise<Transaction> {
-    return createTransaction(card, params, true);
+    if (!params) {
+        throw new Error("params not set");
+    } else if (!params.userSuppliedId) {
+        throw new Error("params.userSuppliedId not set");
+    }
+
+    const cardId = cards.getCardId(card);
+    const resp = await lightrail.request("POST", `cards/${encodeURIComponent(cardId)}/transactions/dryRun`).send(params);
+    if (resp.status === 200) {
+        return resp.body.transaction;
+    }
+    throw new LightrailRequestError(resp);
 }
 
 export async function getTransaction(card: string | Card, transaction: string | Transaction): Promise<Transaction> {
