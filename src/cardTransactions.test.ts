@@ -27,10 +27,11 @@ const largeChargeParams: SimulateTransactionParams = {
 describe("cardTransactions", () => {
     describe("simulateTransaction()", () => {
         before(() => {
+            chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
+            chai.assert.isString(process.env.CARD_ID, "env var CARD_ID must be set ot run the tests (for example set it in the .env file)");
             Lightrail.configure({
-                apiKey: process.env.LIGHTRAIL_API_KEY,
+                apiKey: process.env.LIGHTRAIL_API_KEY || "",
             });
-            // TODO: add test to ensure required env vars are set: very good error message here
         });
 
         it("creates a dry run transaction - minimum params", async () => {

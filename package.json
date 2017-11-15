@@ -1,6 +1,6 @@
 {
   "name": "lightrail-client",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Javascript and Typescript client for Lightrail",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,7 +22,9 @@
     "lightrail"
   ],
   "contributors": [
-    "Jeffery Grajkowski <pushplay@gmail.com> (https://github.com/pushplay/)"
+    "Jeffery Grajkowski <pushplay@gmail.com> (https://github.com/pushplay)",
+    "Tana Jukes <tana.jukes@gmail.com> (https://github.com/tjukes)",
+    "Tim Jordison (https://github.com/Tim-Jordison)"
   ],
   "license": "MIT",
   "bugs": {
