@@ -6,8 +6,10 @@ import {CreateTransactionParams} from "./params/CreateTransactionParams";
 import {Transaction} from "./model/Transaction";
 import {SimulateTransactionParams} from "./params/SimulateTransactionParams";
 
-// Creates a contact first if contact doesn't exist (if userSuppliedId or shopperId provided)
-// but throws error if contactId provided and contact not found (can't create a contact 'by contactId')
+/**
+ * Creates a contact first if contact doesn't exist (if userSuppliedId or shopperId provided)
+ * but throws error if contactId provided and contact not found (can't create a contact 'by contactId')
+ */
 export async function createAccount(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, params: CreateAccountCardParams): Promise<Card> {
     let contactForAccountCreation = await contacts.getContactByAnyIdentifier(contact);
     if (!contactForAccountCreation) {
