@@ -7,14 +7,11 @@ import {Transaction} from "./model/Transaction";
 import {SimulateTransactionParams} from "./params/SimulateTransactionParams";
 
 export async function createAccount(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, params: CreateAccountCardParams): Promise<Card> {
-    const contactForAccountCreation = await contacts.getContactByAnyIdentifier(contact);
-    // TODO
-    // if (!contactForAccountCreation) {
-    //     // contactForAccountCreation = await    ... create contactForAccountCreation
-    // }
-    console.log("CONTACT", contactForAccountCreation);
+    let contactForAccountCreation = await contacts.getContactByAnyIdentifier(contact);
+    if (!contactForAccountCreation) {
+        contactForAccountCreation = await contacts.createContact({userSuppliedId: contact.userSuppliedId || contact.shopperId});
+    }
     const accountCard = await cards.getAccountCardByContactAndCurrency(contactForAccountCreation, params.currency);
-    console.log("ACCT CARD", accountCard);
     if (!accountCard) {
         if (params.contactId && (params.contactId !== contactForAccountCreation.contactId)) {
             throw new Error("Account creation error: params.contactId set to different value than contactForAccountCreation.contactId");

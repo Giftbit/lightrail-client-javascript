@@ -49,9 +49,14 @@ describe("account methods", () => {
         });
         it("creates an account - using shopperId", async () => {
             const res = await contacts.accounts.createAccount({shopperId: sampleShopperId}, accountCreationParams);
-            console.log(res);
             const contact = await contacts.getContactById(res.contactId);
             chai.assert.equal(contact.userSuppliedId, sampleShopperId);
+        });
+        it("creates contact first if it doesn't exist", async () => {
+            const newShopperId = uuid();
+            const res = await contacts.accounts.createAccount({shopperId: newShopperId}, accountCreationParams);
+            const contact = await contacts.getContactById(res.contactId);
+            chai.assert.equal(contact.userSuppliedId, newShopperId);
         });
     });
     describe("createTransaction", () => {
@@ -68,7 +73,7 @@ describe("account methods", () => {
             chai.assert.equal(contact.userSuppliedId, sampleShopperId);
         });
     });
-    describe.only("simulateTransaction", () => {
+    describe("simulateTransaction", () => {
         it("simulates transacting against an account - using contact id", async () => {
             accountTransactionParams.userSuppliedId = uuid();
             const res = await contacts.accounts.simulateTransaction({contactId: sampleContactId}, accountTransactionParams);
