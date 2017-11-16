@@ -36,6 +36,9 @@ export async function createTransaction(contact: { contactId?: string, userSuppl
         throw new Error("could not find contact to transact against");
     }
     const accountCard = await cards.getAccountCardByContactAndCurrency(contactForTransaction, params.currency);
+    if (!accountCard) {
+        throw new Error("could not find account to transact against");
+    }
     return cards.transactions.createTransaction(accountCard, params);
 }
 
@@ -45,5 +48,8 @@ export async function simulateTransaction(contact: { contactId?: string, userSup
         throw new Error("could not find contact to simulate transacting against");
     }
     const accountCard = await cards.getAccountCardByContactAndCurrency(contactForTransaction, params.currency);
+    if (!accountCard) {
+        throw new Error("could not find account to simulate transacting against");
+    }
     return cards.transactions.simulateTransaction(accountCard, params);
 }

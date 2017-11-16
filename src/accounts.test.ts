@@ -13,6 +13,7 @@ chai.use(chaiAsPromised);
 const sampleContactId: string = process.env.CONTACT_ID;
 const sampleShopperId: string = process.env.SHOPPER_ID;
 const currency: string = "USD";
+const badCurrency: string = "AOA"; // any currency that your sample contact & sample shopper do not have accounts for
 
 const accountCreationParams: CreateAccountCardParams = {
     currency: currency,
@@ -30,6 +31,12 @@ const accountTransactionParamsHighValue: SimulateTransactionParams = {
     value: -10000000000000000,
     currency: currency,
     userSuppliedId: "",  // must be regenerated in each test to avoid conflicts
+};
+
+const accountTransactionParamsBadCurrency: CreateTransactionParams = {
+    value: 1,
+    currency: badCurrency,
+    userSuppliedId: "does-not-matter-here",
 };
 
 
@@ -77,6 +84,9 @@ describe("account methods", () => {
             const accountCard = await cards.getCardById(res.cardId);
             const contact = await contacts.getContactById(accountCard.contactId);
             chai.assert.equal(contact.userSuppliedId, sampleShopperId);
+        });
+        it("throws an error if account card not found", async () => {
+            await chai.assert.isRejected(contacts.accounts.createTransaction({shopperId: sampleShopperId}, accountTransactionParamsBadCurrency));
         });
     });
     describe("simulateTransaction", () => {
