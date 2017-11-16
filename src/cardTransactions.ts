@@ -11,7 +11,7 @@ import {Pagination} from "./model/Pagination";
 import {GetTransactionsParams} from "./params/GetTransactionsParams";
 import {SimulateTransactionParams} from "./params/SimulateTransactionParams";
 
-export async function createTransaction(card: string | Card, params: CreateTransactionParams | SimulateTransactionParams): Promise<Transaction> {
+export async function createTransaction(card: string | Card, params: CreateTransactionParams): Promise<Transaction> {
     if (!params) {
         throw new Error("params not set");
     } else if (!params.userSuppliedId) {

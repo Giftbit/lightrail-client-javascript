@@ -6,6 +6,9 @@ import {PaginationParams} from "./params/PaginationParams";
 import {Contact} from "./model/Contact";
 import {UpdateContactParams} from "./params/UpdateContactParams";
 import {CreateContactParams} from "./params/CreateContactParams";
+import * as accounts from "./accounts";
+
+export {accounts};
 
 export async function createContact(params: CreateContactParams): Promise<Contact> {
     if (!params) {
@@ -19,6 +22,18 @@ export async function createContact(params: CreateContactParams): Promise<Contac
         return resp.body.contact;
     }
     throw new LightrailRequestError(resp);
+}
+
+export async function getContactByAnyIdentifier(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }) {
+    if (contact.contactId) {
+        return getContactById(contact.contactId);
+    } else if (contact.userSuppliedId) {
+        return getContactByUserSuppliedId(contact.userSuppliedId);
+    } else if (contact.shopperId) {
+        return getContactByUserSuppliedId(contact.shopperId);
+    } else {
+        throw new Error("one of contact.contactId, contact.userSuppliedId or contact.shopperId must be set");
+    }
 }
 
 export async function getContacts(params?: GetContactsParams & PaginationParams): Promise<{ contacts: Contact[], pagination: Pagination }> {
@@ -40,7 +55,7 @@ export async function getContactById(contactId: string): Promise<Contact> {
 }
 
 export async function getContactByUserSuppliedId(userSuppliedId: string): Promise<Contact> {
-    const resp = await this.getContacts({userSuppliedId});
+    const resp = await getContacts({userSuppliedId});
     if (resp.contacts.length > 0) {
         return resp.contacts[0];
     }

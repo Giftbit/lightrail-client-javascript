@@ -1,4 +1,5 @@
 export * from "./CapturePendingTransactionParams";
+export * from "./CreateAccountCardParams";
 export * from "./CreateCardParams";
 export * from "./CreateContactParams";
 export * from "./CreateTransactionParams";
