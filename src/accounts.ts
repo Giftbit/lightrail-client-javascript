@@ -23,13 +23,11 @@ export async function createAccount(contact: { contactId?: string, userSuppliedI
     if (!accountCard) {
         if (params.contactId && (params.contactId !== contactForAccountCreation.contactId)) {
             throw new Error("Account creation error: you've specified two different contacts to attach this account to.");
-        } else {
-            params.contactId = contactForAccountCreation.contactId;
         }
+        params.contactId = contactForAccountCreation.contactId;
         return cards.createCard(params);
-    } else {
-        return accountCard;
     }
+    return accountCard;
 }
 
 export async function createTransaction(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, params: CreateTransactionParams): Promise<Transaction> {

@@ -119,10 +119,12 @@ describe("account methods", () => {
         });
         it("throws error when simulating a transaction for too much value with nsf not set - using contact id", async () => {
             accountTransactionParamsHighValue.userSuppliedId = uuid();
+            accountTransactionParamsHighValue.nsf = true;
             await chai.assert.isRejected(contacts.accounts.simulateTransaction({contactId: sampleContactId}, accountTransactionParamsHighValue));
         });
         it("throws error when simulating a transaction for too much value with nsf not set - using shopperId", async () => {
             accountTransactionParamsHighValue.userSuppliedId = uuid();
+            accountTransactionParamsHighValue.nsf = true;
             await chai.assert.isRejected(contacts.accounts.simulateTransaction({shopperId: sampleShopperId}, accountTransactionParamsHighValue));
         });
     });
