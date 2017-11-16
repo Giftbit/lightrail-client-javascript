@@ -40,7 +40,7 @@ export async function getContactById(contactId: string): Promise<Contact> {
 }
 
 export async function getContactByUserSuppliedId(userSuppliedId: string): Promise<Contact> {
-    const resp = await this.getContacts({userSuppliedId});
+    const resp = await getContacts({userSuppliedId});
     if (resp.contacts.length > 0) {
         return resp.contacts[0];
     }
