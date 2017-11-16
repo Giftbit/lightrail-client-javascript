@@ -58,6 +58,12 @@ describe("account methods", () => {
             const contact = await contacts.getContactById(res.contactId);
             chai.assert.equal(contact.userSuppliedId, newShopperId);
         });
+        it("throws error if contactId provided but can't find contact", async () => {
+            await chai.assert.isRejected(contacts.accounts.createAccount({
+                contactId: "does-not-exist",
+                shopperId: "does-not-exist-either"
+            }, accountCreationParams));
+        });
     });
     describe("createTransaction", () => {
         it("transacts against an account - using contact id", async () => {
