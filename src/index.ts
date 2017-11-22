@@ -53,7 +53,7 @@ export function configure(options: Partial<LightrailOptions>): void {
     }
     if (options.hasOwnProperty("additionalHeaders")) {
         if (typeof options.additionalHeaders !== "object") {
-            throw new Error("additionalHeaders must be an object")
+            throw new Error("additionalHeaders must be an object");
         }
         configuration.additionalHeaders = options.additionalHeaders;
     }
@@ -80,7 +80,7 @@ export function request(method: string, path: string): superagent.Request {
         .ok(() => true);
     for (let key in configuration.additionalHeaders) {
         if (configuration.additionalHeaders.hasOwnProperty(key)) {
-            r.set(key, configuration.additionalHeaders[key])
+            r.set(key, configuration.additionalHeaders[key]);
         }
     }
     if (configuration.logRequests && superagentLogger) {
