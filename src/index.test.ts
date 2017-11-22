@@ -76,6 +76,7 @@ describe("index", () => {
             chai.assert.isObject(payload);
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
+                gmi: "germie",
                 coi: "chauntaktEyeDee"
             });
             chai.assert.equal(payload.iss, "MERCHANT");
@@ -97,6 +98,7 @@ describe("index", () => {
             chai.assert.isObject(payload);
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
+                gmi: "germie",
                 cui: "luserSuppliedId"
             });
             chai.assert.equal(payload.iss, "MERCHANT");
@@ -118,6 +120,7 @@ describe("index", () => {
             chai.assert.isObject(payload);
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
+                gmi: "germie",
                 shi: "zhopherId"
             });
             chai.assert.equal(payload.iss, "MERCHANT");
