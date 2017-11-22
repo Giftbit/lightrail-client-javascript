@@ -1,6 +1,7 @@
 import * as jsonwebtoken from "jsonwebtoken";
 import * as superagent from "superagent";
 import * as superagentLogger from "superagent-logger";
+import * as accounts from "./accounts";
 import * as cards from "./cards";
 import * as contacts from "./contacts";
 import * as model from "./model";
@@ -9,7 +10,7 @@ import * as programs from "./programs";
 import {LightrailOptions} from "./LightrailOptions";
 import {LightrailRequestError} from "./LightrailRequestError";
 
-export {LightrailOptions, LightrailRequestError, cards, contacts, model, params, programs};
+export {LightrailOptions, LightrailRequestError, accounts, cards, contacts, model, params, programs};
 
 /**
  * These values are all configurable from configure().
