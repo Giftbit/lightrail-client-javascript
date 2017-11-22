@@ -127,34 +127,3 @@ describe("index", () => {
         });
     });
 });
-
-/*
- it("configure additionalHeaders is set correctly", async () => {
- index.configure({
- apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
- sharedSecret: "secret",
- additionalHeaders: {
- headerOne: "this is header one",
- headerTwo: "this is header two"
- }
- });
-
- await res = index.cards.createCard({
- userSuppliedId: "some-id"
- });
-
- const shopperToken = index.generateShopperToken({shopperId: "zhopherId"}, 600);
- chai.assert.isString(shopperToken);
-
- const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
- chai.assert.isObject(payload);
- chai.assert.deepEqual(payload.g, {
- gui: "gooey",
- shi: "zhopherId"
- });
- chai.assert.equal(payload.iss, "MERCHANT");
- chai.assert.isNumber(payload.iat);
- chai.assert.isNumber(payload.exp);
- chai.assert.equal(payload.exp, payload.iat + 600);
- });
- */
