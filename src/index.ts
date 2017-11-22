@@ -125,6 +125,7 @@ export function generateShopperToken(contact: { contactId?: string, userSupplied
         {
             g: {
                 gui: merchantJwtPayload.g.gui,
+                gmi: merchantJwtPayload.g.gmi,
                 coi: contact.contactId || undefined,
                 cui: contact.userSuppliedId || undefined,
                 shi: contact.shopperId || undefined
