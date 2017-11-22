@@ -1,6 +1,6 @@
 {
   "name": "lightrail-client",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A Javascript and Typescript client for Lightrail",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,6 +33,7 @@
   "homepage": "https://github.com/Giftbit/lightrail-client-javascript#readme",
   "devDependencies": {
     "@types/chai": "^4.0.4",
+    "@types/jsonwebtoken": "^7.2.3",
     "@types/mocha": "^2.2.44",
     "@types/superagent": "^3.5.6",
     "@types/node": "^8.0.28",
@@ -49,7 +50,6 @@
     "uuid": "^3.1.0"
   },
   "dependencies": {
-    "@types/jsonwebtoken": "^7.2.3",
     "jsonwebtoken": "^8.1.0",
     "superagent": "^3.8.1"
   },
