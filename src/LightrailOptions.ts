@@ -22,4 +22,9 @@ export interface LightrailOptions {
      * superagent-logger must be available.
      */
     logRequests: boolean;
+
+    /**
+     * Optional parameter that can be used to set additional headers in requests to Lightrail.
+     */
+    additionalHeaders: { [key: string]: string; }
 }
