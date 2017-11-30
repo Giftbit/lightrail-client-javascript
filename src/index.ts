@@ -78,7 +78,7 @@ export function request(method: string, path: string): superagent.Request {
     let r = superagent(method, configuration.restRoot + path)
         .set("Authorization", `Bearer ${configuration.apiKey}`)
         .ok(() => true);
-    for (let key in configuration.additionalHeaders) {
+    for (const key in configuration.additionalHeaders) {
         if (configuration.additionalHeaders.hasOwnProperty(key)) {
             r.set(key, configuration.additionalHeaders[key]);
         }

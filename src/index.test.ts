@@ -58,7 +58,7 @@ describe("index", () => {
                 res.end(JSON.stringify({success: true}));
             });
 
-            const res = await index.cards.createCard({userSuppliedId: "someId", cardType: "ACCOUNT_CARD"})
+            await index.cards.createCard({userSuppliedId: "someId", cardType: "ACCOUNT_CARD"});
         });
     });
 

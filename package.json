@@ -32,11 +32,11 @@
   },
   "homepage": "https://github.com/Giftbit/lightrail-client-javascript#readme",
   "devDependencies": {
-    "@types/chai": "^4.0.4",
+    "@types/chai": "^4.0.6",
     "@types/jsonwebtoken": "^7.2.3",
     "@types/mocha": "^2.2.44",
     "@types/superagent": "^3.5.6",
-    "@types/node": "^8.0.28",
+    "@types/node": "^8.0.53",
     "@types/chai-as-promised": "^7.1.0",
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
@@ -46,7 +46,7 @@
     "rimraf": "^2.6.2",
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
-    "typescript": "^2.6.1",
+    "typescript": "^2.6.2",
     "uuid": "^3.1.0"
   },
   "dependencies": {
