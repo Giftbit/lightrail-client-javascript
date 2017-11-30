@@ -1,14 +1,29 @@
 import * as chai from "chai";
 import * as jsonwebtoken from "jsonwebtoken";
 import * as index from "./";
+import * as http from "http";
+import mitm = require("mitm");
 
 describe("index", () => {
     describe("configure()", () => {
-        after(() => {
+        let mitmInstance: any;
+
+        beforeEach(() => {
+            // mitm shims node's internal request/response constructs so they can be intercepted.
+            // A similar project called nock works at a higher level but can't do assertions on
+            // the header based on the whole request.
+            mitmInstance = mitm();
+        });
+
+        afterEach(() => {
             index.configure({
                 apiKey: "",
                 restRoot: "https://api.lightrail.com/v1/"
             });
+            if (mitmInstance) {
+                mitmInstance.disable();
+                mitmInstance = null;
+            }
         });
 
         it("can set api key and restRoot", () => {
@@ -19,6 +34,31 @@ describe("index", () => {
 
             chai.assert.equal(index.configuration.apiKey, "abcd");
             chai.assert.equal(index.configuration.restRoot, "http://www.example.com/");
+        });
+
+        it("configure additionalHeaders is set correctly", async () => {
+            index.configure({
+                apiKey: "does.not.matter",
+                restRoot: "https://api.lightrail.com/v1/",
+                additionalHeaders: {
+                    headerone: "this is header one",
+                    headertwo: "this is header two"
+                }
+            });
+
+            mitmInstance.on("request", (req: http.IncomingMessage, res: http.ServerResponse) => {
+                console.log(JSON.stringify(req.headers));
+                chai.assert.equal(req.method, "POST");
+                chai.assert.equal(req.headers["host"], "api.lightrail.com");
+                chai.assert.equal(req.url, "/v1/cards");
+                chai.assert.equal(req.headers["headerone"], "this is header one");
+                chai.assert.equal(req.headers["headertwo"], "this is header two");
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.end(JSON.stringify({success: true}));
+            });
+
+            const res = await index.cards.createCard({userSuppliedId: "someId", cardType: "ACCOUNT_CARD"})
         });
     });
 
@@ -36,6 +76,7 @@ describe("index", () => {
             chai.assert.isObject(payload);
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
+                gmi: "germie",
                 coi: "chauntaktEyeDee"
             });
             chai.assert.equal(payload.iss, "MERCHANT");
@@ -57,6 +98,7 @@ describe("index", () => {
             chai.assert.isObject(payload);
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
+                gmi: "germie",
                 cui: "luserSuppliedId"
             });
             chai.assert.equal(payload.iss, "MERCHANT");
@@ -78,6 +120,7 @@ describe("index", () => {
             chai.assert.isObject(payload);
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
+                gmi: "germie",
                 shi: "zhopherId"
             });
             chai.assert.equal(payload.iss, "MERCHANT");

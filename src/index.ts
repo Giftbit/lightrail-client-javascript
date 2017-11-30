@@ -19,7 +19,8 @@ export const configuration: LightrailOptions = {
     apiKey: null,
     restRoot: "https://api.lightrail.com/v1/",
     sharedSecret: null,
-    logRequests: false
+    logRequests: false,
+    additionalHeaders: {}
 };
 
 /**
@@ -50,6 +51,12 @@ export function configure(options: Partial<LightrailOptions>): void {
         }
         configuration.sharedSecret = options.sharedSecret;
     }
+    if (options.hasOwnProperty("additionalHeaders")) {
+        if (typeof options.additionalHeaders !== "object") {
+            throw new Error("additionalHeaders must be an object");
+        }
+        configuration.additionalHeaders = options.additionalHeaders;
+    }
     if (options.hasOwnProperty("logRequests")) {
         if (typeof options.logRequests !== "boolean") {
             throw new Error("logRequests must be a boolean");
@@ -71,6 +78,11 @@ export function request(method: string, path: string): superagent.Request {
     let r = superagent(method, configuration.restRoot + path)
         .set("Authorization", `Bearer ${configuration.apiKey}`)
         .ok(() => true);
+    for (let key in configuration.additionalHeaders) {
+        if (configuration.additionalHeaders.hasOwnProperty(key)) {
+            r.set(key, configuration.additionalHeaders[key]);
+        }
+    }
     if (configuration.logRequests && superagentLogger) {
         r = r.use(superagentLogger);
     }
@@ -88,7 +100,7 @@ export function request(method: string, path: string): superagent.Request {
  * @param validityInSeconds the number of seconds the shopper token will be valid for
  * @returns the shopper token
  */
-export function generateShopperToken(contact: {contactId?: string, userSuppliedId?: string, shopperId?: string}, validityInSeconds: number = 43200): string {
+export function generateShopperToken(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, validityInSeconds: number = 43200): string {
     if (!configuration.apiKey) {
         throw new Error("apiKey not set");
     }
@@ -113,6 +125,7 @@ export function generateShopperToken(contact: {contactId?: string, userSuppliedI
         {
             g: {
                 gui: merchantJwtPayload.g.gui,
+                gmi: merchantJwtPayload.g.gmi,
                 coi: contact.contactId || undefined,
                 cui: contact.userSuppliedId || undefined,
                 shi: contact.shopperId || undefined
