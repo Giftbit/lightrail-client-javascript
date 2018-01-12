@@ -1,4 +1,5 @@
 export * from "./Card";
+export * from "./CardDetails";
 export * from "./Contact";
 export * from "./Fullcode";
 export * from "./Pagination";

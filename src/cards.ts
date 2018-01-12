@@ -12,6 +12,7 @@ import {PaginationParams} from "./params/PaginationParams";
 import {Pagination} from "./model/Pagination";
 import {Contact} from "./model/Contact";
 import {Transaction} from "./model/Transaction";
+import {CardDetails} from "./model/CardDetails";
 
 export {transactions, valueStores};
 
@@ -69,6 +70,17 @@ export async function getFullcode(card: string | Card): Promise<Fullcode> {
     const resp = await lightrail.request("GET", `cards/${encodeURIComponent(cardId)}/fullcode`);
     if (resp.status === 200) {
         return resp.body.fullcode;
+    } else if (resp.status === 404) {
+        return null;
+    }
+    throw new LightrailRequestError(resp);
+}
+
+export async function getDetails(card: string | Card): Promise<CardDetails> {
+    const cardId = getCardId(card);
+    const resp = await lightrail.request("GET", `cards/${encodeURIComponent(cardId)}/details`);
+    if (resp.status === 200) {
+        return resp.body.details;
     } else if (resp.status === 404) {
         return null;
     }
