@@ -25,7 +25,10 @@ export async function createAccount(contact: { contactId?: string, userSuppliedI
             throw new Error("Account creation error: you've specified two different contacts to attach this account to.");
         }
         params.contactId = contactForAccountCreation.contactId;
-        return cards.createCard(params);
+        return cards.createCard({
+            ...params,
+            cardType: Card.CardType.ACCOUNT_CARD
+        });
     }
     return accountCard;
 }

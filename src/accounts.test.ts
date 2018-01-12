@@ -17,7 +17,6 @@ const badCurrency: string = "AOA"; // any currency that your sample contact & sa
 
 const accountCreationParams: CreateAccountCardParams = {
     currency: currency,
-    cardType: "ACCOUNT_CARD",
     userSuppliedId: uuid(),
 };
 
