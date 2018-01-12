@@ -6,6 +6,7 @@ export interface CardDetails {
     cardtype: Card.CardType;
     asAtDate: string;
     cardId: string;
+    valueStores: CardDetails.ValueStore[];
 }
 
 export namespace CardDetails {
