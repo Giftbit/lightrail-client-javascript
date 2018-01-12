@@ -23,7 +23,7 @@ export async function createValueStore(card: string | Card, params: CreateValueS
     throw new LightrailRequestError(resp);
 }
 
-export async function getValueStores(card: string | Card, params: GetValueStoresParams & PaginationParams): Promise<{ valueStores: ValueStore[], pagination: Pagination }> {
+export async function getValueStores(card: string | Card, params: GetValueStoresParams | PaginationParams): Promise<{ valueStores: ValueStore[], pagination: Pagination }> {
     const cardId = cards.getCardId(card);
     const resp = await lightrail.request("GET", `cards/${encodeURIComponent(cardId)}/valueStores`).query(params);
     if (resp.status === 200) {

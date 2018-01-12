@@ -51,7 +51,7 @@ export async function getTransaction(card: string | Card, transaction: string | 
     throw new LightrailRequestError(resp);
 }
 
-export async function getTransactions(card: string | Card, params: GetTransactionsParams & PaginationParams): Promise<{ transactions: Transaction[], pagination: Pagination }> {
+export async function getTransactions(card: string | Card, params: GetTransactionsParams | PaginationParams): Promise<{ transactions: Transaction[], pagination: Pagination }> {
     const cardId = cards.getCardId(card);
     const resp = await lightrail.request("GET", `cards/${encodeURIComponent(cardId)}/transactions`).query(params);
     if (resp.status === 200) {

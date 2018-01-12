@@ -36,7 +36,7 @@ export async function getContactByAnyIdentifier(contact: { contactId?: string, u
     }
 }
 
-export async function getContacts(params?: GetContactsParams & PaginationParams): Promise<{ contacts: Contact[], pagination: Pagination }> {
+export async function getContacts(params?: GetContactsParams | PaginationParams): Promise<{ contacts: Contact[], pagination: Pagination }> {
     const resp = await lightrail.request("GET", "contacts").query(params);
     if (resp.status === 200) {
         return resp.body;

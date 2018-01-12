@@ -30,7 +30,7 @@ export async function createCard(params: CreateCardParams): Promise<Card> {
     throw new LightrailRequestError(resp);
 }
 
-export async function getCards(params: GetCardsParams & PaginationParams): Promise<{ cards: Card[], pagination: Pagination }> {
+export async function getCards(params: GetCardsParams | PaginationParams): Promise<{ cards: Card[], pagination: Pagination }> {
     const resp = await lightrail.request("GET", "cards").query(params);
     if (resp.status === 200) {
         return resp.body;

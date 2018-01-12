@@ -39,7 +39,7 @@ export async function getTransaction(fullcode: string, pin: string, transaction:
     throw new LightrailRequestError(resp);
 }
 
-export async function getTransactions(fullcode: string, pin: string, params: GetTransactionsParams & PaginationParams): Promise<{ transactions: Transaction[], pagination: Pagination }> {
+export async function getTransactions(fullcode: string, pin: string, params: GetTransactionsParams | PaginationParams): Promise<{ transactions: Transaction[], pagination: Pagination }> {
     const resp = await lightrail.request("GET", `codes/${encodeURIComponent(fullcode)}/transactions`)
         .query({
             ...params,
