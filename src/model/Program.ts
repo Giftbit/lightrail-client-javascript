@@ -1,4 +1,5 @@
 import {ValueStore} from "./ValueStore";
+import {Card} from "./Card";
 
 export interface Program {
 
@@ -19,7 +20,7 @@ export interface Program {
     valueStoreType: ValueStore.ValueStoreType;
     metadata: {[key: string]: any} | null;
     timeZone: string;
-    cardType: string;
+    cardType: Card.CardType;
 
 }
 
