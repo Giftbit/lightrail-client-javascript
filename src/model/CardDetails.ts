@@ -3,7 +3,7 @@ import {ValueStore} from "./ValueStore";
 
 export interface CardDetails {
     currency: string;
-    cardtype: Card.CardType;
+    cardType: Card.CardType;
     asAtDate: string;
     cardId: string;
     valueStores: CardDetails.ValueStore[];
