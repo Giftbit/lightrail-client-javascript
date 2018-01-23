@@ -6,7 +6,7 @@ export interface Card {
     currency: string;
     contactId: string;
     dateCreated: string;
-    categories: {[id: string]: string}[];
+    categories: {categoryId: string, key: string, value: string}[];
 
 }
 
