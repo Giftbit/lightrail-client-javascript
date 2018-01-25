@@ -1,5 +1,3 @@
-import {Card} from "../model/Card";
-
 export interface CreateAccountCardParams {
 
     userSuppliedId: string;

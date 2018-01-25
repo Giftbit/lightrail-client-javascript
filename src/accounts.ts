@@ -11,22 +11,24 @@ import {SimulateTransactionParams} from "./params/SimulateTransactionParams";
  * but throws error if contactId provided and contact not found (can't create a contact 'by contactId')
  */
 export async function createAccount(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, params: CreateAccountCardParams): Promise<Card> {
-    let contactForAccountCreation = await contacts.getContactByAnyIdentifier(contact);
-    if (!contactForAccountCreation) {
+    let contactId = await getContactId(contact);
+    if (!contactId) {
         if (contact.contactId) {
             throw new Error(`could not find contact with contactId ${contact.contactId}`);
         } else if (contact.userSuppliedId || contact.shopperId) {
-            contactForAccountCreation = await contacts.createContact({userSuppliedId: contact.userSuppliedId || contact.shopperId});
+            const contactForAccountCreation = await contacts.createContact({userSuppliedId: contact.userSuppliedId || contact.shopperId});
+            contactId = contactForAccountCreation.contactId;
         }
     }
-    const accountCard = await cards.getAccountCardByContactAndCurrency(contactForAccountCreation, params.currency);
+
+    const accountCard = await cards.getAccountCardByContactAndCurrency(contactId, params.currency);
     if (!accountCard) {
-        if (params.contactId && (params.contactId !== contactForAccountCreation.contactId)) {
+        if (params.contactId && (params.contactId !== contactId)) {
             throw new Error("Account creation error: you've specified two different contacts to attach this account to.");
         }
-        params.contactId = contactForAccountCreation.contactId;
         return cards.createCard({
             ...params,
+            contactId: contactId,
             cardType: Card.CardType.ACCOUNT_CARD
         });
     }
@@ -34,11 +36,12 @@ export async function createAccount(contact: { contactId?: string, userSuppliedI
 }
 
 export async function createTransaction(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, params: CreateTransactionParams): Promise<Transaction> {
-    const contactForTransaction = await contacts.getContactByAnyIdentifier(contact);
-    if (!contactForTransaction) {
+    const contactId = await getContactId(contact);
+    if (!contactId) {
         throw new Error("could not find contact to transact against");
     }
-    const accountCard = await cards.getAccountCardByContactAndCurrency(contactForTransaction, params.currency);
+
+    const accountCard = await cards.getAccountCardByContactAndCurrency(contactId, params.currency);
     if (!accountCard) {
         throw new Error("could not find account to transact against");
     }
@@ -46,13 +49,22 @@ export async function createTransaction(contact: { contactId?: string, userSuppl
 }
 
 export async function simulateTransaction(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, params: SimulateTransactionParams): Promise<Transaction> {
-    const contactForTransaction = await contacts.getContactByAnyIdentifier(contact);
-    if (!contactForTransaction) {
-        throw new Error("could not find contact to simulate transacting against");
+    const contactId = await getContactId(contact);
+    if (!contactId) {
+        throw new Error("could not find contact to transact against");
     }
-    const accountCard = await cards.getAccountCardByContactAndCurrency(contactForTransaction, params.currency);
+
+    const accountCard = await cards.getAccountCardByContactAndCurrency(contactId, params.currency);
     if (!accountCard) {
         throw new Error("could not find account to simulate transacting against");
     }
     return cards.transactions.simulateTransaction(accountCard, params);
+}
+
+async function getContactId(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }): Promise<string> {
+    if (contact.contactId) {
+        return contact.contactId;
+    }
+    const contactObject = await contacts.getContactByAnyIdentifier(contact);
+    return contactObject ? contactObject.contactId : null;
 }
