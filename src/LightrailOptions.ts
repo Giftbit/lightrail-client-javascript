@@ -13,7 +13,7 @@ export interface LightrailOptions {
     restRoot: string;
 
     /**
-     * The shared secret as set in the web app.
+     * The shared secret as available from the web app.
      */
     sharedSecret: string;
 

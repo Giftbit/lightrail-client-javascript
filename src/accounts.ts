@@ -5,6 +5,7 @@ import {CreateAccountCardParams} from "./params/CreateAccountCardParams";
 import {CreateTransactionParams} from "./params/CreateTransactionParams";
 import {Transaction} from "./model/Transaction";
 import {SimulateTransactionParams} from "./params/SimulateTransactionParams";
+import {CapturePendingTransactionParams, VoidPendingTransactionParams} from "./params";
 
 /**
  * Creates a contact first if contact doesn't exist (if userSuppliedId or shopperId provided)
@@ -46,6 +47,32 @@ export async function createTransaction(contact: { contactId?: string, userSuppl
         throw new Error("could not find account to transact against");
     }
     return cards.transactions.createTransaction(accountCard, params);
+}
+
+export async function capturePendingTransaction(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, transaction: Transaction, params: CapturePendingTransactionParams): Promise<Transaction> {
+    const contactId = await getContactId(contact);
+    if (!contactId) {
+        throw new Error("could not find contact to transact against");
+    }
+
+    const accountCard = await cards.getAccountCardByContactAndCurrency(contactId, transaction.currency);
+    if (!accountCard) {
+        throw new Error("could not find account to transact against");
+    }
+    return cards.transactions.capturePending(accountCard, transaction, params);
+}
+
+export async function voidPendingTransaction(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, transaction: Transaction, params: VoidPendingTransactionParams): Promise<Transaction> {
+    const contactId = await getContactId(contact);
+    if (!contactId) {
+        throw new Error("could not find contact to transact against");
+    }
+
+    const accountCard = await cards.getAccountCardByContactAndCurrency(contactId, transaction.currency);
+    if (!accountCard) {
+        throw new Error("could not find account to transact against");
+    }
+    return cards.transactions.voidPending(accountCard, transaction, params);
 }
 
 export async function simulateTransaction(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, params: SimulateTransactionParams): Promise<Transaction> {

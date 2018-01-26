@@ -68,6 +68,10 @@ export function configure(options: Partial<LightrailOptions>): void {
     }
 }
 
+
+/**
+ * Initiate a new request to the Lightrail server.
+ */
 export function request(method: string, path: string): superagent.Request {
     if (!configuration.apiKey) {
         throw new Error("apiKey not set");
