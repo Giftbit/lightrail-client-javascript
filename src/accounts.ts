@@ -29,7 +29,6 @@ export async function createAccount(contact: { contactId?: string, userSuppliedI
         }
         return cards.createCard({
             ...params,
-            userSuppliedId: contact.userSuppliedId || contact.shopperId || `account-${contact.shopperId}-${params.currency}`,
             contactId: contactId,
             cardType: Card.CardType.ACCOUNT_CARD
         });
