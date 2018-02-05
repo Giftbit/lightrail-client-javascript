@@ -16,8 +16,7 @@ const currency: string = "USD";
 const badCurrency: string = "AOA"; // any currency that your sample contact & sample shopper do not have accounts for
 
 const accountCreationParams: CreateAccountCardParams = {
-    currency: currency,
-    userSuppliedId: uuid(),
+    currency: currency
 };
 
 const accountTransactionParams: CreateTransactionParams = {

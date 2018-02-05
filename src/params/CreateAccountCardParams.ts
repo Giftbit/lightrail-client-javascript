@@ -1,6 +1,5 @@
 export interface CreateAccountCardParams {
 
-    userSuppliedId: string;
     currency: string;
     initialValue?: number;
     categories?: { [key: string]: string };
