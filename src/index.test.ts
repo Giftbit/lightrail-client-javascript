@@ -36,6 +36,24 @@ describe("index", () => {
             chai.assert.equal(index.configuration.restRoot, "http://www.example.com/");
         });
 
+        it("sets the User-Agent", async () => {
+            index.configure({
+                apiKey: "abcd"
+            });
+
+            let mitmHit = false;
+            mitmInstance.on("request", (req: http.IncomingMessage, res: http.ServerResponse) => {
+                mitmHit = true;
+                chai.assert.match(req.headers["user-agent"] as string, /^Lightrail-JavaScript\/\d+\.\d+\.\d+$/);
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.end(JSON.stringify({success: true}));
+            });
+
+            await index.cards.createCard({userSuppliedId: "someId", cardType: "ACCOUNT_CARD"});
+            chai.assert.isTrue(mitmHit);
+        });
+
         it("configure additionalHeaders is set correctly", async () => {
             index.configure({
                 apiKey: "does.not.matter",
@@ -46,8 +64,9 @@ describe("index", () => {
                 }
             });
 
+            let mitmHit = false;
             mitmInstance.on("request", (req: http.IncomingMessage, res: http.ServerResponse) => {
-                console.log(JSON.stringify(req.headers));
+                mitmHit = true;
                 chai.assert.equal(req.method, "POST");
                 chai.assert.equal(req.headers["host"], "api.lightrail.com");
                 chai.assert.equal(req.url, "/v1/cards");
@@ -59,6 +78,7 @@ describe("index", () => {
             });
 
             await index.cards.createCard({userSuppliedId: "someId", cardType: "ACCOUNT_CARD"});
+            chai.assert.isTrue(mitmHit);
         });
     });
 

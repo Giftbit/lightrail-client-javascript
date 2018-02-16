@@ -1,8 +1,8 @@
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import {v4 as uuid} from "uuid";
 import * as Lightrail from "./";
-import {SimulateTransactionParams} from "./params/SimulateTransactionParams";
+import {v4 as uuid} from "uuid";
+import {SimulateTransactionParams} from "./params";
 
 chai.use(chaiAsPromised);
 

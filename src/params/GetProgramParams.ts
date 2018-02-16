@@ -1,6 +1,4 @@
-import {Card} from "../model/Card";
-import {Program} from "../model/Program";
-import {ValueStore} from "../model/ValueStore";
+import {Card, Program, ValueStore} from "../model";
 
 export interface GetProgramParams {
 

@@ -1,9 +1,32 @@
 import * as lightrail from "./";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {GetProgramParams} from "./params/GetProgramParams";
-import {PaginationParams} from "./params/PaginationParams";
-import {Program} from "./model/Program";
-import {Pagination} from "./model/Pagination";
+import {Pagination, Program} from "./model";
+import {GetProgramParams, PaginationParams} from "./params";
+import {CreateProgramParams} from "./params/CreateProgramParams";
+
+export async function createProgram(params: CreateProgramParams): Promise<Program> {
+    if (!params) {
+        throw new Error("params not set");
+    } else if (!params.userSuppliedId) {
+        throw new Error("params.userSuppliedId not set");
+    }
+
+    const resp = await lightrail.request("POST", "programs").send(params);
+    if (resp.status === 200) {
+        return resp.body.program;
+    }
+    throw new LightrailRequestError(resp);
+}
+
+export async function getProgramById(programId: string): Promise<Program> {
+    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}`);
+    if (resp.status === 200) {
+        return resp.body.program;
+    } else if (resp.status === 404) {
+        return null;
+    }
+    throw new LightrailRequestError(resp);
+}
 
 export async function getPrograms(params: GetProgramParams | PaginationParams): Promise<{ programs: Program[], pagination: Pagination }> {
     const resp = await lightrail.request("GET", "programs").query(params);

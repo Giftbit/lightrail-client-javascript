@@ -1,11 +1,10 @@
 import * as contacts from "./contacts";
 import * as cards from "./cards";
-import {Card} from "./model/Card";
-import {CreateAccountCardParams} from "./params/CreateAccountCardParams";
-import {CreateTransactionParams} from "./params/CreateTransactionParams";
-import {Transaction} from "./model/Transaction";
-import {SimulateTransactionParams} from "./params/SimulateTransactionParams";
-import {CapturePendingTransactionParams, VoidPendingTransactionParams} from "./params";
+import {
+    CapturePendingTransactionParams, CreateAccountCardParams, CreateTransactionParams, SimulateTransactionParams,
+    VoidPendingTransactionParams
+} from "./params";
+import {Card, Transaction} from "./model";
 
 /**
  * Creates a contact first if contact doesn't exist (if userSuppliedId or shopperId provided)

@@ -1,12 +1,8 @@
 import * as lightrail from "./";
-import {Pagination} from "./model/Pagination";
-import {LightrailRequestError} from "./LightrailRequestError";
-import {GetContactsParams} from "./params/GetContactsParams";
-import {PaginationParams} from "./params/PaginationParams";
-import {Contact} from "./model/Contact";
-import {UpdateContactParams} from "./params/UpdateContactParams";
-import {CreateContactParams} from "./params/CreateContactParams";
 import * as accounts from "./accounts";
+import {LightrailRequestError} from "./LightrailRequestError";
+import {CreateContactParams, GetContactsParams, PaginationParams, UpdateContactParams} from "./params";
+import {Contact, Pagination} from "./model";
 
 export {accounts};
 

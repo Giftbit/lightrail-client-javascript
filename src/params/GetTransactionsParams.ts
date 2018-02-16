@@ -1,4 +1,4 @@
-import {Transaction} from "../model/Transaction";
+import {Transaction} from "../model";
 
 export interface GetTransactionsParams {
     userSuppliedId?: string;

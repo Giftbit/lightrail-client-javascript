@@ -1,12 +1,8 @@
 import * as lightrail from "./";
 import * as cards from "./cards";
-import {Card} from "./model/Card";
-import {CreateValueStoreParams} from "./params/CreateValueStoreParams";
-import {ValueStore} from "./model/ValueStore";
+import {Card, Pagination, ValueStore} from "./model";
+import {CreateValueStoreParams, GetValueStoresParams, PaginationParams} from "./params";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {GetValueStoresParams} from "./params/GetValueStoresParams";
-import {PaginationParams} from "./params/PaginationParams";
-import {Pagination} from "./model/Pagination";
 
 export async function createValueStore(card: string | Card, params: CreateValueStoreParams): Promise<ValueStore> {
     if (!params) {

@@ -4,9 +4,7 @@ import {v4 as uuid} from "uuid";
 import * as Lightrail from "./";
 import * as contacts from "./contacts";
 import * as cards from "./cards";
-import {CreateAccountCardParams} from "./params/CreateAccountCardParams";
-import {CreateTransactionParams} from "./params/CreateTransactionParams";
-import {SimulateTransactionParams} from "./params/SimulateTransactionParams";
+import {CreateAccountCardParams, CreateTransactionParams, SimulateTransactionParams} from "./params";
 
 chai.use(chaiAsPromised);
 
@@ -39,7 +37,7 @@ const accountTransactionParamsBadCurrency: CreateTransactionParams = {
 };
 
 
-describe("account methods", () => {
+describe("accounts", () => {
     before(() => {
         chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
         chai.assert.isString(process.env.CARD_ID, "env var CARD_ID must be set ot run the tests (for example set it in the .env file)");
@@ -48,7 +46,7 @@ describe("account methods", () => {
         });
     });
 
-    describe("createAccount", () => {
+    describe("createAccount()", () => {
         it("creates an account - using contact id", async () => {
             const res = await contacts.accounts.createAccount({contactId: sampleContactId}, accountCreationParams);
             chai.assert.equal(res.contactId, sampleContactId);
@@ -71,7 +69,7 @@ describe("account methods", () => {
             }, accountCreationParams));
         });
     });
-    describe("createTransaction", () => {
+    describe("createTransaction()", () => {
         it("transacts against an account - using contact id", async () => {
             accountTransactionParams.userSuppliedId = uuid();
             const res = await contacts.accounts.createTransaction({contactId: sampleContactId}, accountTransactionParams);
@@ -88,7 +86,7 @@ describe("account methods", () => {
             await chai.assert.isRejected(contacts.accounts.createTransaction({shopperId: sampleShopperId}, accountTransactionParamsBadCurrency));
         });
     });
-    describe("simulateTransaction", () => {
+    describe("simulateTransaction()", () => {
         it("simulates transacting against an account - using contact id", async () => {
             accountTransactionParams.userSuppliedId = uuid();
             const res = await contacts.accounts.simulateTransaction({contactId: sampleContactId}, accountTransactionParams);

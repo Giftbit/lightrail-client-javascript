@@ -1,13 +1,11 @@
 import * as lightrail from "./";
 import * as cardTransactions from "./cardTransactions";
-import {Transaction} from "./model/Transaction";
-import {CreateTransactionParams} from "./params/CreateTransactionParams";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {GetTransactionsParams} from "./params/GetTransactionsParams";
-import {PaginationParams} from "./params/PaginationParams";
-import {Pagination} from "./model/Pagination";
-import {CapturePendingTransactionParams} from "./params/CapturePendingTransactionParams";
-import {VoidPendingTransactionParams} from "./params/VoidPendingTransactionParams";
+import {
+    CapturePendingTransactionParams, CreateTransactionParams, GetTransactionsParams,
+    PaginationParams, VoidPendingTransactionParams
+} from "./params";
+import {Pagination, Transaction} from "./model";
 
 export async function createTransaction(fullcode: string, pin: string, params: CreateTransactionParams): Promise<Transaction> {
     if (!params) {

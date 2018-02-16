@@ -2,17 +2,9 @@ import * as lightrail from "./";
 import * as contacts from "./contacts";
 import * as transactions from "./cardTransactions";
 import * as valueStores from "./valueStores";
-import {CreateCardParams} from "./params/CreateCardParams";
-import {Card} from "./model/Card";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {Fullcode} from "./model/Fullcode";
-import {UpdateCardParams} from "./params/UpdateCardParams";
-import {GetCardsParams} from "./params/GetCardsParams";
-import {PaginationParams} from "./params/PaginationParams";
-import {Pagination} from "./model/Pagination";
-import {Contact} from "./model/Contact";
-import {Transaction} from "./model/Transaction";
-import {CardDetails} from "./model/CardDetails";
+import {Card, CardDetails, Contact, Fullcode, Pagination, Transaction} from "./model";
+import {CreateCardParams, GetCardsParams, PaginationParams, UpdateCardParams} from "./params";
 
 export {transactions, valueStores};
 

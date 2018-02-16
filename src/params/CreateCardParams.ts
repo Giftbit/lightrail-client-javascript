@@ -1,9 +1,10 @@
-import {Card} from "../model/Card";
+import {Card} from "../model";
 
 export interface CreateCardParams {
 
     userSuppliedId: string;
     cardType: Card.CardType;
+    programId?: string;
     currency?: string;
     initialValue?: number;
     categories?: {[key: string]: string};
@@ -12,6 +13,5 @@ export interface CreateCardParams {
     startDate?: string | Date;
     inactive?: boolean;
     metadata?: {[key: string]: any};
-    programId?: string;
 
 }

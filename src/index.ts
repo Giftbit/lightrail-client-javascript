@@ -7,6 +7,7 @@ import * as contacts from "./contacts";
 import * as model from "./model";
 import * as params from "./params";
 import * as programs from "./programs";
+import packageJson = require("../package.json");
 import {LightrailOptions} from "./LightrailOptions";
 import {LightrailRequestError} from "./LightrailRequestError";
 
@@ -81,6 +82,7 @@ export function request(method: string, path: string): superagent.Request {
     // throttling or automatic retry on particular codes.
     let r = superagent(method, configuration.restRoot + path)
         .set("Authorization", `Bearer ${configuration.apiKey}`)
+        .set("User-Agent", `Lightrail-JavaScript/${packageJson.version}`)
         .ok(() => true);
     for (const key in configuration.additionalHeaders) {
         if (configuration.additionalHeaders.hasOwnProperty(key)) {
