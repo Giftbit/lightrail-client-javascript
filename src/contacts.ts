@@ -2,7 +2,7 @@ import * as lightrail from "./";
 import * as accounts from "./accounts";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {CreateContactParams, GetContactsParams, PaginationParams, UpdateContactParams} from "./params";
-import {Contact, Pagination} from "./model";
+import {Contact, ContactIdentifier, Pagination} from "./model";
 
 export {accounts};
 
@@ -20,7 +20,7 @@ export async function createContact(params: CreateContactParams): Promise<Contac
     throw new LightrailRequestError(resp);
 }
 
-export async function getContactByAnyIdentifier(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }) {
+export async function getContactByAnyIdentifier(contact: ContactIdentifier) {
     if (contact.contactId) {
         return getContactById(contact.contactId);
     } else if (contact.userSuppliedId) {

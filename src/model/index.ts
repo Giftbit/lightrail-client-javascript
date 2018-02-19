@@ -1,6 +1,7 @@
 export * from "./Card";
 export * from "./CardDetails";
 export * from "./Contact";
+export * from "./ContactIdentifier";
 export * from "./Fullcode";
 export * from "./Pagination";
 export * from "./Program";

@@ -10,6 +10,7 @@ import * as programs from "./programs";
 import packageJson = require("../package.json");
 import {LightrailOptions} from "./LightrailOptions";
 import {LightrailRequestError} from "./LightrailRequestError";
+import {GenerateShopperTokenOptions} from "./GenerateShopperTokenOptions";
 
 export {LightrailOptions, LightrailRequestError, accounts, cards, contacts, model, params, programs};
 
@@ -101,23 +102,40 @@ export function request(method: string, path: string): superagent.Request {
  * contactId, userSuppliedId, or shopperId.
  *
  * eg: `generateShopperToken({shopperId: "user-12345"});`
+ * eg: `generateShopperToken({shopperId: "user-12345"}, {validityInSeconds: 43200});`
  *
  * @param contact an object that defines one of: contactId, userSuppliedId or shopperId
- * @param validityInSeconds the number of seconds the shopper token will be valid for
+ * @param options the number of seconds the shopper token will be valid for *OR* a GenerateShopperTokenOptions object
  * @returns the shopper token
  */
-export function generateShopperToken(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, validityInSeconds: number = 43200): string {
+export function generateShopperToken(contact: model.ContactIdentifier, options?: number | GenerateShopperTokenOptions): string {
     if (!configuration.apiKey) {
         throw new Error("apiKey not set");
     }
     if (!configuration.sharedSecret) {
         throw new Error("sharedSecret not set");
     }
+    if (!contact) {
+        throw new Error("contact not set");
+    }
     if (!contact.contactId && !contact.userSuppliedId && !contact.shopperId) {
         throw new Error("one of contact.contactId, contact.userSuppliedId or contact.shopperId must be set");
     }
-    if (typeof validityInSeconds !== "number" || validityInSeconds <= 0) {
-        throw new Error("validityInSeconds must be a number > 0");
+
+    let validityInSeconds = 43200;
+    let additionalIds: {[name: string]: string};
+    if (typeof options === "number") {
+        validityInSeconds = options;
+    } else if (options) {
+        if (typeof options.validityInSeconds === "number") {
+            validityInSeconds = options.validityInSeconds;
+        }
+        if (options.additionalIds) {
+            additionalIds = options.additionalIds;
+        }
+    }
+    if (validityInSeconds <= 0) {
+        throw new Error("validityInSeconds must be > 0");
     }
 
     const merchantJwtPayload = jsonwebtoken.decode(configuration.apiKey) as any;
@@ -126,7 +144,6 @@ export function generateShopperToken(contact: { contactId?: string, userSupplied
     }
 
     const nowInSeconds = Date.now() / 1000;
-
     return jsonwebtoken.sign(
         {
             g: {
@@ -136,6 +153,7 @@ export function generateShopperToken(contact: { contactId?: string, userSupplied
                 cui: contact.userSuppliedId || undefined,
                 shi: contact.shopperId || undefined
             },
+            ids: additionalIds || undefined,
             iss: "MERCHANT",
             iat: nowInSeconds,
             exp: nowInSeconds + validityInSeconds
