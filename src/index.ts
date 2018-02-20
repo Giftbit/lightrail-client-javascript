@@ -123,15 +123,15 @@ export function generateShopperToken(contact: model.ContactIdentifier, options?:
     }
 
     let validityInSeconds = 43200;
-    let additionalIds: {[name: string]: string};
+    let metadata: {[name: string]: any};
     if (typeof options === "number") {
         validityInSeconds = options;
     } else if (options) {
         if (typeof options.validityInSeconds === "number") {
             validityInSeconds = options.validityInSeconds;
         }
-        if (options.additionalIds) {
-            additionalIds = options.additionalIds;
+        if (options.metadata) {
+            metadata = options.metadata;
         }
     }
     if (validityInSeconds <= 0) {
@@ -153,7 +153,7 @@ export function generateShopperToken(contact: model.ContactIdentifier, options?:
                 cui: contact.userSuppliedId || undefined,
                 shi: contact.shopperId || undefined
             },
-            ids: additionalIds || undefined,
+            metadata: metadata || undefined,
             iss: "MERCHANT",
             iat: nowInSeconds,
             exp: nowInSeconds + validityInSeconds
