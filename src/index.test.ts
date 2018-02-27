@@ -165,7 +165,6 @@ describe("index", () => {
                 gmi: "germie",
                 shi: "zhopherId"
             });
-            console.log("payload: " + JSON.stringify(payload));
             chai.assert.deepEqual(payload.metadata, {
                 foo: "xxxYYYzzz"
             });
