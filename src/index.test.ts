@@ -155,7 +155,7 @@ describe("index", () => {
                 sharedSecret: "secret"
             });
 
-            const shopperToken = index.generateShopperToken({shopperId: "zhopherId"}, {validityInSeconds: 999, additionalIds: {foo: "xxxYYYzzz"}});
+            const shopperToken = index.generateShopperToken({shopperId: "zhopherId"}, {validityInSeconds: 999, metadata: {foo: "xxxYYYzzz"}});
             chai.assert.isString(shopperToken);
 
             const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
@@ -165,7 +165,7 @@ describe("index", () => {
                 gmi: "germie",
                 shi: "zhopherId"
             });
-            chai.assert.deepEqual(payload.ids, {
+            chai.assert.deepEqual(payload.metadata, {
                 foo: "xxxYYYzzz"
             });
             chai.assert.equal(payload.iss, "MERCHANT");
