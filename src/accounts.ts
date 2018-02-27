@@ -4,13 +4,13 @@ import {
     CapturePendingTransactionParams, CreateAccountCardParams, CreateTransactionParams, SimulateTransactionParams,
     VoidPendingTransactionParams
 } from "./params";
-import {Card, Transaction} from "./model";
+import {Card, ContactIdentifier, Transaction} from "./model";
 
 /**
  * Creates a contact first if contact doesn't exist (if userSuppliedId or shopperId provided)
  * but throws error if contactId provided and contact not found (can't create a contact 'by contactId')
  */
-export async function createAccount(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, params: CreateAccountCardParams): Promise<Card> {
+export async function createAccount(contact: ContactIdentifier, params: CreateAccountCardParams): Promise<Card> {
     let contactId = await getContactId(contact);
     if (!contactId) {
         if (contact.contactId) {
@@ -35,7 +35,7 @@ export async function createAccount(contact: { contactId?: string, userSuppliedI
     return accountCard;
 }
 
-export async function createTransaction(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, params: CreateTransactionParams): Promise<Transaction> {
+export async function createTransaction(contact: ContactIdentifier, params: CreateTransactionParams): Promise<Transaction> {
     const contactId = await getContactId(contact);
     if (!contactId) {
         throw new Error("could not find contact to transact against");
@@ -48,7 +48,7 @@ export async function createTransaction(contact: { contactId?: string, userSuppl
     return cards.transactions.createTransaction(accountCard, params);
 }
 
-export async function capturePendingTransaction(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, transaction: Transaction, params: CapturePendingTransactionParams): Promise<Transaction> {
+export async function capturePendingTransaction(contact: ContactIdentifier, transaction: Transaction, params: CapturePendingTransactionParams): Promise<Transaction> {
     const contactId = await getContactId(contact);
     if (!contactId) {
         throw new Error("could not find contact to transact against");
@@ -61,7 +61,7 @@ export async function capturePendingTransaction(contact: { contactId?: string, u
     return cards.transactions.capturePending(accountCard, transaction, params);
 }
 
-export async function voidPendingTransaction(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, transaction: Transaction, params: VoidPendingTransactionParams): Promise<Transaction> {
+export async function voidPendingTransaction(contact: ContactIdentifier, transaction: Transaction, params: VoidPendingTransactionParams): Promise<Transaction> {
     const contactId = await getContactId(contact);
     if (!contactId) {
         throw new Error("could not find contact to transact against");
@@ -74,7 +74,7 @@ export async function voidPendingTransaction(contact: { contactId?: string, user
     return cards.transactions.voidPending(accountCard, transaction, params);
 }
 
-export async function simulateTransaction(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }, params: SimulateTransactionParams): Promise<Transaction> {
+export async function simulateTransaction(contact: ContactIdentifier, params: SimulateTransactionParams): Promise<Transaction> {
     const contactId = await getContactId(contact);
     if (!contactId) {
         throw new Error("could not find contact to transact against");
@@ -87,7 +87,7 @@ export async function simulateTransaction(contact: { contactId?: string, userSup
     return cards.transactions.simulateTransaction(accountCard, params);
 }
 
-async function getContactId(contact: { contactId?: string, userSuppliedId?: string, shopperId?: string }): Promise<string> {
+async function getContactId(contact: ContactIdentifier): Promise<string> {
     if (contact.contactId) {
         return contact.contactId;
     }
