@@ -157,7 +157,7 @@ export function generateShopperToken(contact: model.ContactIdentifier, options?:
             iss: "MERCHANT",
             iat: nowInSeconds,
             exp: nowInSeconds + validityInSeconds,
-            scopes: ["shopper"]
+            roles: ["shopper"]
         },
         configuration.sharedSecret,
         {
