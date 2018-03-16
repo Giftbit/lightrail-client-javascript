@@ -149,6 +149,28 @@ describe("index", () => {
             chai.assert.equal(payload.exp, payload.iat + 600);
         });
 
+        it("signs an empty shopperId", () => {
+            index.configure({
+                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                sharedSecret: "secret"
+            });
+
+            const shopperToken = index.generateShopperToken({shopperId: ""}, 600);
+            chai.assert.isString(shopperToken);
+
+            const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
+            chai.assert.isObject(payload);
+            chai.assert.deepEqual(payload.g, {
+                gui: "gooey",
+                gmi: "germie",
+                shi: ""
+            });
+            chai.assert.equal(payload.iss, "MERCHANT");
+            chai.assert.isNumber(payload.iat);
+            chai.assert.isNumber(payload.exp);
+            chai.assert.equal(payload.exp, payload.iat + 600);
+        });
+
         it("signs a shopper token with additional IDs", () => {
             index.configure({
                 apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",

@@ -118,7 +118,7 @@ export function generateShopperToken(contact: model.ContactIdentifier, options?:
     if (!contact) {
         throw new Error("contact not set");
     }
-    if (!contact.contactId && !contact.userSuppliedId && !contact.shopperId) {
+    if (!contact.contactId && !contact.userSuppliedId && contact.shopperId == null) {
         throw new Error("one of contact.contactId, contact.userSuppliedId or contact.shopperId must be set");
     }
 
