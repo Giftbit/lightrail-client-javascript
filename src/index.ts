@@ -151,7 +151,7 @@ export function generateShopperToken(contact: model.ContactIdentifier, options?:
                 gmi: merchantJwtPayload.g.gmi,
                 coi: contact.contactId || undefined,
                 cui: contact.userSuppliedId || undefined,
-                shi: contact.shopperId || undefined
+                shi: typeof(contact.shopperId) === "string" ? contact.shopperId : undefined
             },
             metadata: metadata || undefined,
             iss: "MERCHANT",
