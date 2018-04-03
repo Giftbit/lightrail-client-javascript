@@ -36,7 +36,6 @@ const accountTransactionParamsBadCurrency: CreateTransactionParams = {
     userSuppliedId: "does-not-matter-here",
 };
 
-
 describe("accounts", () => {
     before(() => {
         chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
@@ -51,17 +50,20 @@ describe("accounts", () => {
             const res = await contacts.accounts.createAccount({contactId: sampleContactId}, accountCreationParams);
             chai.assert.equal(res.contactId, sampleContactId);
         });
+
         it("creates an account - using shopperId", async () => {
             const res = await contacts.accounts.createAccount({shopperId: sampleShopperId}, accountCreationParams);
             const contact = await contacts.getContactById(res.contactId);
             chai.assert.equal(contact.userSuppliedId, sampleShopperId);
         });
+
         it("creates contact first if it doesn't exist", async () => {
             const newShopperId = uuid();
             const res = await contacts.accounts.createAccount({shopperId: newShopperId}, accountCreationParams);
             const contact = await contacts.getContactById(res.contactId);
             chai.assert.equal(contact.userSuppliedId, newShopperId);
         });
+
         it("throws error if contactId provided but can't find contact", async () => {
             await chai.assert.isRejected(contacts.accounts.createAccount({
                 contactId: "does-not-exist",
@@ -69,12 +71,33 @@ describe("accounts", () => {
             }, accountCreationParams));
         });
     });
+
+    describe("getDetails()", () => {
+        it("returns null if the contact doesn't exist", async () => {
+            const details = await contacts.accounts.getDetails({shopperId: "idonotexist"}, badCurrency);
+            chai.assert.isNull(details);
+        });
+
+        it("returns null if the account card doesn't exist", async () => {
+            const details = await contacts.accounts.getDetails({shopperId: sampleShopperId}, badCurrency);
+            chai.assert.isNull(details);
+        });
+
+        it("returns card details if available", async () => {
+            const details = await contacts.accounts.getDetails({shopperId: sampleShopperId}, currency);
+            chai.assert.isObject(details);
+            chai.assert.equal(details.currency, currency);
+            chai.assert.isArray(details.valueStores);
+        });
+    });
+
     describe("createTransaction()", () => {
         it("transacts against an account - using contact id", async () => {
             accountTransactionParams.userSuppliedId = uuid();
             const res = await contacts.accounts.createTransaction({contactId: sampleContactId}, accountTransactionParams);
             chai.assert.equal(res.userSuppliedId, accountTransactionParams.userSuppliedId);
         });
+
         it("transacts against an account - using shopperId", async () => {
             accountTransactionParams.userSuppliedId = uuid();
             const res = await contacts.accounts.createTransaction({shopperId: sampleShopperId}, accountTransactionParams);
@@ -82,16 +105,19 @@ describe("accounts", () => {
             const contact = await contacts.getContactById(accountCard.contactId);
             chai.assert.equal(contact.userSuppliedId, sampleShopperId);
         });
+
         it("throws an error if account card not found", async () => {
             await chai.assert.isRejected(contacts.accounts.createTransaction({shopperId: sampleShopperId}, accountTransactionParamsBadCurrency));
         });
     });
+
     describe("simulateTransaction()", () => {
         it("simulates transacting against an account - using contact id", async () => {
             accountTransactionParams.userSuppliedId = uuid();
             const res = await contacts.accounts.simulateTransaction({contactId: sampleContactId}, accountTransactionParams);
             chai.assert.equal(res.userSuppliedId, accountTransactionParams.userSuppliedId);
         });
+
         it("simulates transacting against an account - using shopperId", async () => {
             accountTransactionParams.userSuppliedId = uuid();
             const res = await contacts.accounts.simulateTransaction({shopperId: sampleShopperId}, accountTransactionParams);
@@ -106,6 +132,7 @@ describe("accounts", () => {
             const res = await contacts.accounts.simulateTransaction({contactId: sampleContactId}, accountTransactionParamsHighValue);
             chai.assert.equal(res.userSuppliedId, accountTransactionParamsHighValue.userSuppliedId);
         });
+
         it("simulates transacting against an account - using shopperId - nsf: false", async () => {
             accountTransactionParamsHighValue.userSuppliedId = uuid();
             accountTransactionParamsHighValue.nsf = false;
@@ -114,11 +141,13 @@ describe("accounts", () => {
             const contact = await contacts.getContactById(accountCard.contactId);
             chai.assert.equal(contact.userSuppliedId, sampleShopperId);
         });
+
         it("throws error when simulating a transaction for too much value with nsf not set - using contact id", async () => {
             accountTransactionParamsHighValue.userSuppliedId = uuid();
             accountTransactionParamsHighValue.nsf = true;
             await chai.assert.isRejected(contacts.accounts.simulateTransaction({contactId: sampleContactId}, accountTransactionParamsHighValue));
         });
+
         it("throws error when simulating a transaction for too much value with nsf not set - using shopperId", async () => {
             accountTransactionParamsHighValue.userSuppliedId = uuid();
             accountTransactionParamsHighValue.nsf = true;
