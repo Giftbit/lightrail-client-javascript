@@ -4,7 +4,7 @@ import {
     CapturePendingTransactionParams, CreateAccountCardParams, CreateTransactionParams, SimulateTransactionParams,
     VoidPendingTransactionParams
 } from "./params";
-import {Card, ContactIdentifier, Transaction} from "./model";
+import {Card, CardDetails, ContactIdentifier, Transaction} from "./model";
 
 /**
  * Creates a contact first if contact doesn't exist (if userSuppliedId or shopperId provided)
@@ -33,6 +33,18 @@ export async function createAccount(contact: ContactIdentifier, params: CreateAc
         });
     }
     return accountCard;
+}
+
+export async function getDetails(contact: ContactIdentifier, currency: string): Promise<CardDetails> {
+    const contactId = await getContactId(contact);
+    if (!contactId) {
+        return null;
+    }
+    const accountCard = await cards.getAccountCardByContactAndCurrency(contactId, currency);
+    if (!accountCard) {
+        return null;
+    }
+    return cards.getDetails(accountCard);
 }
 
 export async function createTransaction(contact: ContactIdentifier, params: CreateTransactionParams): Promise<Transaction> {
