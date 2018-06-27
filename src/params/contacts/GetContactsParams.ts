@@ -9,6 +9,5 @@ export interface GetContactsParams {
     email?: string;
 }
 
-export interface GetContactsResponse {
-    contacts: Contact[];
+export interface GetContactsResponse extends Array<Contact> {
 }

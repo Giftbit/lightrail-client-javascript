@@ -1,8 +1,10 @@
 import * as lightrail from "./";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {
-    CreateContactParams, CreateContactResponse,
-    GetContactsParams, GetContactsResponse,
+    CreateContactParams,
+    CreateContactResponse,
+    GetContactsParams,
+    GetContactsResponse,
     PaginationParams
 } from "./params";
 import {Contact} from "./model";
@@ -23,8 +25,8 @@ export async function createContact(params: CreateContactParams): Promise<Create
     }
 
     const resp = await lightrail.request("POST", "contacts").send(params);
-    if (resp.status === 200) {
-        return resp.body.contact;
+    if (resp.status === 200 || resp.status === 201) {
+        return resp.body;
     }
     throw new LightrailRequestError(resp);
 }

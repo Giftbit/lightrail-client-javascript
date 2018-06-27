@@ -5,10 +5,10 @@ import * as contacts from "./contacts";
 import * as model from "./model";
 import * as params from "./params";
 import * as programs from "./programs";
-import packageJson = require("../package.json");
 import {LightrailOptions} from "./LightrailOptions";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {GenerateShopperTokenOptions} from "./GenerateShopperTokenOptions";
+import packageJson = require("../package.json");
 
 export {LightrailOptions, LightrailRequestError, contacts, model, params, programs};
 
@@ -72,16 +72,19 @@ export function configure(options: Partial<LightrailOptions>): void {
  * Initiate a new request to the Lightrail server.
  */
 export function request(method: string, path: string): superagent.Request {
-    if (!configuration.apiKey) {
+    if (!configuration.apiKey && !window) {
         throw new Error("apiKey not set");
     }
 
     // We can do some fancy things with superagent here like request rate
     // throttling or automatic retry on particular codes.
     let r = superagent(method, configuration.restRoot + path)
-        .set("Authorization", `Bearer ${configuration.apiKey}`)
         .set("User-Agent", `Lightrail-JavaScript/${packageJson.version}`)
         .ok(() => true);
+
+    if (!!configuration.apiKey) {
+        r.set("Authorization", `Bearer ${configuration.apiKey}`);
+    }
     for (const key in configuration.additionalHeaders) {
         if (configuration.additionalHeaders.hasOwnProperty(key)) {
             r.set(key, configuration.additionalHeaders[key]);

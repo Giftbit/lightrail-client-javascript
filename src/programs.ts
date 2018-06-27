@@ -15,6 +15,7 @@ export async function createProgram(params: CreateProgramParams): Promise<Create
     if (resp.status === 200) {
         return resp.body.program;
     }
+
     throw new LightrailRequestError(resp);
 }
 

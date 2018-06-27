@@ -6,5 +6,5 @@ export interface CreateProgramParams {
     currency: string;
 }
 
-export interface CreateProgramResponse extends Program{
+export interface CreateProgramResponse extends Program {
 }
