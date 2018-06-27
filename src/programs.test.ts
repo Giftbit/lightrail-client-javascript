@@ -1,7 +1,6 @@
 import * as chai from "chai";
-import * as Lightrail from "./";
+import * as Lightrail from "./index";
 import * as uuid from "uuid";
-import {ValueStore} from "./model";
 
 describe("programs", () => {
     before(() => {
@@ -14,18 +13,15 @@ describe("programs", () => {
 
     describe("createProgram()", () => {
         it("creates a program", async () => {
-            const userSuppliedId = uuid.v4();
+            const id = uuid.v4();
             const program = await Lightrail.programs.createProgram({
-                userSuppliedId,
+                id,
                 name: "javascript programs unit test",
-                valueStoreType: ValueStore.ValueStoreType.PRINCIPAL,
                 currency: "USD",
-                codeMinValue: 89,
-                codeMaxValue: 9889
             });
             chai.assert.isNotNull(program);
-            chai.assert.isString(program.programId);
-            chai.assert.equal(program.userSuppliedId, userSuppliedId);
+            chai.assert.isString(program.id);
+            chai.assert.equal(program.id, id);
         });
     });
 });

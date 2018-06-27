@@ -1,8 +1,6 @@
 import * as jsonwebtoken from "jsonwebtoken";
 import * as superagent from "superagent";
 import * as superagentLogger from "superagent-logger";
-import * as accounts from "./accounts";
-import * as cards from "./cards";
 import * as contacts from "./contacts";
 import * as model from "./model";
 import * as params from "./params";
@@ -12,14 +10,14 @@ import {LightrailOptions} from "./LightrailOptions";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {GenerateShopperTokenOptions} from "./GenerateShopperTokenOptions";
 
-export {LightrailOptions, LightrailRequestError, accounts, cards, contacts, model, params, programs};
+export {LightrailOptions, LightrailRequestError, contacts, model, params, programs};
 
 /**
  * These values are all configurable from configure().
  */
 export const configuration: LightrailOptions = {
     apiKey: null,
-    restRoot: "https://api.lightrail.com/v1/",
+    restRoot: "https://api.lightrail.com/v2/",
     sharedSecret: null,
     logRequests: false,
     additionalHeaders: {}
@@ -69,7 +67,6 @@ export function configure(options: Partial<LightrailOptions>): void {
         configuration.logRequests = options.logRequests;
     }
 }
-
 
 /**
  * Initiate a new request to the Lightrail server.

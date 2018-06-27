@@ -1,6 +1,6 @@
 import * as chai from "chai";
 import * as jsonwebtoken from "jsonwebtoken";
-import * as index from "./";
+import * as index from "./index";
 import * as http from "http";
 import mitm = require("mitm");
 
@@ -18,7 +18,7 @@ describe("index", () => {
         afterEach(() => {
             index.configure({
                 apiKey: "",
-                restRoot: "https://api.lightrail.com/v1/"
+                restRoot: process.env.LIGHTRAIL_API_PATH
             });
             if (mitmInstance) {
                 mitmInstance.disable();
@@ -50,14 +50,14 @@ describe("index", () => {
                 res.end(JSON.stringify({success: true}));
             });
 
-            await index.cards.createCard({userSuppliedId: "someId", cardType: "ACCOUNT_CARD"});
+            await index.contacts.createContact({id: "someId", firstName: "Some", lastName: "Name"});
             chai.assert.isTrue(mitmHit);
         });
 
         it.skip("configure additionalHeaders is set correctly", async () => {
             index.configure({
                 apiKey: "does.not.matter",
-                restRoot: "https://api.lightrail.com/v1/",
+                restRoot: "https://api.lightrail.com/v2/",
                 additionalHeaders: {
                     headerone: "this is header one",
                     headertwo: "this is header two"
@@ -77,7 +77,7 @@ describe("index", () => {
                 res.end(JSON.stringify({success: true}));
             });
 
-            await index.cards.createCard({userSuppliedId: "someId", cardType: "ACCOUNT_CARD"});
+            await index.contacts.createContact({id: "someId", firstName: "Some", lastName: "Name"});
             chai.assert.isTrue(mitmHit);
         });
     });
