@@ -17,7 +17,7 @@ export {LightrailOptions, LightrailRequestError, contacts, model, params, progra
  */
 export const configuration: LightrailOptions = {
     apiKey: null,
-    restRoot: "https://api.lightrail.com/v2/",
+    restRoot: "https://api.lightraildev.net/v2/",
     sharedSecret: null,
     logRequests: false,
     additionalHeaders: {}
@@ -69,21 +69,49 @@ export function configure(options: Partial<LightrailOptions>): void {
 }
 
 /**
+ * Flattens one level deep and formats as key.subkey ie: {key:{subkey:4}} => {key.subkey:4}
+ * @param {Object} params
+ * @returns {Object}
+ */
+export const formatFilterParams = (params?: Object): Object => {
+    const formattedParams: Object = {};
+    if (params) {
+        for (let key in params) {
+            if (typeof params[key] !== "object") {
+                formattedParams[key] = params[key];
+            } else {
+                for (let filterKey in params[key]) {
+                    if (params[key].hasOwnProperty(filterKey)) {
+                        formattedParams[key + "." + filterKey] = params[key][filterKey];
+                    }
+                }
+            }
+        }
+    }
+
+    return formattedParams;
+};
+
+/**
  * Initiate a new request to the Lightrail server.
  */
 export function request(method: string, path: string): superagent.Request {
-    if (!configuration.apiKey && !window) {
+    const isBrowser = (typeof window !== "undefined" && this === window);
+
+    if (!configuration.apiKey && !isBrowser) {
         throw new Error("apiKey not set");
     }
 
     // We can do some fancy things with superagent here like request rate
     // throttling or automatic retry on particular codes.
     let r = superagent(method, configuration.restRoot + path)
-        .set("User-Agent", `Lightrail-JavaScript/${packageJson.version}`)
         .ok(() => true);
 
     if (!!configuration.apiKey) {
         r.set("Authorization", `Bearer ${configuration.apiKey}`);
+    }
+    if (!isBrowser) {
+        r.set("User-Agent", `Lightrail-JavaScript/${packageJson.version}`);
     }
     for (const key in configuration.additionalHeaders) {
         if (configuration.additionalHeaders.hasOwnProperty(key)) {

@@ -1,12 +1,12 @@
 import {Contact} from "../../model";
+import {FilterableString} from "../FilterableParam";
 
 export interface GetContactsParams {
-    limit?: number;
-    id?: string;
-    tags?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
+    id?: FilterableString;
+    tags?: FilterableString;
+    firstName?: FilterableString;
+    lastName?: FilterableString;
+    email?: FilterableString;
 }
 
 export interface GetContactsResponse extends Array<Contact> {

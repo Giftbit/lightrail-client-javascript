@@ -1,8 +1,8 @@
 import * as chai from "chai";
 import * as jsonwebtoken from "jsonwebtoken";
 import * as index from "./index";
+import {formatFilterParams} from "./index";
 import * as http from "http";
-import mitm = require("mitm");
 
 describe("index", () => {
     describe("configure()", () => {
@@ -194,6 +194,23 @@ describe("index", () => {
             chai.assert.isNumber(payload.iat);
             chai.assert.isNumber(payload.exp);
             chai.assert.equal(payload.exp, payload.iat + 999);
+        });
+    });
+
+    describe("formatFilterParams(p)", () => {
+        it("handles null or blank params object", () => {
+            chai.assert.deepEqual(formatFilterParams({}), {});
+            chai.assert.deepEqual(formatFilterParams(null), {});
+        });
+
+        it("doesn't modify a normal object", () => {
+            const obj = {test: 1, test2: "test2"};
+            chai.assert.deepEqual(formatFilterParams(obj), obj);
+        });
+
+        it("formats objects with nested values in the key.key format", () => {
+            const obj = {test: 1, test2: "test2", test3: {gt: 4, lt: 8}};
+            chai.assert.deepEqual(formatFilterParams(obj), {test: 1, test2: "test2", "test3.gt": 4, "test3.lt": 8});
         });
     });
 });

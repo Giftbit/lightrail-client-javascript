@@ -1,16 +1,11 @@
 import * as lightrail from "./";
+import {formatFilterParams} from "./";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {
-    CreateContactParams,
-    CreateContactResponse,
-    GetContactsParams,
-    GetContactsResponse,
-    PaginationParams
-} from "./params";
+import {CreateContactParams, CreateContactResponse, GetContactsParams, GetContactsResponse} from "./params";
 import {Contact} from "./model";
 
-export async function getContacts(params?: GetContactsParams | PaginationParams): Promise<GetContactsResponse> {
-    const resp = await lightrail.request("GET", "contacts").query(params);
+export async function getContacts(params?: GetContactsParams): Promise<GetContactsResponse> {
+    const resp = await lightrail.request("GET", "contacts").query(formatFilterParams(params));
     if (resp.status === 200) {
         return resp.body;
     }
@@ -34,7 +29,7 @@ export async function createContact(params: CreateContactParams): Promise<Create
 export async function getContactById(contactId: string): Promise<Contact> {
     const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(contactId)}`);
     if (resp.status === 200) {
-        return resp.body.contact;
+        return resp.body;
     } else if (resp.status === 404) {
         return null;
     }
