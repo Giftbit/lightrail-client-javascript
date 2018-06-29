@@ -27,13 +27,13 @@ describe("contacts", () => {
         it("creates a contact", async () => {
             const contact = await Lightrail.contacts.createContact(testContact);
 
-            chai.assert.isNotNull(contact);
-            chai.assert.isString(contact.id);
-            chai.assert.equal(contact.id, id);
-            chai.assert.equal(contact.firstName, testContact.firstName);
-            chai.assert.equal(contact.lastName, testContact.lastName);
-            chai.assert.equal(contact.email, testContact.email);
-            chai.assert.equal(contact.metadata["deepestFear"], testContact.metadata["deepestFear"]);
+            chai.assert.isNotNull(contact.body);
+            chai.assert.isString(contact.body.id);
+            chai.assert.equal(contact.body.id, id);
+            chai.assert.equal(contact.body.firstName, testContact.firstName);
+            chai.assert.equal(contact.body.lastName, testContact.lastName);
+            chai.assert.equal(contact.body.email, testContact.email);
+            chai.assert.equal(contact.body.metadata["deepestFear"], testContact.metadata["deepestFear"]);
         });
     });
 
@@ -41,9 +41,9 @@ describe("contacts", () => {
         it("gets list", async () => {
             const contacts = await Lightrail.contacts.getContacts();
 
-            chai.assert.isNotNull(contacts);
-            chai.assert.isArray(contacts);
-            chai.assert.equal(contacts.filter(c => (c.id === id)).length, 1);
+            chai.assert.isNotNull(contacts.body);
+            chai.assert.isArray(contacts.body);
+            chai.assert.equal(contacts.body.filter(c => (c.id === id)).length, 1);
         });
 
         it("filters for lastName using eq", async () => {
@@ -54,9 +54,9 @@ describe("contacts", () => {
             });
 
             chai.assert.isNotNull(contacts);
-            chai.assert.isArray(contacts);
-            chai.assert.equal(contacts.filter(p => p.lastName === "Mctesty Face").length, contacts.length);
-            chai.assert.equal(contacts.filter(c => (c.id === id)).length, 1);
+            chai.assert.isArray(contacts.body);
+            chai.assert.equal(contacts.body.filter(p => p.lastName === "Mctesty Face").length, contacts.body.length);
+            chai.assert.equal(contacts.body.filter(c => (c.id === id)).length, 1);
         });
     });
 
@@ -65,12 +65,12 @@ describe("contacts", () => {
             const contact = await Lightrail.contacts.getContactById(id);
 
             chai.assert.isNotNull(contact);
-            chai.assert.isString(contact.id);
-            chai.assert.equal(contact.id, id);
-            chai.assert.equal(contact.firstName, testContact.firstName);
-            chai.assert.equal(contact.lastName, testContact.lastName);
-            chai.assert.equal(contact.email, testContact.email);
-            chai.assert.equal(contact.metadata["deepestFear"], testContact.metadata["deepestFear"]);
+            chai.assert.isString(contact.body.id);
+            chai.assert.equal(contact.body.id, id);
+            chai.assert.equal(contact.body.firstName, testContact.firstName);
+            chai.assert.equal(contact.body.lastName, testContact.lastName);
+            chai.assert.equal(contact.body.email, testContact.email);
+            chai.assert.equal(contact.body.metadata["deepestFear"], testContact.metadata["deepestFear"]);
         });
     });
 });

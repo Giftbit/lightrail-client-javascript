@@ -1,18 +1,21 @@
 import * as lightrail from "./";
-import {formatFilterParams} from "./";
+import {formatFilterParams, formatResponse} from "./requestUtils";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {CreateContactParams, CreateContactResponse, GetContactsParams, GetContactsResponse} from "./params";
 import {Contact} from "./model";
+import {LightrailResponse} from "./model/LightrailResponse";
 
-export async function getContacts(params?: GetContactsParams): Promise<GetContactsResponse> {
+export async function getContacts(params?: GetContactsParams): Promise<LightrailResponse<GetContactsResponse>> {
     const resp = await lightrail.request("GET", "contacts").query(formatFilterParams(params));
     if (resp.status === 200) {
-        return resp.body;
+        return (
+            formatResponse<GetContactsResponse>(resp)
+        );
     }
     throw new LightrailRequestError(resp);
 }
 
-export async function createContact(params: CreateContactParams): Promise<CreateContactResponse> {
+export async function createContact(params: CreateContactParams): Promise<LightrailResponse<CreateContactResponse>> {
     if (!params) {
         throw new Error("params not set");
     } else if (!params.id) {
@@ -21,15 +24,19 @@ export async function createContact(params: CreateContactParams): Promise<Create
 
     const resp = await lightrail.request("POST", "contacts").send(params);
     if (resp.status === 200 || resp.status === 201) {
-        return resp.body;
+        return (
+            formatResponse(resp)
+        );
     }
     throw new LightrailRequestError(resp);
 }
 
-export async function getContactById(contactId: string): Promise<Contact> {
+export async function getContactById(contactId: string): Promise<LightrailResponse<Contact>> {
     const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(contactId)}`);
     if (resp.status === 200) {
-        return resp.body;
+        return (
+            formatResponse(resp)
+        );
     } else if (resp.status === 404) {
         return null;
     }

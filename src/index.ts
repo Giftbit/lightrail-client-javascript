@@ -69,30 +69,6 @@ export function configure(options: Partial<LightrailOptions>): void {
 }
 
 /**
- * Flattens one level deep and formats as key.subkey ie: {key:{subkey:4}} => {key.subkey:4}
- * @param {Object} params
- * @returns {Object}
- */
-export const formatFilterParams = (params?: Object): Object => {
-    const formattedParams: Object = {};
-    if (params) {
-        for (let key in params) {
-            if (typeof params[key] !== "object") {
-                formattedParams[key] = params[key];
-            } else {
-                for (let filterKey in params[key]) {
-                    if (params[key].hasOwnProperty(filterKey)) {
-                        formattedParams[key + "." + filterKey] = params[key][filterKey];
-                    }
-                }
-            }
-        }
-    }
-
-    return formattedParams;
-};
-
-/**
  * Initiate a new request to the Lightrail server.
  */
 export function request(method: string, path: string): superagent.Request {

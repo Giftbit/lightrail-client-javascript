@@ -1,5 +1,5 @@
 export * from "./Contact";
 export * from "./ContactIdentifier";
-export * from "./Pagination";
+export * from "./PaginatedResponse";
 export * from "./Program";
 export * from "./Transaction";

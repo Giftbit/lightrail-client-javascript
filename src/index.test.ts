@@ -1,7 +1,7 @@
 import * as chai from "chai";
 import * as jsonwebtoken from "jsonwebtoken";
 import * as index from "./index";
-import {formatFilterParams} from "./index";
+import {formatFilterParams} from "./requestUtils";
 import * as http from "http";
 
 describe("index", () => {
