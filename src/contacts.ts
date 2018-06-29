@@ -5,17 +5,17 @@ import {CreateContactParams, CreateContactResponse, GetContactsParams, GetContac
 import {Contact} from "./model";
 import {LightrailResponse} from "./model/LightrailResponse";
 
-export async function getContacts(params?: GetContactsParams): Promise<LightrailResponse<GetContactsResponse>> {
+export async function getContacts(params?: GetContactsParams): Promise<GetContactsResponse> {
     const resp = await lightrail.request("GET", "contacts").query(formatFilterParams(params));
     if (resp.status === 200) {
         return (
-            formatResponse<GetContactsResponse>(resp)
+            formatResponse(resp)
         );
     }
     throw new LightrailRequestError(resp);
 }
 
-export async function createContact(params: CreateContactParams): Promise<LightrailResponse<CreateContactResponse>> {
+export async function createContact(params: CreateContactParams): Promise<CreateContactResponse> {
     if (!params) {
         throw new Error("params not set");
     } else if (!params.id) {

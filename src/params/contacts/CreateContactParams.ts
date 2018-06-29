@@ -1,4 +1,5 @@
 import {Contact} from "../../model";
+import {LightrailResponse} from "../../model/LightrailResponse";
 
 export interface CreateContactParams {
     id: string;
@@ -9,5 +10,5 @@ export interface CreateContactParams {
     metadata?: Object;
 }
 
-export interface CreateContactResponse extends Contact {
+export interface CreateContactResponse extends LightrailResponse<Contact> {
 }

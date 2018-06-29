@@ -1,5 +1,6 @@
 import {Contact} from "../../model";
 import {FilterableString} from "../FilterableParam";
+import {LightrailResponse} from "../../model/LightrailResponse";
 
 export interface GetContactsParams {
     id?: FilterableString;
@@ -9,5 +10,5 @@ export interface GetContactsParams {
     email?: FilterableString;
 }
 
-export interface GetContactsResponse extends Array<Contact> {
+export interface GetContactsResponse extends LightrailResponse<Array<Contact>> {
 }
