@@ -17,6 +17,7 @@ export {LightrailOptions, LightrailRequestError, contacts, model, params, progra
  */
 export const configuration: LightrailOptions = {
     apiKey: null,
+    isBrowser: false,
     restRoot: "https://api.lightraildev.net/v2/",
     sharedSecret: null,
     logRequests: false,
@@ -35,6 +36,9 @@ export function configure(options: Partial<LightrailOptions>): void {
             throw new Error("apiKey must be a string");
         }
         configuration.apiKey = options.apiKey;
+    }
+    if (options.hasOwnProperty("isBrowser")) {
+        configuration.isBrowser = options.isBrowser;
     }
     if (options.hasOwnProperty("restRoot")) {
         if (typeof options.restRoot !== "string") {
@@ -72,9 +76,7 @@ export function configure(options: Partial<LightrailOptions>): void {
  * Initiate a new request to the Lightrail server.
  */
 export function request(method: string, path: string): superagent.Request {
-    const isBrowser = (typeof window !== "undefined" && this === window);
-
-    if (!configuration.apiKey && !isBrowser) {
+    if (!configuration.apiKey && !configuration.isBrowser) {
         throw new Error("apiKey not set");
     }
 
@@ -86,7 +88,7 @@ export function request(method: string, path: string): superagent.Request {
     if (!!configuration.apiKey) {
         r.set("Authorization", `Bearer ${configuration.apiKey}`);
     }
-    if (!isBrowser) {
+    if (!configuration.isBrowser) {
         r.set("User-Agent", `Lightrail-JavaScript/${packageJson.version}`);
     }
     for (const key in configuration.additionalHeaders) {

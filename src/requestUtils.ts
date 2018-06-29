@@ -1,4 +1,4 @@
-import {LightrailResponse} from "./model/LightrailResponse";
+import {LightrailResponse, PaginatedLightrailResponse} from "./model/LightrailResponse";
 import {Response} from "superagent";
 import * as parseLinkHeader from "parse-link-header";
 
@@ -26,14 +26,14 @@ export const formatFilterParams = (params?: Object): Object => {
     return formattedParams;
 };
 
-export function formatResponse<T>(response: Response): LightrailResponse<T> {
-    const lr: LightrailResponse<T> = {
+export function formatResponse<T>(response: Response): LightrailResponse<T> | PaginatedLightrailResponse<T> {
+    const lr: any = {
         body: response.body
     };
 
     if (response.header) {
         if (response.header.hasOwnProperty("max-limit")) {
-            lr["max-limit"] = response.header["max-limit"];
+            lr.maxLimit = response.header["max-limit"];
         }
 
         if (response.header.hasOwnProperty("limit")) {

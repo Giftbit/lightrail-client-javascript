@@ -1,6 +1,6 @@
 import * as lightrail from "./";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {PaginatedResponse, Program} from "./model";
+import {PaginationHeaders, Program} from "./model";
 import {GetProgramsParams, PaginationParams} from "./params";
 import {CreateProgramParams, CreateProgramResponse} from "./params/programs/CreateProgramParams";
 
@@ -19,7 +19,7 @@ export async function createProgram(params: CreateProgramParams): Promise<Create
     throw new LightrailRequestError(resp);
 }
 
-export async function getPrograms(params: GetProgramsParams | PaginationParams): Promise<{ programs: Program[], pagination: PaginatedResponse }> {
+export async function getPrograms(params: GetProgramsParams | PaginationParams): Promise<{ programs: Program[], pagination: PaginationHeaders }> {
     const resp = await lightrail.request("GET", "programs").query(params);
     if (resp.status === 200) {
         return resp.body;

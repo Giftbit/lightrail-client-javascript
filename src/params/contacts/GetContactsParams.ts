@@ -1,6 +1,6 @@
 import {Contact} from "../../model";
 import {FilterableString} from "../FilterableParam";
-import {LightrailResponse} from "../../model/LightrailResponse";
+import {PaginatedLightrailResponse} from "../../model/LightrailResponse";
 
 export interface GetContactsParams {
     id?: FilterableString;
@@ -10,5 +10,5 @@ export interface GetContactsParams {
     email?: FilterableString;
 }
 
-export interface GetContactsResponse extends LightrailResponse<Array<Contact>> {
+export interface GetContactsResponse extends PaginatedLightrailResponse<Array<Contact>> {
 }

@@ -8,6 +8,12 @@ export interface LightrailOptions {
     apiKey: string;
 
     /**
+     * Is this code running in the browser?
+     *
+     */
+    isBrowser: boolean;
+
+    /**
      * The REST root URL.  Usually this is only set for testing.
      */
     restRoot: string;
