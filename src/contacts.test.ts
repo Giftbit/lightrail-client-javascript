@@ -73,4 +73,8 @@ describe("contacts", () => {
             chai.assert.equal(contact.body.metadata["deepestFear"], testContact.metadata["deepestFear"]);
         });
     });
+
+    describe("updateContact(id, params)", () => {
+        //TODO
+    });
 });

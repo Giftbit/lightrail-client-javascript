@@ -1,7 +1,13 @@
 import * as lightrail from "./";
 import {formatFilterParams, formatResponse} from "./requestUtils";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {CreateContactParams, CreateContactResponse, GetContactsParams, GetContactsResponse} from "./params";
+import {
+    CreateContactParams,
+    CreateContactResponse,
+    GetContactsParams,
+    GetContactsResponse,
+    UpdateContactParams
+} from "./params";
 import {Contact} from "./model";
 import {LightrailResponse} from "./model/LightrailResponse";
 
@@ -43,6 +49,14 @@ export async function getContactById(contactId: string): Promise<LightrailRespon
     throw new LightrailRequestError(resp);
 }
 
+export async function updateContact(contact: string | Contact, params: UpdateContactParams): Promise<Contact> {
+    const contactId = getContactId(contact);
+    const resp = await lightrail.request("PATCH", `contacts/${encodeURIComponent(contactId)}`).send(params);
+    if (resp.status === 200) {
+        return resp.body.contact;
+    }
+    throw new LightrailRequestError(resp);
+}
 
 // export async function getContactByAnyIdentifier(contact: ContactIdentifier) {
 //     if (contact.contactId) {
@@ -57,26 +71,19 @@ export async function getContactById(contactId: string): Promise<LightrailRespon
 // }
 //
 //
-// export async function updateContact(contact: string | Contact, params: UpdateContactParams): Promise<Contact> {
-//     const contactId = getContactId(contact);
-//     const resp = await lightrail.request("PATCH", `contacts/${encodeURIComponent(contactId)}`).send(params);
-//     if (resp.status === 200) {
-//         return resp.body.contact;
-//     }
-//     throw new LightrailRequestError(resp);
-// }
-//
-// /**
-//  * Get contactId from the string (as the ID itself) or Contact object.
-//  */
-// export function getContactId(contact: string | Contact): string {
-//     if (!contact) {
-//         throw new Error("contact not set");
-//     } else if (typeof contact === "string") {
-//         return contact;
-//     } else if (contact.id) {
-//         return contact.contactId;
-//     } else {
-//         throw new Error("contact must be a string for contactId or a Contact object");
-//     }
-// }
+
+
+/**
+ * Get contactId from the string (as the ID itself) or Contact object.
+ */
+export function getContactId(contact: string | Contact): string {
+    if (!contact) {
+        throw new Error("contact not set");
+    } else if (typeof contact === "string") {
+        return contact;
+    } else if (contact.id) {
+        return contact.id;
+    } else {
+        throw new Error("contact must be a string for contactId or a Contact object");
+    }
+}
