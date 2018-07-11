@@ -49,11 +49,11 @@ export async function getContactById(contactId: string): Promise<LightrailRespon
     throw new LightrailRequestError(resp);
 }
 
-export async function updateContact(contact: string | Contact, params: UpdateContactParams): Promise<Contact> {
+export async function updateContact(contact: string | Contact, params: UpdateContactParams): Promise<LightrailResponse<Contact>> {
     const contactId = getContactId(contact);
     const resp = await lightrail.request("PATCH", `contacts/${encodeURIComponent(contactId)}`).send(params);
     if (resp.status === 200) {
-        return resp.body.contact;
+        return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
 }

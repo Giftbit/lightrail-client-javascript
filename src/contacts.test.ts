@@ -2,6 +2,7 @@ import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
 import {CreateContactParams} from "./params";
+import {UpdateContactParams} from "../dist/params";
 
 describe("contacts", () => {
     before(() => {
@@ -75,6 +76,46 @@ describe("contacts", () => {
     });
 
     describe("updateContact(id, params)", () => {
-        //TODO
+        it("changes contact name, email and metadata properties using contactId", async () => {
+            const params: UpdateContactParams = {
+                firstName: "Johnny",
+                lastName: "Test Face",
+                email: "jtestface@tester.com",
+                metadata: {deepestFear: "sharks"}
+            };
+
+            const updatedContact = await Lightrail.contacts.updateContact(id, params);
+
+            chai.assert.isNotNull(updatedContact);
+            chai.assert.isString(updatedContact.body.id);
+            chai.assert.equal(updatedContact.body.id, id);
+            chai.assert.equal(updatedContact.body.firstName, params.firstName);
+            chai.assert.equal(updatedContact.body.lastName, params.lastName);
+            chai.assert.equal(updatedContact.body.email, params.email);
+            chai.assert.equal(updatedContact.body.metadata["deepestFear"], params.metadata["deepestFear"]);
+        });
+
+        it("changes contact name, email and metadata properties using contact object", async () => {
+            const params: UpdateContactParams = {
+                firstName: "Jimjam",
+                lastName: "Test Pants",
+                email: "jj_testpants@tester.com",
+                metadata: {deepestFear: "heights"}
+            };
+
+            const contact = await Lightrail.contacts.getContactById(id);
+            chai.assert.isNotNull(contact);
+            chai.assert.isNotNull(contact.body);
+
+            const updatedContact = await Lightrail.contacts.updateContact(contact.body, params);
+
+            chai.assert.isNotNull(updatedContact);
+            chai.assert.isString(updatedContact.body.id);
+            chai.assert.equal(updatedContact.body.id, id);
+            chai.assert.equal(updatedContact.body.firstName, params.firstName);
+            chai.assert.equal(updatedContact.body.lastName, params.lastName);
+            chai.assert.equal(updatedContact.body.email, params.email);
+            chai.assert.equal(updatedContact.body.metadata["deepestFear"], params.metadata["deepestFear"]);
+        });
     });
 });
