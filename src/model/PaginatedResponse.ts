@@ -1,5 +1,3 @@
-import {Links} from "parse-link-header";
-
 export interface PaginationParams {
     limit?: number;
     after?: string;
@@ -10,5 +8,4 @@ export interface PaginationParams {
 export interface PaginationHeaders {
     maxLimit?: number;
     limit?: number;
-    link?: Links;
 }

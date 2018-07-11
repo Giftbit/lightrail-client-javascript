@@ -26,6 +26,12 @@ export const formatFilterParams = (params?: Object): Object => {
     return formattedParams;
 };
 
+
+/**
+ * Formats a response object into a standardized/predictable response, should be used to format all responses
+ * @param {request.Response} response
+ * @returns {LightrailResponse<T> | PaginatedLightrailResponse<T>}
+ */
 export function formatResponse<T>(response: Response): LightrailResponse<T> | PaginatedLightrailResponse<T> {
     const lr: any = {
         body: response.body
@@ -41,7 +47,7 @@ export function formatResponse<T>(response: Response): LightrailResponse<T> | Pa
         }
 
         if (response.header.hasOwnProperty("link")) {
-            lr.link = parseLinkHeader(response.header.link);
+            lr.links = parseLinkHeader(response.header.link);
         }
     }
 

@@ -22,10 +22,10 @@
     "lightrail"
   ],
   "contributors": [
+    "Daniel Opden Dries <daniel.opdendries@gmail.com> (https://github.com/dopdendries)",
     "Jeffery Grajkowski <pushplay@gmail.com> (https://github.com/pushplay)",
     "Tana Jukes <tana.jukes@gmail.com> (https://github.com/tjukes)",
-    "Tim Jordison (https://github.com/Tim-Jordison)",
-    "Daniel Opden Dries <daniel.opdendries@gmail.com> (https://github.com/dopdendries)"
+    "Tim Jordison (https://github.com/Tim-Jordison)"
   ],
   "license": "MIT",
   "bugs": {
