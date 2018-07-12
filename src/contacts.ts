@@ -10,6 +10,8 @@ import {
 } from "./params";
 import {Contact} from "./model";
 import {LightrailResponse} from "./model/LightrailResponse";
+import {UpdateContactResponse} from "../dist/params/contacts/UpdateContactParams";
+import {DeleteContactResponse} from "./params/contacts/DeleteContactParams";
 
 export async function getContacts(params?: GetContactsParams): Promise<GetContactsResponse> {
     const resp = await lightrail.request("GET", "contacts").query(formatFilterParams(params));
@@ -25,7 +27,7 @@ export async function createContact(params: CreateContactParams): Promise<Create
     if (!params) {
         throw new Error("params not set");
     } else if (!params.id) {
-        throw new Error("params.userSuppliedId not set");
+        throw new Error("params.id not set");
     }
 
     const resp = await lightrail.request("POST", "contacts").send(params);
@@ -49,11 +51,24 @@ export async function getContactById(contactId: string): Promise<LightrailRespon
     throw new LightrailRequestError(resp);
 }
 
-export async function updateContact(contact: string | Contact, params: UpdateContactParams): Promise<LightrailResponse<Contact>> {
+export async function updateContact(contact: string | Contact, params: UpdateContactParams): Promise<UpdateContactResponse> {
     const contactId = getContactId(contact);
     const resp = await lightrail.request("PATCH", `contacts/${encodeURIComponent(contactId)}`).send(params);
     if (resp.status === 200) {
         return formatResponse(resp);
+    }
+    throw new LightrailRequestError(resp);
+}
+
+export async function deleteContact(contact: string | Contact): Promise<DeleteContactResponse> {
+    const contactId = getContactId(contact);
+    const resp = await lightrail.request("DELETE", `contacts/${encodeURIComponent(contactId)}`);
+    if (resp.status === 200) {
+        return (
+            formatResponse(resp)
+        );
+    } else if (resp.status === 404) {
+        return null;
     }
     throw new LightrailRequestError(resp);
 }

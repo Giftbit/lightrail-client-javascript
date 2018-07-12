@@ -118,4 +118,15 @@ describe("contacts", () => {
             chai.assert.equal(updatedContact.body.metadata["deepestFear"], params.metadata["deepestFear"]);
         });
     });
+
+    describe("deleteContact()", () => {
+        it("deletes our contact using the id", async () => {
+            const deleted = await Lightrail.contacts.deleteContact(id);
+            chai.assert.isNotNull(deleted);
+            chai.assert.isTrue(deleted.body.success);
+
+            const contact = await Lightrail.contacts.getContactById(id);
+            chai.assert.isNull(contact);
+        });
+    });
 });
