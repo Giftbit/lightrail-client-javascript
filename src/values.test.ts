@@ -4,7 +4,7 @@ import * as uuid from "uuid";
 import {UpdateValueParams} from "./params/values/UpdateValueParams";
 import {CreateValueParams} from "./params/values/CreateValueParams";
 
-describe.only("values", () => {
+describe("values", () => {
     before(() => {
         chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
         Lightrail.configure({
