@@ -1,5 +1,5 @@
-import {LightrailResponse} from "../../../dist/model/LightrailResponse";
 import {Value} from "../../model/Value";
+import {LightrailResponse} from "../../model/LightrailResponse";
 
 export interface CreateValueParams {
     id: string;

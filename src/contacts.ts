@@ -10,8 +10,8 @@ import {
 } from "./params";
 import {Contact} from "./model";
 import {LightrailResponse} from "./model/LightrailResponse";
-import {UpdateContactResponse} from "../dist/params/contacts/UpdateContactParams";
 import {DeleteContactResponse} from "./params/contacts/DeleteContactParams";
+import {UpdateContactResponse} from "./params/contacts/UpdateContactParams";
 
 export async function getContacts(params?: GetContactsParams): Promise<GetContactsResponse> {
     const resp = await lightrail.request("GET", "contacts").query(formatFilterParams(params));

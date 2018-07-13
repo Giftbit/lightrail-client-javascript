@@ -1,8 +1,7 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
-import {CreateContactParams} from "./params";
-import {UpdateContactParams} from "../dist/params";
+import {CreateContactParams, UpdateContactParams} from "./params";
 
 describe("contacts", () => {
     before(() => {
