@@ -3,17 +3,19 @@ import {LightrailRequestError} from "./LightrailRequestError";
 import {PaginationHeaders, Program} from "./model";
 import {GetProgramsParams, PaginationParams} from "./params";
 import {CreateProgramParams, CreateProgramResponse} from "./params/programs/CreateProgramParams";
+import {formatResponse, validateRequiredParams} from "./requestUtils";
 
+// CREATE
 export async function createProgram(params: CreateProgramParams): Promise<CreateProgramResponse> {
     if (!params) {
         throw new Error("params not set");
-    } else if (!params.id) {
-        throw new Error("params.id not set");
+    } else {
+        validateRequiredParams(["id"], params);
     }
 
     const resp = await lightrail.request("POST", "programs").send(params);
     if (resp.status === 200) {
-        return resp.body.program;
+        return formatResponse(resp);
     }
 
     throw new LightrailRequestError(resp);
