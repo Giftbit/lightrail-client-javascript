@@ -3,13 +3,13 @@ import {Value} from "../../model/Value";
 
 export interface CreateValueParams {
     id: string;
-    programId?: string;
+    currency: string;
+
     contactId?: string;
+    programId?: string;
     code?: string;
     isGenericCode?: boolean;
-    currency?: string;
     balance?: number;
-    preTax?: boolean;
     active?: boolean;
     frozen?: boolean;
     discount?: boolean;
@@ -19,7 +19,6 @@ export interface CreateValueParams {
     uses?: number;
     startDate?: string;
     endDate?: string;
-    tags?: string[];
     metadata?: Object;
 }
 

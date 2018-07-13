@@ -7,7 +7,7 @@ export interface Value {
     code: string;
     isGenericCode: boolean;
     contactId: string;
-    pretax: boolean;
+    preTax: boolean;
     active: boolean;
     frozen: boolean;
     canceled: boolean;

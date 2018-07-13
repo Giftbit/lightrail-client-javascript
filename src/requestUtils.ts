@@ -2,6 +2,14 @@ import {LightrailResponse, PaginatedLightrailResponse} from "./model/LightrailRe
 import {Response} from "superagent";
 import * as parseLinkHeader from "parse-link-header";
 
+export const validateRequiredParams = (keys: string[], params: Object): boolean => keys.every(key => {
+    if (!params[key]) {
+        throw new Error("params." + key + " not set");
+    }
+
+    return !!params[key];
+});
+
 /**
  * Flattens one level deep and formats as key.subkey ie: {key:{subkey:4}} => {key.subkey:4}
  * @param {Object} params

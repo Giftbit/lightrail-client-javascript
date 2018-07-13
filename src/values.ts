@@ -1,5 +1,5 @@
 import {CreateValueParams, CreateValueRespone} from "./params/values/CreateValueParams";
-import {formatFilterParams, formatResponse} from "./requestUtils";
+import {formatFilterParams, formatResponse, validateRequiredParams} from "./requestUtils";
 import {LightrailRequestError} from "./LightrailRequestError";
 import * as lightrail from "./index";
 import {GetValueResponse} from "./params/values/GetValueParams";
@@ -10,12 +10,12 @@ import {LightrailResponse} from "./model/LightrailResponse";
 import {Success} from "./model/Success";
 import {ChangeValuesCodeParams, ChangeValuesCodeResponse} from "./params/values/ChangeValuesCodeParams";
 
-
+// CREATE
 export async function createValue(params: CreateValueParams): Promise<CreateValueRespone> {
     if (!params) {
         throw new Error("params not set");
-    } else if (!params.id) {
-        throw new Error("params.id not set");
+    } else {
+        validateRequiredParams(["id", "currency"], params);
     }
 
     const resp = await lightrail.request("POST", "values").send(params);
@@ -27,10 +27,13 @@ export async function createValue(params: CreateValueParams): Promise<CreateValu
     throw new LightrailRequestError(resp);
 }
 
-export async function getValue(value: string | Value, showCode?: string): Promise<GetValueResponse> {
+// READ
+export async function getValue(value: string | Value, showCode?: boolean): Promise<GetValueResponse> {
     const valueId = getValueId(value);
 
-    const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(valueId)}`);
+    console.log(`values/${encodeURIComponent(valueId)}`);
+
+    const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}`).query({showCode: !!showCode});
     if (resp.status === 200) {
         return (
             formatResponse(resp)
@@ -42,7 +45,7 @@ export async function getValue(value: string | Value, showCode?: string): Promis
     throw new LightrailRequestError(resp);
 }
 
-export async function getValues(params: GetValuesParams): Promise<GetValuesResponse> {
+export async function getValues(params?: GetValuesParams): Promise<GetValuesResponse> {
     const resp = await lightrail.request("GET", "values").query(formatFilterParams(params));
     if (resp.status === 200) {
         return (
@@ -52,6 +55,7 @@ export async function getValues(params: GetValuesParams): Promise<GetValuesRespo
     throw new LightrailRequestError(resp);
 }
 
+// UPDATE
 export async function updateValue(value: string | Value, params: UpdateValueParams): Promise<UpdateValueResponse> {
     const valueId = getValueId(value);
 
@@ -67,10 +71,10 @@ export async function updateValue(value: string | Value, params: UpdateValuePara
     throw new LightrailRequestError(resp);
 }
 
-export async function deleteValue(value: string): Promise<LightrailResponse<Success>> {
+export async function changeValuesCode(value: string | Value, params: ChangeValuesCodeParams): Promise<ChangeValuesCodeResponse> {
     const valueId = getValueId(value);
 
-    const resp = await lightrail.request("DELETE", `values/${encodeURIComponent(valueId)}`);
+    const resp = await lightrail.request("POST", `values/${encodeURIComponent(valueId)}/changeCode`).send(params);
     if (resp.status === 200) {
         return (
             formatResponse(resp)
@@ -82,10 +86,11 @@ export async function deleteValue(value: string): Promise<LightrailResponse<Succ
     throw new LightrailRequestError(resp);
 }
 
-export async function changeValuesCode(value: string | Value, params: ChangeValuesCodeParams): Promise<ChangeValuesCodeResponse> {
+// DELETE
+export async function deleteValue(value: string): Promise<LightrailResponse<Success>> {
     const valueId = getValueId(value);
 
-    const resp = await lightrail.request("POST", `values/${encodeURIComponent(valueId)}`).send(params);
+    const resp = await lightrail.request("DELETE", `values/${encodeURIComponent(valueId)}`);
     if (resp.status === 200) {
         return (
             formatResponse(resp)

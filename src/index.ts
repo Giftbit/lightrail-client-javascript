@@ -5,12 +5,14 @@ import * as contacts from "./contacts";
 import * as model from "./model";
 import * as params from "./params";
 import * as programs from "./programs";
+import * as values from "./values";
+import * as currencies from "./currencies";
 import {LightrailOptions} from "./LightrailOptions";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {GenerateShopperTokenOptions} from "./GenerateShopperTokenOptions";
 import packageJson = require("../package.json");
 
-export {LightrailOptions, LightrailRequestError, contacts, model, params, programs};
+export {LightrailOptions, LightrailRequestError, contacts, model, params, programs, values, currencies};
 
 /**
  * These values are all configurable from configure().
