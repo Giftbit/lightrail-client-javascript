@@ -28,7 +28,7 @@ export async function createProgram(params: CreateProgramParams): Promise<Create
 export async function getPrograms(params?: GetProgramsParams): Promise<GetProgramsResponse> {
     const resp = await lightrail.request("GET", "programs").query(params);
     if (resp.status === 200) {
-        return resp.body;
+        return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
 }

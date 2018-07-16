@@ -11,7 +11,7 @@ describe.only("programs", () => {
     });
 
     const testID = uuid.v4().substring(0, 24);
-    
+
     // CREATE
     describe("createProgram()", () => {
         it("creates a program", async () => {
@@ -54,12 +54,11 @@ describe.only("programs", () => {
     // UPDATE
     describe("updateProgram(id, params)", () => {
         it("changes the currency", async () => {
-            const program = await Lightrail.programs.updateProgram({id: testID, currency: "CAD", name: "the new name"});
+            const program = await Lightrail.programs.updateProgram({id: testID, name: "the new name"});
 
             chai.assert.isNotNull(program);
             chai.assert.isString(program.body.id);
             chai.assert.equal(program.body.id, testID);
-            chai.assert.equal(program.body.currency, "CAD");
             chai.assert.equal(program.body.name, "the new name");
         });
     });
