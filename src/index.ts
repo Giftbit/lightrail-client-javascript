@@ -93,6 +93,11 @@ export function request(method: string, path: string): superagent.Request {
     if (!configuration.isBrowser) {
         r.set("User-Agent", `Lightrail-JavaScript/${packageJson.version}`);
     }
+    if (configuration.isBrowser) {
+        r.set("X-Requested-With", "XMLHttpRequest");
+        r.set("Expires", "-1");
+        r.set("Cache-Control", "no-cache,no-store,must-revalidate,max-age=-1,private");
+    }
     for (const key in configuration.additionalHeaders) {
         if (configuration.additionalHeaders.hasOwnProperty(key)) {
             r.set(key, configuration.additionalHeaders[key]);
