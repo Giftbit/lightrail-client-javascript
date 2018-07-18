@@ -18,7 +18,7 @@ export interface CreateProgramParams {
     fixedInitialUses?: number[];
     startDate?: string;
     endDate?: string;
-    metaData?: Object;
+    metadata?: Object;
 }
 
 export interface CreateProgramResponse extends LightrailResponse<Program> {
