@@ -14,7 +14,7 @@ export interface Program {
     fixedInitialUses: number[];
     startDate: string;
     endDate: string;
-    metaData: Object;
+    metadata: Object;
     createdDate: string;
     updatedDate: string;
 }
