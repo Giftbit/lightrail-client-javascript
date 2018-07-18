@@ -1,12 +1,11 @@
 import * as lightrail from "./";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {Program} from "./model";
 import {GetProgramsParams, GetProgramsResponse} from "./params";
 import {CreateProgramParams, CreateProgramResponse} from "./params/programs/CreateProgramParams";
 import {formatResponse, validateRequiredParams} from "./requestUtils";
 import {DeleteProgramResponse} from "./params/programs/DeleteProgramParams";
-import {LightrailResponse} from "./model/LightrailResponse";
 import {UpdateProgramParams, UpdateProgramResponse} from "./params/programs/UpdateProgramParams";
+import {GetProgramByIdResponse} from "./params/programs/GetProgramByIdParams";
 
 // CREATE
 export async function createProgram(params: CreateProgramParams): Promise<CreateProgramResponse> {
@@ -33,7 +32,7 @@ export async function getPrograms(params?: GetProgramsParams): Promise<GetProgra
     throw new LightrailRequestError(resp);
 }
 
-export async function getProgramById(programId: string): Promise<LightrailResponse<Program>> {
+export async function getProgramById(programId: string): Promise<GetProgramByIdResponse> {
     const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}`);
     if (resp.status === 200) {
         return formatResponse(resp);
