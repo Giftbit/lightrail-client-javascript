@@ -82,7 +82,7 @@ describe("index", () => {
         });
     });
 
-    describe.only("generateShopperToken()", () => {
+    describe("generateShopperToken()", () => {
         it("signs a contactId", () => {
             index.configure({
                 apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
