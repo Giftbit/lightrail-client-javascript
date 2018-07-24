@@ -112,34 +112,29 @@ export function request(method: string, path: string): superagent.Request {
 /**
  * Generate a shopper token that can be used to make Lightrail calls
  * restricted to that particular shopper.  The shopper can be defined by the
- * contactId, userSuppliedId, or shopperId.
+ * contactId, or an empty string for anonymous.
  *
- * eg: `generateShopperToken({shopperId: "user-12345"});`
- * eg: `generateShopperToken({shopperId: "user-12345"}, {validityInSeconds: 43200});`
+ * eg: `generateShopperToken("user-12345");`
+ * eg: `generateShopperToken("user-12345", {validityInSeconds: 43200});`
  *
- * @param contact an object that defines one of: contactId, userSuppliedId or shopperId
+ * @param contactId the ID of the contact
  * @param options the number of seconds the shopper token will be valid for *OR* a GenerateShopperTokenOptions object
  * @returns the shopper token
  */
-export function generateShopperToken(contact: model.ContactIdentifier, options?: number | GenerateShopperTokenOptions): string {
+export function generateShopperToken(contactId: string, options?: GenerateShopperTokenOptions): string {
     if (!configuration.apiKey) {
         throw new Error("apiKey not set");
     }
     if (!configuration.sharedSecret) {
         throw new Error("sharedSecret not set");
     }
-    if (!contact) {
-        throw new Error("contact not set");
-    }
-    if (!contact.contactId && !contact.userSuppliedId && contact.shopperId == null) {
-        throw new Error("one of contact.contactId, contact.userSuppliedId or contact.shopperId must be set");
+    if (contactId == null) {
+        throw new Error("contactId must be a string (can be empty)");
     }
 
     let validityInSeconds = 43200;
     let metadata: {[name: string]: any};
-    if (typeof options === "number") {
-        validityInSeconds = options;
-    } else if (options) {
+    if (options) {
         if (typeof options.validityInSeconds === "number") {
             validityInSeconds = options.validityInSeconds;
         }
@@ -162,9 +157,7 @@ export function generateShopperToken(contact: model.ContactIdentifier, options?:
             g: {
                 gui: merchantJwtPayload.g.gui,
                 gmi: merchantJwtPayload.g.gmi,
-                coi: contact.contactId || undefined,
-                cui: contact.userSuppliedId || undefined,
-                shi: typeof(contact.shopperId) === "string" ? contact.shopperId : undefined
+                coi: contactId
             },
             metadata: metadata || undefined,
             iss: "MERCHANT",
