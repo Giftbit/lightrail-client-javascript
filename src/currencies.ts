@@ -1,10 +1,9 @@
 import {formatResponse, validateRequiredParams} from "./requestUtils";
 import {LightrailRequestError} from "./LightrailRequestError";
 import * as lightrail from "./index";
-import {Currency} from "./model/Currency";
-import {LightrailResponse} from "./model/LightrailResponse";
+import {CreateCurrencyParams, CreateCurrencyResponse} from "./params/currencies/CreateCurrencyParams";
 
-export async function createCurrency(params: Currency): Promise<LightrailResponse<Currency>> {
+export async function createCurrency(params: CreateCurrencyParams): Promise<CreateCurrencyResponse> {
     if (!params) {
         throw new Error("missing currency");
     } else {
