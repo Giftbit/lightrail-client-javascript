@@ -9,9 +9,9 @@ import {
     UpdateContactParams
 } from "./params";
 import {Contact} from "./model";
-import {LightrailResponse} from "./model/LightrailResponse";
 import {DeleteContactResponse} from "./params/contacts/DeleteContactParams";
 import {UpdateContactResponse} from "./params/contacts/UpdateContactParams";
+import {GetContactByIdResponse} from "./params/contacts/GetContactByIdParams";
 
 // CREATE
 export async function createContact(params: CreateContactParams): Promise<CreateContactResponse> {
@@ -41,7 +41,7 @@ export async function getContacts(params?: GetContactsParams): Promise<GetContac
     throw new LightrailRequestError(resp);
 }
 
-export async function getContactById(contactId: string): Promise<LightrailResponse<Contact>> {
+export async function getContactById(contactId: string): Promise<GetContactByIdResponse> {
     const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(contactId)}`);
     if (resp.status === 200) {
         return (
