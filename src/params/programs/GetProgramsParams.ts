@@ -1,5 +1,5 @@
 import {Program} from "../../model/index";
-import {LightrailResponse} from "../../model/LightrailResponse";
+import {PaginatedLightrailResponse} from "../../model/LightrailResponse";
 import {FilterableString} from "../FilterableParam";
 
 export interface GetProgramsParams {
@@ -13,5 +13,5 @@ export interface GetProgramsParams {
     updatedDate?: FilterableString;
 }
 
-export interface GetProgramsResponse extends LightrailResponse<Program[]> {
+export interface GetProgramsResponse extends PaginatedLightrailResponse<Program[]> {
 }

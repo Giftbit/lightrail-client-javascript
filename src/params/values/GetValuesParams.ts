@@ -1,4 +1,4 @@
-import {LightrailResponse} from "../../model/LightrailResponse";
+import {PaginatedLightrailResponse} from "../../model/LightrailResponse";
 import {Value} from "../../model/Value";
 import {FilterableNumber, FilterableString} from "../FilterableParam";
 
@@ -23,5 +23,5 @@ export interface GetValuesParams extends Partial<{
 }> {
 }
 
-export interface GetValuesResponse extends LightrailResponse<Array<Value>> {
+export interface GetValuesResponse extends PaginatedLightrailResponse<Array<Value>> {
 }
