@@ -1,3 +1,5 @@
+import {ValueRule} from "./ValueRule";
+
 export interface Value {
     id: string;
     currency: string;
@@ -12,7 +14,7 @@ export interface Value {
     frozen: boolean;
     canceled: boolean;
     redemptionRule: Object;
-    valueRule: Object;
+    valueRule: ValueRule;
     discount: boolean;
     discountSellerLiability: number;
     startDate: string;

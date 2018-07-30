@@ -1,3 +1,5 @@
+import {ValueRule} from "./ValueRule";
+
 export interface Program {
     id: string;
     name: string;
@@ -7,7 +9,7 @@ export interface Program {
     preTax: boolean;
     active: boolean;
     redemptionRule: Object;
-    valueRule: Object;
+    valueRule: ValueRule;
     minInitialBalance: number;
     maxInitialBalance: number;
     fixedInitialBalances: number[];

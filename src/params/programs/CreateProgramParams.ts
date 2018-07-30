@@ -1,5 +1,6 @@
 import {Program} from "../../model";
 import {LightrailResponse} from "../../model/LightrailResponse";
+import {ValueRule} from "../../model/ValueRule";
 
 export interface CreateProgramParams {
     id: string;
@@ -11,7 +12,7 @@ export interface CreateProgramParams {
     preTax?: boolean;
     active?: boolean;
     redemptionRule?: Object;
-    valueRule?: Object;
+    valueRule?: ValueRule;
     minInitialBalance?: number;
     maxInitialBalance?: number;
     fixedInitialBalances?: number[];
