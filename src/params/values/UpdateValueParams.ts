@@ -1,5 +1,6 @@
 import {LightrailResponse} from "../../model/LightrailResponse";
 import {Value} from "../../model/Value";
+import {ValueRule} from "../../model/ValueRule";
 
 export interface UpdateValueParams {
     contactId?: string;
@@ -8,7 +9,7 @@ export interface UpdateValueParams {
     frozen?: boolean;
     canceled?: boolean;
     redemptionRule?: Object;
-    valueRule?: Object;
+    valueRule?: ValueRule;
     discount?: boolean;
     discountSellerLiability?: number;
     startDate?: string;
