@@ -1,6 +1,7 @@
 import {Value} from "../../model/Value";
 import {LightrailResponse} from "../../model/LightrailResponse";
 import {ValueRule} from "../../model/ValueRule";
+import {RedemptionRule} from "../../model/RedemptionRule";
 
 export interface CreateValueParams {
     id: string;
@@ -15,7 +16,7 @@ export interface CreateValueParams {
     frozen?: boolean;
     discount?: boolean;
     discountSellerLiability?: number;
-    redemptionRule?: Object;
+    redemptionRule?: RedemptionRule;
     valueRule?: ValueRule;
     uses?: number;
     startDate?: string;

@@ -1,4 +1,5 @@
 import {ValueRule} from "./ValueRule";
+import {RedemptionRule} from "./RedemptionRule";
 
 export interface Value {
     id: string;
@@ -13,7 +14,7 @@ export interface Value {
     active: boolean;
     frozen: boolean;
     canceled: boolean;
-    redemptionRule: Object;
+    redemptionRule: RedemptionRule;
     valueRule: ValueRule;
     discount: boolean;
     discountSellerLiability: number;
