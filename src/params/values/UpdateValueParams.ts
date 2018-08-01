@@ -1,4 +1,4 @@
-import {LightrailResponse} from "../../model/LightrailResponse";
+import {LightrailResponse} from "../LightrailResponse";
 import {Value} from "../../model/Value";
 import {ValueRule} from "../../model/ValueRule";
 import {RedemptionRule} from "../../model/RedemptionRule";

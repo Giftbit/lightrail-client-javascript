@@ -1,9 +1,9 @@
 import {Program} from "../../model/index";
-import {PaginatedLightrailResponse} from "../../model/LightrailResponse";
-import {FilterableString} from "../FilterableParam";
+import {PaginatedLightrailResponse} from "../LightrailResponse";
+import {FilterableString} from "../FilterableParams";
+import {PaginationParams} from "../PaginationParams";
 
-export interface GetProgramsParams {
-    limit?: number;
+export interface GetProgramsParams extends PaginationParams {
     id?: FilterableString;
     currency?: FilterableString;
     tags?: FilterableString;

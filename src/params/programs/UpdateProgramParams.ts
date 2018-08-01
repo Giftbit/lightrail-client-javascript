@@ -1,5 +1,5 @@
 import {Program} from "../../model";
-import {LightrailResponse} from "../../model/LightrailResponse";
+import {LightrailResponse} from "../LightrailResponse";
 
 export interface UpdateProgramParams extends Partial<Program> {
 }

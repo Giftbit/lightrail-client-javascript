@@ -1,5 +1,5 @@
 import {Contact} from "../../model";
-import {LightrailResponse} from "../../model/LightrailResponse";
+import {LightrailResponse} from "../LightrailResponse";
 
 export interface CreateContactParams {
     id: string;

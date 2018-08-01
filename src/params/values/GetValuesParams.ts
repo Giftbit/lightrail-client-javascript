@@ -1,8 +1,9 @@
-import {PaginatedLightrailResponse} from "../../model/LightrailResponse";
+import {PaginatedLightrailResponse} from "../LightrailResponse";
 import {Value} from "../../model/Value";
-import {FilterableNumber, FilterableString} from "../FilterableParam";
+import {FilterableNumber, FilterableString} from "../FilterableParams";
+import {PaginationParams} from "../PaginationParams";
 
-export interface GetValuesParams extends Partial<{
+export interface GetValuesParams extends PaginationParams, Partial<{
     limit: number;
     showCode: boolean;
     programId: FilterableString;

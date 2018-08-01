@@ -1,5 +1,5 @@
 import {Contact} from "../../model";
-import {LightrailResponse} from "../../model/LightrailResponse";
+import {LightrailResponse} from "../LightrailResponse";
 import {CreateContactParams} from "./CreateContactParams";
 
 export interface UpdateContactParams extends Partial<CreateContactParams> {

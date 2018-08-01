@@ -1,4 +1,4 @@
-import {LightrailResponse, PaginatedLightrailResponse} from "./model/LightrailResponse";
+import {LightrailResponse, PaginatedLightrailResponse} from "./params/LightrailResponse";
 import {Response} from "superagent";
 import * as parseLinkHeader from "parse-link-header";
 
@@ -47,11 +47,11 @@ export function formatResponse<T>(response: Response): LightrailResponse<T> | Pa
 
     if (response.header) {
         if (response.header.hasOwnProperty("max-limit")) {
-            lr.maxLimit = response.header["max-limit"];
+            lr.maxLimit = parseInt(response.header["max-limit"]);
         }
 
         if (response.header.hasOwnProperty("limit")) {
-            lr.limit = response.header.limit;
+            lr.limit = parseInt(response.header.limit);
         }
 
         if (response.header.hasOwnProperty("link")) {

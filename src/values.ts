@@ -6,7 +6,7 @@ import {GetValueResponse} from "./params/values/GetValueParams";
 import {GetValuesParams, GetValuesResponse} from "./params/values/GetValuesParams";
 import {Value} from "./model/Value";
 import {UpdateValueParams, UpdateValueResponse} from "./params/values/UpdateValueParams";
-import {LightrailResponse} from "./model/LightrailResponse";
+import {LightrailResponse} from "./params/LightrailResponse";
 import {Success} from "./model/Success";
 import {ChangeValuesCodeParams, ChangeValuesCodeResponse} from "./params/values/ChangeValuesCodeParams";
 

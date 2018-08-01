@@ -1,5 +1,5 @@
 import {Success} from "../../model/Success";
-import {LightrailResponse} from "../../model/LightrailResponse";
+import {LightrailResponse} from "../LightrailResponse";
 
 export interface DeleteContactResponse extends LightrailResponse<Success> {
 }

@@ -1,5 +1,5 @@
 import {Program} from "../../model";
-import {LightrailResponse} from "../../model/LightrailResponse";
+import {LightrailResponse} from "../LightrailResponse";
 import {ValueRule} from "../../model/ValueRule";
 import {RedemptionRule} from "../../model/RedemptionRule";
 

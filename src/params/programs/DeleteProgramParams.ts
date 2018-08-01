@@ -1,4 +1,4 @@
-import {LightrailResponse} from "../../model/LightrailResponse";
+import {LightrailResponse} from "../LightrailResponse";
 import {Success} from "../../model/Success";
 
 export interface DeleteProgramParams {
