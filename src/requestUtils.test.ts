@@ -3,7 +3,7 @@ import * as Lightrail from "./index";
 import {formatFilterParams, validateRequiredParams} from "./requestUtils";
 import {getContacts} from "./contacts";
 
-describe.only("requestUtils", () => {
+describe("requestUtils", () => {
     before(() => {
         chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
         Lightrail.configure({
