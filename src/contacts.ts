@@ -4,14 +4,14 @@ import {LightrailRequestError} from "./LightrailRequestError";
 import {
     CreateContactParams,
     CreateContactResponse,
-    GetContactsParams,
-    GetContactsResponse,
+    ListContactsParams,
+    ListContactsResponse,
     UpdateContactParams
 } from "./params";
 import {Contact} from "./model";
 import {DeleteContactResponse} from "./params/contacts/DeleteContactParams";
 import {UpdateContactResponse} from "./params/contacts/UpdateContactParams";
-import {GetContactByIdResponse} from "./params/contacts/GetContactByIdParams";
+import {GetContactResponse} from "./params/contacts/GetContactParams";
 
 // CREATE
 export async function createContact(params: CreateContactParams): Promise<CreateContactResponse> {
@@ -31,7 +31,7 @@ export async function createContact(params: CreateContactParams): Promise<Create
 }
 
 // READ
-export async function getContacts(params?: GetContactsParams): Promise<GetContactsResponse> {
+export async function listContacts(params?: ListContactsParams): Promise<ListContactsResponse> {
     const resp = await lightrail.request("GET", "contacts").query(formatFilterParams(params));
     if (resp.status === 200) {
         return (
@@ -41,7 +41,7 @@ export async function getContacts(params?: GetContactsParams): Promise<GetContac
     throw new LightrailRequestError(resp);
 }
 
-export async function getContactById(contactId: string): Promise<GetContactByIdResponse> {
+export async function getContact(contactId: string): Promise<GetContactResponse> {
     const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(contactId)}`);
     if (resp.status === 200) {
         return (

@@ -3,7 +3,7 @@ import {Value} from "../../model/Value";
 import {FilterableNumber, FilterableString} from "../FilterableParams";
 import {PaginationParams} from "../PaginationParams";
 
-export interface GetValuesParams extends PaginationParams, Partial<{
+export interface ListValuesParams extends PaginationParams, Partial<{
     limit: number;
     showCode: boolean;
     programId: FilterableString;
@@ -24,5 +24,5 @@ export interface GetValuesParams extends PaginationParams, Partial<{
 }> {
 }
 
-export interface GetValuesResponse extends PaginatedLightrailResponse<Array<Value>> {
+export interface ListValuesResponse extends PaginatedLightrailResponse<Array<Value>> {
 }

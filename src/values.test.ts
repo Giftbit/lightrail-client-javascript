@@ -40,7 +40,7 @@ describe("values", () => {
 
     describe("getValue(id, showCode)", () => {
         it("gets the value with the code", async () => {
-            const value = await Lightrail.values.getValue(testValueId, true);
+            const value = await Lightrail.values.getValue(testValueId, {showCode: true});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -52,7 +52,7 @@ describe("values", () => {
             chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
         });
         it("gets the value without the code", async () => {
-            const value = await Lightrail.values.getValue(testValueId, false);
+            const value = await Lightrail.values.getValue(testValueId, {showCode: false});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -64,7 +64,7 @@ describe("values", () => {
             chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
         });
         it("gets the value using the value instead of the id", async () => {
-            const value = await Lightrail.values.getValue(testValueId, true);
+            const value = await Lightrail.values.getValue(testValueId, {showCode: true});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -79,7 +79,7 @@ describe("values", () => {
 
     describe("getValues(filters)", () => {
         it("gets values", async () => {
-            const values = await Lightrail.values.getValues();
+            const values = await Lightrail.values.listValues();
 
             chai.assert.isNotNull(values);
             chai.assert.isNotNull(values.body);

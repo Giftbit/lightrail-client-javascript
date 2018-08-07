@@ -16,7 +16,7 @@ export interface UpdateValueParams {
     startDate?: string;
     endDate?: string;
     tags?: string[];
-    metadata?: Object;
+    metadata?: object;
 }
 
 export interface UpdateValueResponse extends LightrailResponse<Value> {

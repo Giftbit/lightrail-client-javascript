@@ -2,7 +2,7 @@ import {LightrailResponse, PaginatedLightrailResponse} from "./params/LightrailR
 import {Response} from "superagent";
 import * as parseLinkHeader from "parse-link-header";
 
-export const validateRequiredParams = (keys: string[], params: Object): boolean => keys.every(key => {
+export const validateRequiredParams = (keys: string[], params: object): boolean => keys.every(key => {
     if (!params[key]) {
         throw new Error("params." + key + " not set");
     }
@@ -12,11 +12,11 @@ export const validateRequiredParams = (keys: string[], params: Object): boolean 
 
 /**
  * Flattens one level deep and formats as key.subkey ie: {key:{subkey:4}} => {key.subkey:4}
- * @param {Object} params
- * @returns {Object}
+ * @param {object} params
+ * @returns {object}
  */
-export const formatFilterParams = (params?: Object): Object => {
-    const formattedParams: Object = {};
+export const formatFilterParams = (params?: object): object => {
+    const formattedParams: object = {};
     if (params) {
         for (let key in params) {
             if (typeof params[key] !== "object") {

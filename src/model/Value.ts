@@ -21,7 +21,7 @@ export interface Value {
     startDate: string;
     endDate: string;
     tags: string[];
-    metadata: Object;
+    metadata: object;
     createdDate: string;
     updatedDate: string;
 }

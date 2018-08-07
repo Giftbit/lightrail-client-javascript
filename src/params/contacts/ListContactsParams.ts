@@ -3,7 +3,7 @@ import {FilterableString} from "../FilterableParams";
 import {PaginatedLightrailResponse} from "../LightrailResponse";
 import {PaginationParams} from "../PaginationParams";
 
-export interface GetContactsParams extends PaginationParams {
+export interface ListContactsParams extends PaginationParams {
     id?: FilterableString;
     tags?: FilterableString;
     firstName?: FilterableString;
@@ -11,5 +11,5 @@ export interface GetContactsParams extends PaginationParams {
     email?: FilterableString;
 }
 
-export interface GetContactsResponse extends PaginatedLightrailResponse<Array<Contact>> {
+export interface ListContactsResponse extends PaginatedLightrailResponse<Array<Contact>> {
 }

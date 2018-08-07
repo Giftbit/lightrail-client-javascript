@@ -21,7 +21,7 @@ export interface CreateValueParams {
     uses?: number;
     startDate?: string;
     endDate?: string;
-    metadata?: Object;
+    metadata?: object;
 }
 
 export interface CreateValueRespone extends LightrailResponse<Value> {

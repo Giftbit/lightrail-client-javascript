@@ -39,7 +39,7 @@ describe("contacts", () => {
 
     describe("getContacts()", () => {
         it("gets list", async () => {
-            const contacts = await Lightrail.contacts.getContacts();
+            const contacts = await Lightrail.contacts.listContacts();
 
             chai.assert.isNotNull(contacts.body);
             chai.assert.isArray(contacts.body);
@@ -47,7 +47,7 @@ describe("contacts", () => {
         });
 
         it("filters for lastName using eq", async () => {
-            const contacts = await Lightrail.contacts.getContacts({
+            const contacts = await Lightrail.contacts.listContacts({
                 lastName: {
                     eq: "Mctesty Face"
                 }
@@ -62,7 +62,7 @@ describe("contacts", () => {
 
     describe("getContact(id)", () => {
         it("gets the expected contact", async () => {
-            const contact = await Lightrail.contacts.getContactById(id);
+            const contact = await Lightrail.contacts.getContact(id);
 
             chai.assert.isNotNull(contact);
             chai.assert.isString(contact.body.id);
@@ -102,7 +102,7 @@ describe("contacts", () => {
                 metadata: {deepestFear: "heights"}
             };
 
-            const contact = await Lightrail.contacts.getContactById(id);
+            const contact = await Lightrail.contacts.getContact(id);
             chai.assert.isNotNull(contact);
             chai.assert.isNotNull(contact.body);
 
@@ -124,7 +124,7 @@ describe("contacts", () => {
             chai.assert.isNotNull(deleted);
             chai.assert.isTrue(deleted.body.success);
 
-            const contact = await Lightrail.contacts.getContactById(id);
+            const contact = await Lightrail.contacts.getContact(id);
             chai.assert.isNull(contact);
         });
     });

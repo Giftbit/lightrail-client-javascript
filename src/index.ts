@@ -133,7 +133,7 @@ export function generateShopperToken(contactId: string, options?: GenerateShoppe
     }
 
     let validityInSeconds = 43200;
-    let metadata: {[name: string]: any};
+    let metadata: { [name: string]: any };
     if (options) {
         if (typeof options.validityInSeconds === "number") {
             validityInSeconds = options.validityInSeconds;

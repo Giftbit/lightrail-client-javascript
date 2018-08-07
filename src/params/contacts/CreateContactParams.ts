@@ -7,7 +7,7 @@ export interface CreateContactParams {
     lastName?: string;
     email?: string;
     tags?: string[];
-    metadata?: Object;
+    metadata?: object;
 }
 
 export interface CreateContactResponse extends LightrailResponse<Contact> {

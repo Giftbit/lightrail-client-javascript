@@ -4,7 +4,7 @@ export interface Contact {
     lastName: string;
     email: string;
     tags: string[];
-    metadata: Object;
+    metadata: object;
     createdDate: string;
     updatedDate: string;
 }

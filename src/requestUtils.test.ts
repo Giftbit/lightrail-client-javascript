@@ -1,7 +1,7 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import {formatFilterParams, validateRequiredParams} from "./requestUtils";
-import {getContacts} from "./contacts";
+import {listContacts} from "./contacts";
 
 describe("requestUtils", () => {
     before(() => {
@@ -43,7 +43,7 @@ describe("requestUtils", () => {
 
     describe("formatResponse(res:Response)", () => {
         it("formats a getContacts response correctely", async () => {
-            const response = await getContacts({limit: 10});
+            const response = await listContacts({limit: 10});
 
             chai.assert.isNumber(response.limit);
             chai.assert.equal(response.limit, 10);

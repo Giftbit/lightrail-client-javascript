@@ -3,7 +3,7 @@ import {PaginatedLightrailResponse} from "../LightrailResponse";
 import {FilterableString} from "../FilterableParams";
 import {PaginationParams} from "../PaginationParams";
 
-export interface GetProgramsParams extends PaginationParams {
+export interface ListProgramsParams extends PaginationParams {
     id?: FilterableString;
     currency?: FilterableString;
     tags?: FilterableString;
@@ -13,5 +13,5 @@ export interface GetProgramsParams extends PaginationParams {
     updatedDate?: FilterableString;
 }
 
-export interface GetProgramsResponse extends PaginatedLightrailResponse<Program[]> {
+export interface ListProgramsResponse extends PaginatedLightrailResponse<Program[]> {
 }
