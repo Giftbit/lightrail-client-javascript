@@ -12,6 +12,9 @@ export * from "./programs/DeleteProgramParams";
 export * from "./programs/GetProgramParams";
 export * from "./programs/ListProgramsParams";
 export * from "./programs/UpdateProgramParams";
+export * from "./programs/issuance/CreateIssuanceParams";
+export * from "./programs/issuance/ListIssuancesParams";
+export * from "./programs/issuance/GetIssuanceParams";
 
 export * from "./transactions/CapturePendingTransactionParams";
 export * from "./transactions/CreateTransactionParams";
