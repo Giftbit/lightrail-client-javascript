@@ -105,7 +105,7 @@ export async function createIssuance(program: string | Program, params: CreateIs
 export async function listIssuances(program: string | Program, params?: ListIssuancesParams): Promise<ListIssuancesResponse> {
     const programId = getProgramId(program);
 
-    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}/issuances`);
+    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}/issuances`).query(params);
     if (resp.status === 200) {
         return formatResponse(resp);
     }
