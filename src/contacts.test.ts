@@ -1,7 +1,7 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
-import {CreateContactParams, UpdateContactParams} from "./params";
+import {CreateContactParams} from "./params";
 
 describe("contacts", () => {
     before(() => {
@@ -62,7 +62,7 @@ describe("contacts", () => {
 
     describe("getContact(id)", () => {
         it("gets the expected contact", async () => {
-            const contact = await Lightrail.contacts.getContact(id);
+            const contact = await Lightrail.contacts.getContact({contactId: id});
 
             chai.assert.isNotNull(contact);
             chai.assert.isString(contact.body.id);
@@ -76,37 +76,14 @@ describe("contacts", () => {
 
     describe("updateContact(id, params)", () => {
         it("changes contact name, email and metadata properties using contactId", async () => {
-            const params: UpdateContactParams = {
+            const params = {
                 firstName: "Johnny",
                 lastName: "Test Face",
                 email: "jtestface@tester.com",
                 metadata: {deepestFear: "sharks"}
             };
 
-            const updatedContact = await Lightrail.contacts.updateContact(id, params);
-
-            chai.assert.isNotNull(updatedContact);
-            chai.assert.isString(updatedContact.body.id);
-            chai.assert.equal(updatedContact.body.id, id);
-            chai.assert.equal(updatedContact.body.firstName, params.firstName);
-            chai.assert.equal(updatedContact.body.lastName, params.lastName);
-            chai.assert.equal(updatedContact.body.email, params.email);
-            chai.assert.equal(updatedContact.body.metadata["deepestFear"], params.metadata["deepestFear"]);
-        });
-
-        it("changes contact name, email and metadata properties using contact object", async () => {
-            const params: UpdateContactParams = {
-                firstName: "Jimjam",
-                lastName: "Test Pants",
-                email: "jj_testpants@tester.com",
-                metadata: {deepestFear: "heights"}
-            };
-
-            const contact = await Lightrail.contacts.getContact(id);
-            chai.assert.isNotNull(contact);
-            chai.assert.isNotNull(contact.body);
-
-            const updatedContact = await Lightrail.contacts.updateContact(contact.body, params);
+            const updatedContact = await Lightrail.contacts.updateContact({contactId: id, params});
 
             chai.assert.isNotNull(updatedContact);
             chai.assert.isString(updatedContact.body.id);
@@ -120,7 +97,7 @@ describe("contacts", () => {
 
     describe("deleteContact()", () => {
         it("deletes our contact using the id", async () => {
-            const deleted = await Lightrail.contacts.deleteContact(id);
+            const deleted = await Lightrail.contacts.deleteContact({contactId: id});
             chai.assert.isNotNull(deleted);
             chai.assert.isTrue(deleted.body.success);
 
