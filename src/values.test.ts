@@ -1,7 +1,6 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
-import {UpdateValueParams} from "./params/values/UpdateValueParams";
 import {CreateValueParams} from "./params/values/CreateValueParams";
 
 describe("values", () => {
@@ -40,7 +39,7 @@ describe("values", () => {
 
     describe("getValue(id, showCode)", () => {
         it("gets the value with the code", async () => {
-            const value = await Lightrail.values.getValue(testValueId, {showCode: true});
+            const value = await Lightrail.values.getValue({valueId: testValueId, params: {showCode: true}});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -52,7 +51,7 @@ describe("values", () => {
             chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
         });
         it("gets the value without the code", async () => {
-            const value = await Lightrail.values.getValue(testValueId, {showCode: false});
+            const value = await Lightrail.values.getValue({valueId: testValueId, params: {showCode: false}});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -64,7 +63,7 @@ describe("values", () => {
             chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
         });
         it("gets the value using the value instead of the id", async () => {
-            const value = await Lightrail.values.getValue(testValueId, {showCode: true});
+            const value = await Lightrail.values.getValue({valueId: testValueId, params: {showCode: true}});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -85,12 +84,21 @@ describe("values", () => {
             chai.assert.isNotNull(values.body);
             chai.assert.isTrue(!!values.body.length);
         });
+
+        it("gets values with a pagination limit", async () => {
+            const values = await Lightrail.values.listValues({limit: 1});
+
+            chai.assert.isNotNull(values);
+            chai.assert.isNotNull(values.body);
+            chai.assert.isTrue(!!values.body.length);
+            chai.assert.equal(values.body.length, 1);
+        });
     });
 
     describe("updateValue(value, updates)", () => {
         it("updates our value as expected", async () => {
-            const updates: UpdateValueParams = {active: false, frozen: true};
-            const value = await Lightrail.values.updateValue(testValueId, updates);
+            const updates = {active: false, frozen: true};
+            const value = await Lightrail.values.updateValue({valueId: testValueId, params: updates});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -101,7 +109,10 @@ describe("values", () => {
 
     describe("changeValuesCode(value, {code}", () => {
         it("changes the code", async () => {
-            const value = await Lightrail.values.changeValuesCode(testValueId, {code: "haberdashery"});
+            const value = await Lightrail.values.changeValuesCode({
+                valueId: testValueId,
+                params: {code: "haberdashery"}
+            });
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -111,7 +122,7 @@ describe("values", () => {
 
     describe("deleteValue(value)", () => {
         it("successful delete", async () => {
-            const response = await Lightrail.values.deleteValue(testValueId);
+            const response = await Lightrail.values.deleteValue({valueId: testValueId});
 
             chai.assert.isNotNull(response);
             chai.assert.isNotNull(response.body);
