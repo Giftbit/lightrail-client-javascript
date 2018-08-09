@@ -21,7 +21,7 @@ export interface CreateIssuanceParams {
         metadata?: object;
         createdDate?: string;
         updateDate?: string;
-    }
+    };
 }
 
 export interface CreateIssuanceResponse extends LightrailResponse<Issuance> {
