@@ -55,7 +55,7 @@ describe("programs", () => {
         it("changes the currency", async () => {
             const program = await Lightrail.programs.updateProgram({
                 programId: testID,
-                params: {name: "the new name"}
+                values: {name: "the new name"}
             });
 
             chai.assert.isNotNull(program);
@@ -103,7 +103,7 @@ describe("/programs/issuance", () => {
         it("successfully generates and issuance", async () => {
             await Lightrail.programs.createIssuance({
                 programId: programID,
-                params: {
+                values: {
                     id: testIssuanceID,
                 count: 10,
                 balance: 500,
@@ -125,7 +125,7 @@ describe("/programs/issuance", () => {
         });
 
         it("limits response", async () => {
-            const issuance = await Lightrail.programs.listIssuances({programId: programID, params: {limit: 1}});
+            const issuance = await Lightrail.programs.listIssuances({programId: programID, options: {limit: 1}});
 
             chai.assert.isNotNull(issuance);
             chai.assert.isArray(issuance.body);

@@ -4,7 +4,7 @@ import {PaginationParams} from "../../PaginationParams";
 
 export interface ListIssuancesParams {
     programId: string;
-    params?: PaginationParams;
+    options?: PaginationParams;
 }
 
 export interface ListIssuancesResponse extends PaginatedLightrailResponse<Issuance[]> {

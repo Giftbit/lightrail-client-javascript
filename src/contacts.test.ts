@@ -83,7 +83,7 @@ describe("contacts", () => {
                 metadata: {deepestFear: "sharks"}
             };
 
-            const updatedContact = await Lightrail.contacts.updateContact({contactId: id, params});
+            const updatedContact = await Lightrail.contacts.updateContact({contactId: id, values: params});
 
             chai.assert.isNotNull(updatedContact);
             chai.assert.isString(updatedContact.body.id);

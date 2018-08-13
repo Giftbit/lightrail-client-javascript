@@ -57,7 +57,7 @@ export async function getContact(params: GetContactParams): Promise<GetContactRe
 
 // UPDATE
 export async function updateContact(params: UpdateContactParams): Promise<UpdateContactResponse> {
-    const resp = await lightrail.request("PATCH", `contacts/${encodeURIComponent(params.contactId)}`).send(params.params);
+    const resp = await lightrail.request("PATCH", `contacts/${encodeURIComponent(params.contactId)}`).send(params.values);
     if (resp.status === 200) {
         return formatResponse(resp);
     }

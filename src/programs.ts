@@ -55,7 +55,7 @@ export async function updateProgram(params: UpdateProgramParams): Promise<Update
         throw new Error("programId in updateProgram({programId, params:{}}) is no set!");
     }
 
-    const resp = await lightrail.request("PATCH", `programs/${encodeURIComponent(params.programId)}`).send(params.params);
+    const resp = await lightrail.request("PATCH", `programs/${encodeURIComponent(params.programId)}`).send(params.values);
     if (resp.status === 200) {
         return formatResponse(resp);
     } else if (resp.status === 404) {
@@ -89,13 +89,13 @@ export async function createIssuance(params: CreateIssuanceParams): Promise<Crea
         throw new Error("createIssuance({programId, params:{}}) param object not set");
     } else if (!params.programId) {
         throw new Error("programId in createIssuance({programId, params:{}}) is no set!");
-    } else if (!params.params) {
+    } else if (!params.values) {
         throw new Error("params in createIssuance({programId, params:{}}) is no set!");
     } else {
-        validateRequiredParams(["id"], params.params);
+        validateRequiredParams(["id"], params.values);
     }
 
-    const resp = await lightrail.request("POST", `programs/${encodeURIComponent(params.programId)}/issuances`).send(params.params);
+    const resp = await lightrail.request("POST", `programs/${encodeURIComponent(params.programId)}/issuances`).send(params.values);
     if (resp.status === 200 || resp.status === 201) {
         return formatResponse(resp);
     }
@@ -109,7 +109,7 @@ export async function listIssuances(params: ListIssuancesParams): Promise<ListIs
         throw new Error("programId in listIssuances({programId}) is no set!");
     }
 
-    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(params.programId)}/issuances`).query(params.params);
+    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(params.programId)}/issuances`).query(params.options);
     if (resp.status === 200) {
         return formatResponse(resp);
     }

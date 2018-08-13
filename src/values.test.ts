@@ -39,7 +39,7 @@ describe("values", () => {
 
     describe("getValue(id, showCode)", () => {
         it("gets the value with the code", async () => {
-            const value = await Lightrail.values.getValue({valueId: testValueId, params: {showCode: true}});
+            const value = await Lightrail.values.getValue({valueId: testValueId, options: {showCode: true}});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -51,7 +51,7 @@ describe("values", () => {
             chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
         });
         it("gets the value without the code", async () => {
-            const value = await Lightrail.values.getValue({valueId: testValueId, params: {showCode: false}});
+            const value = await Lightrail.values.getValue({valueId: testValueId, options: {showCode: false}});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -63,7 +63,7 @@ describe("values", () => {
             chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
         });
         it("gets the value using the value instead of the id", async () => {
-            const value = await Lightrail.values.getValue({valueId: testValueId, params: {showCode: true}});
+            const value = await Lightrail.values.getValue({valueId: testValueId, options: {showCode: true}});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -98,7 +98,7 @@ describe("values", () => {
     describe("updateValue(value, updates)", () => {
         it("updates our value as expected", async () => {
             const updates = {active: false, frozen: true};
-            const value = await Lightrail.values.updateValue({valueId: testValueId, params: updates});
+            const value = await Lightrail.values.updateValue({valueId: testValueId, values: updates});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -111,7 +111,7 @@ describe("values", () => {
         it("changes the code", async () => {
             const value = await Lightrail.values.changeValuesCode({
                 valueId: testValueId,
-                params: {code: "haberdashery"}
+                values: {code: "haberdashery"}
             });
 
             chai.assert.isNotNull(value);

@@ -39,7 +39,7 @@ export async function listValues(params?: ListValuesParams): Promise<ListValuesR
 }
 
 export async function getValue(params?: GetValueParams): Promise<GetValueResponse> {
-    const resp = await lightrail.request("GET", `values/${encodeURIComponent(params.valueId)}`).query(params.params);
+    const resp = await lightrail.request("GET", `values/${encodeURIComponent(params.valueId)}`).query(params.options);
     if (resp.status === 200) {
         return (
             formatResponse(resp)
@@ -53,7 +53,7 @@ export async function getValue(params?: GetValueParams): Promise<GetValueRespons
 
 // UPDATE
 export async function updateValue(params: UpdateValueParams): Promise<UpdateValueResponse> {
-    const resp = await lightrail.request("PATCH", `values/${encodeURIComponent(params.valueId)}`).send(params.params);
+    const resp = await lightrail.request("PATCH", `values/${encodeURIComponent(params.valueId)}`).send(params.values);
     if (resp.status === 200) {
         return (
             formatResponse(resp)
@@ -66,7 +66,7 @@ export async function updateValue(params: UpdateValueParams): Promise<UpdateValu
 }
 
 export async function changeValuesCode(params: ChangeValuesCodeParams): Promise<ChangeValuesCodeResponse> {
-    const resp = await lightrail.request("POST", `values/${encodeURIComponent(params.valueId)}/changeCode`).send(params.params);
+    const resp = await lightrail.request("POST", `values/${encodeURIComponent(params.valueId)}/changeCode`).send(params.values);
     if (resp.status === 200) {
         return (
             formatResponse(resp)

@@ -6,7 +6,6 @@ import {RedemptionRule} from "../../model/RedemptionRule";
 export interface CreateValueParams {
     id: string;
     currency: string;
-
     contactId?: string;
     programId?: string;
     code?: string;
