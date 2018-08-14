@@ -7,7 +7,7 @@ import {ListValuesParams, ListValuesResponse} from "./params/values/ListValuesPa
 import {Value} from "./model/Value";
 import {UpdateValueParams, UpdateValueResponse} from "./params/values/UpdateValueParams";
 import {ChangeValuesCodeParams, ChangeValuesCodeResponse} from "./params/values/ChangeValuesCodeParams";
-import {DeleteValueParams, DeleteValueResponse} from "./params/values/DeleteValueParams";
+import {DeleteValueResponse} from "./params/values/DeleteValueParams";
 
 // CREATE
 export async function createValue(params: CreateValueParams): Promise<CreateValueRespone> {
@@ -38,8 +38,10 @@ export async function listValues(params?: ListValuesParams): Promise<ListValuesR
     throw new LightrailRequestError(resp);
 }
 
-export async function getValue(params?: GetValueParams): Promise<GetValueResponse> {
-    const resp = await lightrail.request("GET", `values/${encodeURIComponent(params.valueId)}`).query(params.options);
+export async function getValue(value: string | Value, params?: GetValueParams): Promise<GetValueResponse> {
+    const valueId = getValueId(value);
+
+    const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}`).query(params);
     if (resp.status === 200) {
         return (
             formatResponse(resp)
@@ -52,8 +54,10 @@ export async function getValue(params?: GetValueParams): Promise<GetValueRespons
 }
 
 // UPDATE
-export async function updateValue(params: UpdateValueParams): Promise<UpdateValueResponse> {
-    const resp = await lightrail.request("PATCH", `values/${encodeURIComponent(params.valueId)}`).send(params.values);
+export async function updateValue(value: string | Value, params: UpdateValueParams): Promise<UpdateValueResponse> {
+    const valueId = getValueId(value);
+
+    const resp = await lightrail.request("PATCH", `values/${encodeURIComponent(valueId)}`).send(params);
     if (resp.status === 200) {
         return (
             formatResponse(resp)
@@ -65,8 +69,10 @@ export async function updateValue(params: UpdateValueParams): Promise<UpdateValu
     throw new LightrailRequestError(resp);
 }
 
-export async function changeValuesCode(params: ChangeValuesCodeParams): Promise<ChangeValuesCodeResponse> {
-    const resp = await lightrail.request("POST", `values/${encodeURIComponent(params.valueId)}/changeCode`).send(params.values);
+export async function changeValuesCode(value: string | Value, params: ChangeValuesCodeParams): Promise<ChangeValuesCodeResponse> {
+    const valueId = getValueId(value);
+
+    const resp = await lightrail.request("POST", `values/${encodeURIComponent(valueId)}/changeCode`).send(params);
     if (resp.status === 200) {
         return (
             formatResponse(resp)
@@ -79,8 +85,10 @@ export async function changeValuesCode(params: ChangeValuesCodeParams): Promise<
 }
 
 // DELETE
-export async function deleteValue(params: DeleteValueParams): Promise<DeleteValueResponse> {
-    const resp = await lightrail.request("DELETE", `values/${encodeURIComponent(params.valueId)}`);
+export async function deleteValue(value: string | Value): Promise<DeleteValueResponse> {
+    const valueId = getValueId(value);
+
+    const resp = await lightrail.request("DELETE", `values/${encodeURIComponent(valueId)}`);
     if (resp.status === 200) {
         return (
             formatResponse(resp)

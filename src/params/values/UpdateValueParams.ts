@@ -3,7 +3,7 @@ import {Value} from "../../model/Value";
 import {ValueRule} from "../../model/ValueRule";
 import {RedemptionRule} from "../../model/RedemptionRule";
 
-export interface UpdateValueValues {
+export interface UpdateValueParams {
     contactId?: string;
     preTax?: boolean;
     active?: boolean;
@@ -17,11 +17,6 @@ export interface UpdateValueValues {
     endDate?: string;
     tags?: string[];
     metadata?: object;
-}
-
-export interface UpdateValueParams {
-    valueId: string;
-    values: UpdateValueValues;
 }
 
 export interface UpdateValueResponse extends LightrailResponse<Value> {
