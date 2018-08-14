@@ -4,7 +4,7 @@ import {FilterableNumber, FilterableString} from "../FilterableParams";
 import {PaginationParams} from "../PaginationParams";
 
 export interface ListValuesParams extends PaginationParams {
-    csv?: string;
+    csv?: boolean;
     issuanceId?: string;
     showCode?: boolean;
     programId?: FilterableString;
