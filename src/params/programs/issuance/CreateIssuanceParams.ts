@@ -4,7 +4,7 @@ import {CodeGenerationParams} from "../CodeGenerationParams";
 import {LightrailResponse} from "../../LightrailResponse";
 import {Issuance} from "../../../model/Issuance";
 
-export interface CreateIssuanceValues {
+export interface CreateIssuanceParams {
     id: string;
     count: number;
     generateCode: CodeGenerationParams;
@@ -19,11 +19,6 @@ export interface CreateIssuanceValues {
     metadata?: object;
     createdDate?: string;
     updateDate?: string;
-}
-
-export interface CreateIssuanceParams {
-    programId: string;
-    values: CreateIssuanceValues;
 }
 
 export interface CreateIssuanceResponse extends LightrailResponse<Issuance> {

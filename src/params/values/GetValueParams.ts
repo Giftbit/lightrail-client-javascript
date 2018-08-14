@@ -1,13 +1,8 @@
 import {LightrailResponse} from "../LightrailResponse";
 import {Value} from "../../model/Value";
 
-export interface GetValueOptions {
-    showCode?: boolean;
-}
-
 export interface GetValueParams {
-    valueId: string;
-    options?: GetValueOptions;
+    showCode?: boolean;
 }
 
 export interface GetValueResponse extends LightrailResponse<Value> {

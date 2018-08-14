@@ -1,13 +1,8 @@
 import {LightrailResponse} from "../LightrailResponse";
 import {Value} from "../../model/Value";
 
-export interface ChangeValuesCodeValues {
-    code: string;
-}
-
 export interface ChangeValuesCodeParams {
-    valueId: string;
-    values?: ChangeValuesCodeValues;
+    code: string;
 }
 
 export interface ChangeValuesCodeResponse extends LightrailResponse<Value> {

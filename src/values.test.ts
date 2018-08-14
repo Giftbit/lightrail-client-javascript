@@ -39,7 +39,7 @@ describe("values", () => {
 
     describe("getValue(id, showCode)", () => {
         it("gets the value with the code", async () => {
-            const value = await Lightrail.values.getValue({valueId: testValueId, options: {showCode: true}});
+            const value = await Lightrail.values.getValue(testValueId, {showCode: true});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -51,7 +51,7 @@ describe("values", () => {
             chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
         });
         it("gets the value without the code", async () => {
-            const value = await Lightrail.values.getValue({valueId: testValueId, options: {showCode: false}});
+            const value = await Lightrail.values.getValue(testValueId, {showCode: false});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -63,7 +63,7 @@ describe("values", () => {
             chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
         });
         it("gets the value using the value instead of the id", async () => {
-            const value = await Lightrail.values.getValue({valueId: testValueId, options: {showCode: true}});
+            const value = await Lightrail.values.getValue(testValueId, {showCode: true});
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -98,7 +98,7 @@ describe("values", () => {
     describe("updateValue(value, updates)", () => {
         it("updates our value as expected", async () => {
             const updates = {active: false, frozen: true};
-            const value = await Lightrail.values.updateValue({valueId: testValueId, values: updates});
+            const value = await Lightrail.values.updateValue(testValueId, updates);
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -109,10 +109,10 @@ describe("values", () => {
 
     describe("changeValuesCode(value, {code}", () => {
         it("changes the code", async () => {
-            const value = await Lightrail.values.changeValuesCode({
-                valueId: testValueId,
-                values: {code: "haberdashery"}
-            });
+            const value = await Lightrail.values.changeValuesCode(
+                testValueId,
+                {code: "haberdashery"}
+            );
 
             chai.assert.isNotNull(value);
             chai.assert.isNotNull(value.body);
@@ -122,7 +122,7 @@ describe("values", () => {
 
     describe("deleteValue(value)", () => {
         it("successful delete", async () => {
-            const response = await Lightrail.values.deleteValue({valueId: testValueId});
+            const response = await Lightrail.values.deleteValue(testValueId);
 
             chai.assert.isNotNull(response);
             chai.assert.isNotNull(response.body);

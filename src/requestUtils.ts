@@ -42,7 +42,8 @@ export const formatFilterParams = (params?: object): object => {
  */
 export function formatResponse<T>(response: Response): LightrailResponse<T> | PaginatedLightrailResponse<T> {
     const lr: any = {
-        body: response.body
+        body: response.body,
+        text: response.text
     };
 
     if (response.header) {

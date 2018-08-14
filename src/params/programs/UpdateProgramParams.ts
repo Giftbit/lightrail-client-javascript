@@ -1,7 +1,7 @@
 import {Program} from "../../model";
 import {LightrailResponse} from "../LightrailResponse";
 
-export interface UpdateProgramValues {
+export interface UpdateProgramParams {
     name?: string;
     active?: boolean;
     discount?: boolean;
@@ -13,11 +13,6 @@ export interface UpdateProgramValues {
     startDate?: string;
     endDate?: string;
     metadata?: object;
-}
-
-export interface UpdateProgramParams {
-    programId: string;
-    values: UpdateProgramValues;
 }
 
 export interface UpdateProgramResponse extends LightrailResponse<Program> {
