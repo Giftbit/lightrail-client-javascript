@@ -3,6 +3,7 @@ import {Links} from "parse-link-header";
 
 export interface LightrailResponse<T> {
     body: T;
+    text: string;
     links?: Links;
 }
 
