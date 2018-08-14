@@ -1,6 +1,6 @@
 import * as lightrail from "./";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {DeleteProgramParams, GetProgramParams, ListProgramsParams, ListProgramsResponse} from "./params";
+import {ListProgramsParams, ListProgramsResponse} from "./params";
 import {CreateProgramParams, CreateProgramResponse} from "./params/programs/CreateProgramParams";
 import {formatResponse, validateRequiredParams} from "./requestUtils";
 import {DeleteProgramResponse} from "./params/programs/DeleteProgramParams";
@@ -9,7 +9,7 @@ import {GetProgramResponse} from "./params/programs/GetProgramParams";
 import {CreateIssuanceParams, CreateIssuanceResponse} from "./params/programs/issuance/CreateIssuanceParams";
 import {Program} from "./model";
 import {ListIssuancesParams, ListIssuancesResponse} from "./params/programs/issuance/ListIssuancesParams";
-import {GetIssuanceParams, GetIssuanceResponse} from "./params/programs/issuance/GetIssuanceParams";
+import {GetIssuanceResponse} from "./params/programs/issuance/GetIssuanceParams";
 import {Issuance} from "./model/Issuance";
 
 // CREATE
@@ -37,8 +37,10 @@ export async function listPrograms(params?: ListProgramsParams): Promise<ListPro
     throw new LightrailRequestError(resp);
 }
 
-export async function getProgram(params: GetProgramParams): Promise<GetProgramResponse> {
-    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(params.programId)}`);
+export async function getProgram(program: string | Program): Promise<GetProgramResponse> {
+    const programId = getProgramId(program);
+
+    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}`);
     if (resp.status === 200) {
         return formatResponse(resp);
     } else if (resp.status === 404) {
@@ -48,14 +50,14 @@ export async function getProgram(params: GetProgramParams): Promise<GetProgramRe
 }
 
 // UPDATE
-export async function updateProgram(params: UpdateProgramParams): Promise<UpdateProgramResponse> {
+export async function updateProgram(program: string | Program, params: UpdateProgramParams): Promise<UpdateProgramResponse> {
+    const programId = getProgramId(program);
+
     if (!params) {
         throw new Error("params not set");
-    } else if (!params.programId) {
-        throw new Error("programId in updateProgram({programId, params:{}}) is no set!");
     }
 
-    const resp = await lightrail.request("PATCH", `programs/${encodeURIComponent(params.programId)}`).send(params.values);
+    const resp = await lightrail.request("PATCH", `programs/${encodeURIComponent(programId)}`).send(params);
     if (resp.status === 200) {
         return formatResponse(resp);
     } else if (resp.status === 404) {
@@ -65,12 +67,10 @@ export async function updateProgram(params: UpdateProgramParams): Promise<Update
 }
 
 // DELETE
-export async function deleteProgram(params: DeleteProgramParams): Promise<DeleteProgramResponse> {
-    if (!params || !params.programId) {
-        throw new Error("programId missing in deleteProgram({programId}) is not set!");
-    }
+export async function deleteProgram(program: string | Program): Promise<DeleteProgramResponse> {
+    const programId = getProgramId(program);
 
-    const resp = await lightrail.request("DELETE", `programs/${encodeURIComponent(params.programId)}`);
+    const resp = await lightrail.request("DELETE", `programs/${encodeURIComponent(programId)}`);
 
     if (resp.status === 200) {
         return formatResponse(resp);
@@ -84,18 +84,16 @@ export async function deleteProgram(params: DeleteProgramParams): Promise<Delete
 // [ ISSUANCE ]
 
 // CREATE
-export async function createIssuance(params: CreateIssuanceParams): Promise<CreateIssuanceResponse> {
+export async function createIssuance(program: string | Program, params: CreateIssuanceParams): Promise<CreateIssuanceResponse> {
+    const programId = getProgramId(program);
+
     if (!params) {
-        throw new Error("createIssuance({programId, params:{}}) param object not set");
-    } else if (!params.programId) {
-        throw new Error("programId in createIssuance({programId, params:{}}) is no set!");
-    } else if (!params.values) {
-        throw new Error("params in createIssuance({programId, params:{}}) is no set!");
+        throw new Error("createIssuance(p) params not set");
     } else {
-        validateRequiredParams(["id"], params.values);
+        validateRequiredParams(["id"], params);
     }
 
-    const resp = await lightrail.request("POST", `programs/${encodeURIComponent(params.programId)}/issuances`).send(params.values);
+    const resp = await lightrail.request("POST", `programs/${encodeURIComponent(programId)}/issuances`).send(params);
     if (resp.status === 200 || resp.status === 201) {
         return formatResponse(resp);
     }
@@ -104,12 +102,10 @@ export async function createIssuance(params: CreateIssuanceParams): Promise<Crea
 }
 
 // READ
-export async function listIssuances(params: ListIssuancesParams): Promise<ListIssuancesResponse> {
-    if (!params.programId) {
-        throw new Error("programId in listIssuances({programId}) is no set!");
-    }
+export async function listIssuances(program: string | Program, params?: ListIssuancesParams): Promise<ListIssuancesResponse> {
+    const programId = getProgramId(program);
 
-    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(params.programId)}/issuances`).query(params.options);
+    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}/issuances`).query(params);
     if (resp.status === 200) {
         return formatResponse(resp);
     }
@@ -117,16 +113,15 @@ export async function listIssuances(params: ListIssuancesParams): Promise<ListIs
     throw new LightrailRequestError(resp);
 }
 
-export async function getIssuance(params: GetIssuanceParams): Promise<GetIssuanceResponse> {
+export async function getIssuance(program: string | Program, issuance: string | Issuance): Promise<GetIssuanceResponse> {
+    const programId = getProgramId(program);
+    const issuanceId = getIssuanceId(issuance);
 
-    if (!params.programId) {
-        throw new Error("programId in getIssuance({programId, issuanceId}) is no set!");
-    }
-    if (!params.issuanceId) {
-        throw new Error("issuanceId in getIssuance({programId, issuanceId}) is no set!");
+    if (!issuanceId) {
+        throw new Error("issuanceId in getIssuance(program, issuanceId) is no set!");
     }
 
-    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(params.programId)}/issuances/${encodeURIComponent(params.issuanceId)}`);
+    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}/issuances/${encodeURIComponent(issuanceId)}`);
     if (resp.status === 200) {
         return formatResponse(resp);
     }
