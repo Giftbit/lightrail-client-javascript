@@ -28,7 +28,7 @@ export async function createValue(params: CreateValueParams): Promise<CreateValu
 
 // READ
 export async function listValues(params?: ListValuesParams): Promise<ListValuesResponse> {
-    const resp = await lightrail.request("GET", "values").set("accept", (!!params && !!params.getCSV) ? "text/csv" : "application/json").query(formatFilterParams(params));
+    const resp = await lightrail.request("GET", "values").set("accept", (!!params && !!params.csv) ? "text/csv" : "application/json").query(formatFilterParams(params));
     if (resp.status === 200) {
         return (
             formatResponse(resp)

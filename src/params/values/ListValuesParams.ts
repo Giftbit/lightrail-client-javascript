@@ -3,7 +3,8 @@ import {Value} from "../../model/Value";
 import {FilterableNumber, FilterableString} from "../FilterableParams";
 import {PaginationParams} from "../PaginationParams";
 
-export interface ListValuesOptions extends PaginationParams {
+export interface ListValuesParams extends PaginationParams {
+    csv?: string;
     issuanceId?: string;
     showCode?: boolean;
     programId?: FilterableString;
@@ -21,11 +22,6 @@ export interface ListValuesOptions extends PaginationParams {
     createdDate?: FilterableString;
     updatedDate?: FilterableString;
     tags?: FilterableString;
-}
-
-export interface ListValuesParams extends PaginationParams {
-    getCSV?: string;
-    options?: ListValuesOptions;
 }
 
 export interface ListValuesResponse extends PaginatedLightrailResponse<Array<Value>> {
