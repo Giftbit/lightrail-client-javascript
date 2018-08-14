@@ -4,8 +4,6 @@ import {LightrailRequestError} from "./LightrailRequestError";
 import {
     CreateContactParams,
     CreateContactResponse,
-    DeleteContactParams,
-    GetContactParams,
     ListContactsParams,
     ListContactsResponse,
     UpdateContactParams
@@ -43,8 +41,10 @@ export async function listContacts(params?: ListContactsParams): Promise<ListCon
     throw new LightrailRequestError(resp);
 }
 
-export async function getContact(params: GetContactParams): Promise<GetContactResponse> {
-    const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(params.contactId)}`);
+export async function getContact(contact: string | Contact): Promise<GetContactResponse> {
+    const contactId = getContactId(contact);
+
+    const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(contactId)}`);
     if (resp.status === 200) {
         return (
             formatResponse(resp)
@@ -56,8 +56,10 @@ export async function getContact(params: GetContactParams): Promise<GetContactRe
 }
 
 // UPDATE
-export async function updateContact(params: UpdateContactParams): Promise<UpdateContactResponse> {
-    const resp = await lightrail.request("PATCH", `contacts/${encodeURIComponent(params.contactId)}`).send(params.values);
+export async function updateContact(contact: string | Contact, params: UpdateContactParams): Promise<UpdateContactResponse> {
+    const contactId = getContactId(contact);
+
+    const resp = await lightrail.request("PATCH", `contacts/${encodeURIComponent(contactId)}`).send(params);
     if (resp.status === 200) {
         return formatResponse(resp);
     }
@@ -65,8 +67,10 @@ export async function updateContact(params: UpdateContactParams): Promise<Update
 }
 
 // DELETE
-export async function deleteContact(params: DeleteContactParams): Promise<DeleteContactResponse> {
-    const resp = await lightrail.request("DELETE", `contacts/${encodeURIComponent(params.contactId)}`);
+export async function deleteContact(contact: string | Contact): Promise<DeleteContactResponse> {
+    const contactId = getContactId(contact);
+
+    const resp = await lightrail.request("DELETE", `contacts/${encodeURIComponent(contactId)}`);
     if (resp.status === 200) {
         return (
             formatResponse(resp)

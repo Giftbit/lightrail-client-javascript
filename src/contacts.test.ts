@@ -62,7 +62,7 @@ describe("contacts", () => {
 
     describe("getContact(id)", () => {
         it("gets the expected contact", async () => {
-            const contact = await Lightrail.contacts.getContact({contactId: id});
+            const contact = await Lightrail.contacts.getContact(id);
 
             chai.assert.isNotNull(contact);
             chai.assert.isString(contact.body.id);
@@ -83,7 +83,7 @@ describe("contacts", () => {
                 metadata: {deepestFear: "sharks"}
             };
 
-            const updatedContact = await Lightrail.contacts.updateContact({contactId: id, values: params});
+            const updatedContact = await Lightrail.contacts.updateContact(id, params);
 
             chai.assert.isNotNull(updatedContact);
             chai.assert.isString(updatedContact.body.id);
@@ -97,7 +97,7 @@ describe("contacts", () => {
 
     describe("deleteContact()", () => {
         it("deletes our contact using the id", async () => {
-            const deleted = await Lightrail.contacts.deleteContact({contactId: id});
+            const deleted = await Lightrail.contacts.deleteContact(id);
             chai.assert.isNotNull(deleted);
             chai.assert.isTrue(deleted.body.success);
 
