@@ -6,6 +6,7 @@ import {Issuance} from "../../../model/Issuance";
 
 export interface CreateIssuanceParams {
     id: string;
+    name: string;
     count: number;
     generateCode: CodeGenerationParams;
     code?: string;
