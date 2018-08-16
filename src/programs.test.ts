@@ -100,6 +100,7 @@ describe("/programs/issuance", () => {
         it("successfully generates and issuance", async () => {
             await Lightrail.programs.createIssuance(programID, {
                 id: testIssanceID,
+                name: "Custom Issuance Name",
                 count: 10,
                 balance: 500,
                 generateCode: {}
