@@ -16,11 +16,6 @@ export * from "./programs/issuance/CreateIssuanceParams";
 export * from "./programs/issuance/ListIssuancesParams";
 export * from "./programs/issuance/GetIssuanceParams";
 
-export * from "./transactions/CapturePendingTransactionParams";
-export * from "./transactions/CreateTransactionParams";
-export * from "./transactions/GetTransactionParams";
-export * from "./transactions/SimulateTransactionParams";
-export * from "./transactions/VoidPendingTransactionParams";
 
 export * from "./values/ChangeValuesCodeParams";
 export * from "./values/CreateValueParams";
