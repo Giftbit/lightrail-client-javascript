@@ -58,3 +58,36 @@ export interface Transaction {
     paymentSources: PaymentSource[];
     metadata: object;
 }
+
+export interface DebitSource {
+    rail: "lightrail";
+    code?: string;
+    contactId?: string;
+    valueId?: string;
+}
+
+export interface TransferSource extends DebitSource {
+    source?: string;
+    customer?: string;
+    maxAmount?: number;
+}
+
+export interface CheckoutSource {
+    rail: "lightrail" | "stripe" | "internal";
+    code?: string;
+    contactId?: string;
+    valueId?: string;
+    source?: string;
+    customer?: string;
+    maxAmount?: number;
+    id?: string;
+    balance?: number;
+    beforeLightrail?: boolean;
+}
+
+export interface TransactionDestination {
+    rail: "lightrail";
+    code?: string;
+    contactId?: string;
+    valueId?: string;
+}
