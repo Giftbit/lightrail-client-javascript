@@ -16,6 +16,12 @@ export * from "./programs/issuance/CreateIssuanceParams";
 export * from "./programs/issuance/ListIssuancesParams";
 export * from "./programs/issuance/GetIssuanceParams";
 
+export * from "./transactions/CheckoutParams";
+export * from "./transactions/DebitParams";
+export * from "./transactions/CreditParams";
+export * from "./transactions/TransferParams";
+export * from "./transactions/ListTransactionsParams";
+export * from "./transactions/GetTransactionParams";
 
 export * from "./values/ChangeValuesCodeParams";
 export * from "./values/CreateValueParams";

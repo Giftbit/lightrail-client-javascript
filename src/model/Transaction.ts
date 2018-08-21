@@ -20,6 +20,14 @@ export interface LightrailTransactionStep {
     balanceChange: number;
 }
 
+export interface ValueApplied {
+    id: string;
+    redemptionRule: string;
+    ruleExplination: string;
+    amount: number;
+    preTax: boolean;
+}
+
 export interface LineTotal {
     subtotal: number;
     taxable: number;
@@ -29,11 +37,21 @@ export interface LineTotal {
     payable: number;
 }
 
-export interface LineItem {
-    productId: string;
-    unitPrice: number;
-    quantity: number;
-    taxRate: number;
+export interface LineItemBase {
+    type?: "product" | "shipping" | "fee";
+    productId?: string;
+    variantId?: string;
+    unitPrice?: number;
+    quantity?: number;
+    taxRate?: number;
+    marketplaceRate?: number;
+    tags?: string[];
+    metadata?: object;
+    lineTotal?: LineTotal;
+}
+
+export interface LineItem extends LineItemBase {
+    valuesApplied: ValueApplied[];
     lineTotal: LineTotal;
 }
 

@@ -3,7 +3,7 @@ import {LightrailResponse} from "../LightrailResponse";
 
 export interface TransferParams {
     id: string;
-    sources: TransferSource;
+    source: TransferSource;
     destination: TransactionDestination;
     amount: number;
     currency: string;

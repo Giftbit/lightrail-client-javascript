@@ -1,10 +1,11 @@
 import {LightrailResponse} from "../LightrailResponse";
-import {CheckoutSource, LineItem, Transaction} from "../../model";
+import {CheckoutSource, Transaction} from "../../model";
+import {LineItemBase} from "../../model/Transaction";
 
 export interface CheckoutParams {
     id: string;
     currency: string;
-    lineItems?: LineItem[];
+    lineItems?: LineItemBase[];
     sources?: CheckoutSource[];
     simulate?: boolean;
     allowRemainder?: boolean;
