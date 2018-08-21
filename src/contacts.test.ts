@@ -105,4 +105,51 @@ describe("contacts", () => {
             chai.assert.isNull(contact);
         });
     });
+
+
+    // TEST ADDITIONAL ACTIONS USING PERSISTANT CONTACT
+    const attachToContactID = "TESTS_ATTACH_TO";
+
+    describe("attachContactToValue", () => {
+        it("attaches a new Value to the Contact", async () => {
+            // Create Value
+            const valueID = "ValueToAttachId";
+            let value = await Lightrail.values.getValue(valueID);
+            if (!value) {
+                value = await Lightrail.values.createValue({
+                    id: valueID,
+                    currency: "USD",
+                    balance: 33
+                });
+            }
+
+            // Create Contact and Attach Value
+            let contact = await Lightrail.contacts.getContact(attachToContactID);
+            if (!contact) {
+                await Lightrail.contacts.createContact({
+                    ...testContact,
+                    id: attachToContactID,
+                    email: "testAttach@fake.com"
+                });
+            }
+            const attachedValue = await Lightrail.contacts.attachContactToValue(attachToContactID, {valueId: valueID});
+
+            chai.assert.isNotNull(value);
+            chai.assert.isNotNull(attachedValue);
+            chai.assert.isNull(value.body.contactId);
+            chai.assert.equal(value.body.id, attachedValue.body.id);
+            chai.assert.notEqual(value.body.contactId, attachedValue.body.contactId);
+            chai.assert.equal(attachedValue.body.contactId, attachToContactID);
+        });
+    });
+
+    describe("listContactValues(id, params)", () => {
+        it("should list the values", async () => {
+            const list = await Lightrail.contacts.listContactsValues(attachToContactID, {limit: 1});
+
+            chai.assert.isNotNull(list);
+            chai.assert.isArray(list.body);
+            chai.assert.equal(list.body.length, 1);
+        });
+    });
 });

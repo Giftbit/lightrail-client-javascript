@@ -1,3 +1,4 @@
+// NOTE: Generic, not all Filterable types accept all (ie: tags is only in)
 export interface FilterTypes {
     lt: string | number;     // Less than (<)
     lte: string | number;    // Less than or equal to (<=)
