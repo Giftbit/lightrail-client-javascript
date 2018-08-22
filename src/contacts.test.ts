@@ -113,15 +113,12 @@ describe("contacts", () => {
     describe("attachContactToValue", () => {
         it("attaches a new Value to the Contact", async () => {
             // Create Value
-            const valueID = "ValueToAttachId";
-            let value = await Lightrail.values.getValue(valueID);
-            if (!value) {
-                value = await Lightrail.values.createValue({
+            const valueID = uuid.v4().substring(0, 20);
+            const value = await Lightrail.values.createValue({
                     id: valueID,
                     currency: "USD",
                     balance: 33
                 });
-            }
 
             // Create Contact and Attach Value
             let contact = await Lightrail.contacts.getContact(attachToContactID);

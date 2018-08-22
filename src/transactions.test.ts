@@ -50,8 +50,6 @@ describe("transactions", () => {
                 }
             });
 
-            console.log(credit.body);
-
             chai.assert.isNotNull(credit);
             chai.assert.equal(credit.body.transactionType, "credit");
         });
