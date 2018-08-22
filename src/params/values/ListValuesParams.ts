@@ -9,6 +9,7 @@ export interface ListValuesParams extends PaginationParams {
     showCode?: boolean;
     programId?: FilterableString;
     currency?: FilterableString;
+    code?: FilterableString;
     contactId?: FilterableString;
     balance?: FilterableNumber;
     uses?: FilterableNumber;
