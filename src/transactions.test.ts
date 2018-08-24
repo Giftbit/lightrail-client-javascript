@@ -8,9 +8,13 @@ describe("transactions", () => {
     const valueId = "transactionTestValueId";
 
     before(async () => {
-        chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
-        Lightrail.configure({
-            apiKey: process.env.LIGHTRAIL_API_KEY || "",
+        before(() => {
+            chai.assert.isString(process.env.LIGHTRAIL_API_PATH, "env var LIGHTRAIL_API_PATH must be set ot run the tests (for example set it in the .env file)");
+            chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
+            Lightrail.configure({
+                restRoot: process.env.LIGHTRAIL_API_PATH || "",
+                apiKey: process.env.LIGHTRAIL_API_KEY || "",
+            });
         });
 
         const value = await Lightrail.values.getValue(valueId);
@@ -70,7 +74,7 @@ describe("transactions", () => {
                 sources: [
                     {
                         rail: "lightrail",
-                        code: "THISIS_THE_TEST_VALUE_CODE"
+                        code: "TRANSACTION_TEST_CODE"
                     }
                 ]
             });
