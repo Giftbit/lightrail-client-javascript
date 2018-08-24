@@ -21,7 +21,7 @@ export {LightrailOptions, LightrailRequestError, contacts, model, params, progra
 export const configuration: LightrailOptions = {
     apiKey: null,
     isBrowser: false,
-    restRoot: "https://api.lightraildev.net/v2/",
+    restRoot: "https://api.lightrail.com/v2/",
     sharedSecret: null,
     logRequests: false,
     additionalHeaders: {}
