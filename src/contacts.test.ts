@@ -117,10 +117,10 @@ describe("contacts", () => {
             // Create Value
             const valueID = uuid.v4().substring(0, 20);
             const value = await Lightrail.values.createValue({
-                    id: valueID,
-                    currency: "USD",
-                    balance: 33
-                });
+                id: valueID,
+                currency: "USD",
+                balance: 33
+            });
 
             // Create Contact and Attach Value
             let contact = await Lightrail.contacts.getContact(attachToContactID);

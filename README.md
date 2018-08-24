@@ -246,8 +246,8 @@ The response will be similar to the following. Note that this is just a simulati
 
 **IMPORTANT: note that several environment variables are required for the tests to run.** After cloning the repo, `npm install` dependencies and set the following (either in a `.env` file in the root directory or however you prefer to set environment variables):
 
-- `LIGHTRAIL_API_PATH`: set to `https://api.lightraildev.net/v2`
-- `LIGHTRAIL_API_KEY`: dev mode API key
+- `LIGHTRAIL_API_PATH`: set to `https://api.lightrail.com/v2`
+- `LIGHTRAIL_API_KEY`: find this in to the Lightrail web app -- go to your [account settings](https://www.lightrail.com/app/#/account/profile), then click 'Integrations' and 'Generate Key.' **Note** that for running tests, you should use a test mode key.
 
 Then you can run `npm test`.
 
