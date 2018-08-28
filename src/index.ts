@@ -148,7 +148,7 @@ export function generateShopperToken(contactId: string, options?: GenerateShoppe
     }
 
     const merchantJwtPayload = jsonwebtoken.decode(configuration.apiKey) as any;
-    if (!merchantJwtPayload || !merchantJwtPayload.g || !merchantJwtPayload.g.gui) {
+    if (!merchantJwtPayload || !merchantJwtPayload.g || !merchantJwtPayload.g.gui || !merchantJwtPayload.g.tmi) {
         throw new Error("apiKey not valid");
     }
 
@@ -158,6 +158,7 @@ export function generateShopperToken(contactId: string, options?: GenerateShoppe
             g: {
                 gui: merchantJwtPayload.g.gui,
                 gmi: merchantJwtPayload.g.gmi,
+                tmi: merchantJwtPayload.g.tmi,
                 coi: contactId
             },
             metadata: metadata || undefined,

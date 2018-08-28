@@ -85,7 +85,7 @@ describe("index", () => {
     describe("generateShopperToken()", () => {
         it("signs a contactId", () => {
             index.configure({
-                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc",
                 sharedSecret: "secret"
             });
 
@@ -97,6 +97,7 @@ describe("index", () => {
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
                 gmi: "germie",
+                tmi: "teemie",
                 coi: "chauntaktEyeDee"
             });
             chai.assert.equal(payload.iss, "MERCHANT");
@@ -107,7 +108,7 @@ describe("index", () => {
 
         it("signs an empty contactId", () => {
             index.configure({
-                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc",
                 sharedSecret: "secret"
             });
 
@@ -119,6 +120,7 @@ describe("index", () => {
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
                 gmi: "germie",
+                tmi: "teemie",
                 coi: ""
             });
             chai.assert.equal(payload.iss, "MERCHANT");
@@ -129,11 +131,14 @@ describe("index", () => {
 
         it("signs a shopper token with metadata", () => {
             index.configure({
-                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc",
                 sharedSecret: "secret"
             });
 
-            const shopperToken = index.generateShopperToken("zhopherId", {validityInSeconds: 999, metadata: {foo: "xxxYYYzzz"}});
+            const shopperToken = index.generateShopperToken("zhopherId", {
+                validityInSeconds: 999,
+                metadata: {foo: "xxxYYYzzz"}
+            });
             chai.assert.isString(shopperToken);
 
             const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
@@ -141,6 +146,7 @@ describe("index", () => {
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
                 gmi: "germie",
+                tmi: "teemie",
                 coi: "zhopherId"
             });
             chai.assert.deepEqual(payload.metadata, {
@@ -150,6 +156,17 @@ describe("index", () => {
             chai.assert.isNumber(payload.iat);
             chai.assert.isNumber(payload.exp);
             chai.assert.equal(payload.exp, payload.iat + 999);
+        });
+
+        it("fails if the API key does not have a `tmi`", () => {
+            index.configure({
+                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                sharedSecret: "secret"
+            });
+
+            chai.assert.throws(() => {
+                index.generateShopperToken("chauntaktEyeDee", {validityInSeconds: 600});
+            });
         });
     });
 

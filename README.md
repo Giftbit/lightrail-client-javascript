@@ -246,17 +246,8 @@ The response will be similar to the following. Note that this is just a simulati
 
 **IMPORTANT: note that several environment variables are required for the tests to run.** After cloning the repo, `npm install` dependencies and set the following (either in a `.env` file in the root directory or however you prefer to set environment variables):
 
-- ` LIGHTRAIL_API_KEY`: find this in to the Lightrail web app -- go to your [account settings](https://www.lightrail.com/app/#/account/profile), then click 'API keys' and 'Generate Key.' **Note** that for running tests, you should use a test mode key.
-
-
-- `CARD_ID`: this is the `cardId` for a USD card with at least a few dollars on it.
-
-
-- `SHOPPER_ID`: the userSuppliedId for a Lightrail contact with a USD account
-
-
-- `CONTACT_ID`: the Lightrail-generated contactId for the same contact
-
+- `LIGHTRAIL_API_PATH`: set to `https://api.lightrail.com/v2`
+- `LIGHTRAIL_API_KEY`: find this in to the Lightrail web app -- go to your [account settings](https://www.lightrail.com/app/#/account/profile), then click 'Integrations' and 'Generate Key.' **Note** that for running tests, you should use a test mode key.
 
 Then you can run `npm test`.
 
