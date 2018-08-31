@@ -1,31 +1,53 @@
-export interface PaymentSource {
-    rail: string;
+export type TransactionParty = LightrailTransactionParty | StripeTransactionParty | InternalTransactionParty;
 
-    [key: string]: string;
+export interface LightrailTransactionParty {
+    rail: "lightrail";
+    contactId?: string;
+    code?: string;
+    valueId?: string;
 }
 
-export interface TransactionStep {
-    rail: string;
-
-    [key: string]: object | string | number;
+export interface StripeTransactionParty {
+    rail: "stripe";
+    source?: string;
+    customer?: string;
+    maxAmount?: number;
+    priority?: number;
 }
+
+export interface InternalTransactionParty {
+    rail: "internal";
+    internalId: string;
+    balance: number;
+    pretax?: boolean;
+    beforeLightrail?: boolean;
+}
+
+export type TransactionStep = LightrailTransactionStep | StripeTransactionStep | InternalTransactionStep;
 
 export interface LightrailTransactionStep {
-    rail: string;
+    rail: "lightrail";
     valueId: string;
-    contactId: string;
-    code: string;
+    contactId?: string;
+    code?: string;
     balanceBefore: number;
     balanceAfter: number;
     balanceChange: number;
 }
 
-export interface ValueApplied {
-    id: string;
-    redemptionRule: string;
-    ruleExplination: string;
+export interface StripeTransactionStep {
+    rail: "stripe";
     amount: number;
-    preTax: boolean;
+    chargeId?: string;
+    charge?: any; // Stripe ICharge
+}
+
+export interface InternalTransactionStep {
+    rail: "internal";
+    internalId: string;
+    balanceBefore: number;
+    balanceAfter: number;
+    balanceChange: number;
 }
 
 export interface LineTotal {
@@ -51,7 +73,6 @@ export interface LineItemBase {
 }
 
 export interface LineItem extends LineItemBase {
-    valuesApplied: ValueApplied[];
     lineTotal: LineTotal;
 }
 
@@ -63,7 +84,7 @@ export interface TransactionTotals {
     remainder?: number;
 }
 
-export type TransactionType = "debit" | "credit" | "checkout" | "transfer";
+export type TransactionType = "debit" | "credit" | "checkout" | "transfer" | string;
 
 export interface Transaction {
     id: string;
@@ -72,8 +93,8 @@ export interface Transaction {
     createdDate: string;
     totals: TransactionTotals;
     lineItems: LineItem[];
-    steps: Array<LightrailTransactionStep | TransactionStep>;
-    paymentSources: PaymentSource[];
+    steps: TransactionStep[];
+    paymentSources: TransactionParty[];
     metadata: object;
 }
 
