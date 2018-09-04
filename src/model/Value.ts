@@ -1,22 +1,26 @@
 import {ValueRule} from "./ValueRule";
 import {RedemptionRule} from "./RedemptionRule";
 
-export interface Program {
+export interface Value {
     id: string;
-    name: string;
     currency: string;
-    discount: boolean;
-    discountSellerLiability: number;
+    balance: number;
+    uses: number;
+    programId: string;
+    code: string;
+    isGenericCode: boolean;
+    contactId: string;
     preTax: boolean;
     active: boolean;
+    frozen: boolean;
+    canceled: boolean;
     redemptionRule: RedemptionRule;
     valueRule: ValueRule;
-    minInitialBalance: number;
-    maxInitialBalance: number;
-    fixedInitialBalances: number[];
-    fixedInitialUses: number[];
+    discount: boolean;
+    discountSellerLiability: number;
     startDate: string;
     endDate: string;
+    tags: string[];
     metadata: object;
     createdDate: string;
     updatedDate: string;

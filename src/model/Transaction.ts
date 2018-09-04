@@ -1,39 +1,132 @@
-import {TransactionBreakdown} from "./TransactionBreakdown";
+export type TransactionParty = LightrailTransactionParty | StripeTransactionParty | InternalTransactionParty;
 
-export interface Transaction {
-    transactionId: string;
-    value: number;
-    userSuppliedId: string;
-    dateCreated: string;
-    transactionType: Transaction.TransactionType;
-    transactionAccessMethod: Transaction.TransactionAccessMethod;
-    parentTransactionId: string;
-    cardId: string;
-    currency: string;
-    transactionBreakdown: TransactionBreakdown[];
-    metadata: {[key: string]: any};
+export interface LightrailTransactionParty {
+    rail: "lightrail";
+    contactId?: string;
+    code?: string;
+    valueId?: string;
 }
 
-export namespace Transaction {
-    export type TransactionType = "DRAWDOWN" | "FUND" | "INITIAL_VALUE" | "CANCELLATION" | "INACTIVATE" | "ACTIVATE" | "FREEZE" | "UNFREEZE" | "PENDING_CREATE" | "PENDING_VOID" | "PENDING_CAPTURE" | "DRAWDOWN_REFUND";
-    export namespace TransactionType {
-        export const DRAWDOWN: TransactionType = "DRAWDOWN";
-        export const FUND: TransactionType = "FUND";
-        export const INITIAL_VALUE: TransactionType = "INITIAL_VALUE";
-        export const CANCELLATION: TransactionType = "CANCELLATION";
-        export const INACTIVATE: TransactionType = "INACTIVATE";
-        export const ACTIVATE: TransactionType = "ACTIVATE";
-        export const FREEZE: TransactionType = "FREEZE";
-        export const UNFREEZE: TransactionType = "UNFREEZE";
-        export const PENDING_CREATE: TransactionType = "PENDING_CREATE";
-        export const PENDING_VOID: TransactionType = "PENDING_VOID";
-        export const PENDING_CAPTURE: TransactionType = "PENDING_CAPTURE";
-        export const DRAWDOWN_REFUND: TransactionType = "DRAWDOWN_REFUND";
-    }
+export interface StripeTransactionParty {
+    rail: "stripe";
+    source?: string;
+    customer?: string;
+    maxAmount?: number;
+    priority?: number;
+}
 
-    export type TransactionAccessMethod = "CARDID" | "RAWCODE";
-    export namespace TransactionAccessMethod {
-        export const CARDID: TransactionAccessMethod = "CARDID";
-        export const RAWCODE: TransactionAccessMethod = "RAWCODE";
-    }
+export interface InternalTransactionParty {
+    rail: "internal";
+    internalId: string;
+    balance: number;
+    pretax?: boolean;
+    beforeLightrail?: boolean;
+}
+
+export type TransactionStep = LightrailTransactionStep | StripeTransactionStep | InternalTransactionStep;
+
+export interface LightrailTransactionStep {
+    rail: "lightrail";
+    valueId: string;
+    contactId?: string;
+    code?: string;
+    balanceBefore: number;
+    balanceAfter: number;
+    balanceChange: number;
+}
+
+export interface StripeTransactionStep {
+    rail: "stripe";
+    amount: number;
+    chargeId?: string;
+    charge?: any; // Stripe ICharge
+}
+
+export interface InternalTransactionStep {
+    rail: "internal";
+    internalId: string;
+    balanceBefore: number;
+    balanceAfter: number;
+    balanceChange: number;
+}
+
+export interface LineTotal {
+    subtotal: number;
+    taxable: number;
+    tax: number;
+    discount: number;
+    remainder: number;
+    payable: number;
+}
+
+export interface LineItemBase {
+    type?: "product" | "shipping" | "fee";
+    productId?: string;
+    variantId?: string;
+    unitPrice?: number;
+    quantity?: number;
+    taxRate?: number;
+    marketplaceRate?: number;
+    tags?: string[];
+    metadata?: object;
+    lineTotal?: LineTotal;
+}
+
+export interface LineItem extends LineItemBase {
+    lineTotal: LineTotal;
+}
+
+export interface TransactionTotals {
+    subtotal?: number;
+    tax?: number;
+    discount?: number;
+    payable?: number;
+    remainder?: number;
+}
+
+export type TransactionType = "debit" | "credit" | "checkout" | "transfer" | string;
+
+export interface Transaction {
+    id: string;
+    transactionType: TransactionType;
+    currency: string;
+    createdDate: string;
+    totals: TransactionTotals;
+    lineItems: LineItem[];
+    steps: TransactionStep[];
+    paymentSources: TransactionParty[];
+    metadata: object;
+}
+
+export interface DebitSource {
+    rail: "lightrail";
+    code?: string;
+    contactId?: string;
+    valueId?: string;
+}
+
+export interface TransferSource extends DebitSource {
+    source?: string;
+    customer?: string;
+    maxAmount?: number;
+}
+
+export interface CheckoutSource {
+    rail: "lightrail" | "stripe" | "internal";
+    code?: string;
+    contactId?: string;
+    valueId?: string;
+    source?: string;
+    customer?: string;
+    maxAmount?: number;
+    id?: string;
+    balance?: number;
+    beforeLightrail?: boolean;
+}
+
+export interface TransactionDestination {
+    rail: "lightrail";
+    code?: string;
+    contactId?: string;
+    valueId?: string;
 }

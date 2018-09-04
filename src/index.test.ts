@@ -1,8 +1,8 @@
 import * as chai from "chai";
 import * as jsonwebtoken from "jsonwebtoken";
-import * as index from "./";
+import * as index from "./index";
+import {formatFilterParams} from "./requestUtils";
 import * as http from "http";
-import mitm = require("mitm");
 
 describe("index", () => {
     describe("configure()", () => {
@@ -18,7 +18,7 @@ describe("index", () => {
         afterEach(() => {
             index.configure({
                 apiKey: "",
-                restRoot: "https://api.lightrail.com/v1/"
+                restRoot: process.env.LIGHTRAIL_API_PATH
             });
             if (mitmInstance) {
                 mitmInstance.disable();
@@ -50,14 +50,14 @@ describe("index", () => {
                 res.end(JSON.stringify({success: true}));
             });
 
-            await index.cards.createCard({userSuppliedId: "someId", cardType: "ACCOUNT_CARD"});
+            await index.contacts.createContact({id: "someId", firstName: "Some", lastName: "Name"});
             chai.assert.isTrue(mitmHit);
         });
 
         it.skip("configure additionalHeaders is set correctly", async () => {
             index.configure({
                 apiKey: "does.not.matter",
-                restRoot: "https://api.lightrail.com/v1/",
+                restRoot: "https://api.lightrail.com/v2/",
                 additionalHeaders: {
                     headerone: "this is header one",
                     headertwo: "this is header two"
@@ -77,7 +77,7 @@ describe("index", () => {
                 res.end(JSON.stringify({success: true}));
             });
 
-            await index.cards.createCard({userSuppliedId: "someId", cardType: "ACCOUNT_CARD"});
+            await index.contacts.createContact({id: "someId", firstName: "Some", lastName: "Name"});
             chai.assert.isTrue(mitmHit);
         });
     });
@@ -85,11 +85,11 @@ describe("index", () => {
     describe("generateShopperToken()", () => {
         it("signs a contactId", () => {
             index.configure({
-                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc",
                 sharedSecret: "secret"
             });
 
-            const shopperToken = index.generateShopperToken({contactId: "chauntaktEyeDee"}, 600);
+            const shopperToken = index.generateShopperToken("chauntaktEyeDee", {validityInSeconds: 600});
             chai.assert.isString(shopperToken);
 
             const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
@@ -97,6 +97,7 @@ describe("index", () => {
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
                 gmi: "germie",
+                tmi: "teemie",
                 coi: "chauntaktEyeDee"
             });
             chai.assert.equal(payload.iss, "MERCHANT");
@@ -105,13 +106,13 @@ describe("index", () => {
             chai.assert.equal(payload.exp, payload.iat + 600);
         });
 
-        it("signs a contact userSuppliedId", () => {
+        it("signs an empty contactId", () => {
             index.configure({
-                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc",
                 sharedSecret: "secret"
             });
 
-            const shopperToken = index.generateShopperToken({userSuppliedId: "luserSuppliedId"}, 600);
+            const shopperToken = index.generateShopperToken("", {validityInSeconds: 600});
             chai.assert.isString(shopperToken);
 
             const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
@@ -119,7 +120,8 @@ describe("index", () => {
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
                 gmi: "germie",
-                cui: "luserSuppliedId"
+                tmi: "teemie",
+                coi: ""
             });
             chai.assert.equal(payload.iss, "MERCHANT");
             chai.assert.isNumber(payload.iat);
@@ -127,13 +129,16 @@ describe("index", () => {
             chai.assert.equal(payload.exp, payload.iat + 600);
         });
 
-        it("signs a shopperId", () => {
+        it("signs a shopper token with metadata", () => {
             index.configure({
-                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc",
                 sharedSecret: "secret"
             });
 
-            const shopperToken = index.generateShopperToken({shopperId: "zhopherId"}, 600);
+            const shopperToken = index.generateShopperToken("zhopherId", {
+                validityInSeconds: 999,
+                metadata: {foo: "xxxYYYzzz"}
+            });
             chai.assert.isString(shopperToken);
 
             const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
@@ -141,51 +146,8 @@ describe("index", () => {
             chai.assert.deepEqual(payload.g, {
                 gui: "gooey",
                 gmi: "germie",
-                shi: "zhopherId"
-            });
-            chai.assert.equal(payload.iss, "MERCHANT");
-            chai.assert.isNumber(payload.iat);
-            chai.assert.isNumber(payload.exp);
-            chai.assert.equal(payload.exp, payload.iat + 600);
-        });
-
-        it("signs an empty shopperId", () => {
-            index.configure({
-                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
-                sharedSecret: "secret"
-            });
-
-            const shopperToken = index.generateShopperToken({shopperId: ""}, 600);
-            chai.assert.isString(shopperToken);
-
-            const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
-            chai.assert.isObject(payload);
-            chai.assert.deepEqual(payload.g, {
-                gui: "gooey",
-                gmi: "germie",
-                shi: ""
-            });
-            chai.assert.equal(payload.iss, "MERCHANT");
-            chai.assert.isNumber(payload.iat);
-            chai.assert.isNumber(payload.exp);
-            chai.assert.equal(payload.exp, payload.iat + 600);
-        });
-
-        it("signs a shopper token with additional IDs", () => {
-            index.configure({
-                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
-                sharedSecret: "secret"
-            });
-
-            const shopperToken = index.generateShopperToken({shopperId: "zhopherId"}, {validityInSeconds: 999, metadata: {foo: "xxxYYYzzz"}});
-            chai.assert.isString(shopperToken);
-
-            const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
-            chai.assert.isObject(payload);
-            chai.assert.deepEqual(payload.g, {
-                gui: "gooey",
-                gmi: "germie",
-                shi: "zhopherId"
+                tmi: "teemie",
+                coi: "zhopherId"
             });
             chai.assert.deepEqual(payload.metadata, {
                 foo: "xxxYYYzzz"
@@ -194,6 +156,34 @@ describe("index", () => {
             chai.assert.isNumber(payload.iat);
             chai.assert.isNumber(payload.exp);
             chai.assert.equal(payload.exp, payload.iat + 999);
+        });
+
+        it("fails if the API key does not have a `tmi`", () => {
+            index.configure({
+                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                sharedSecret: "secret"
+            });
+
+            chai.assert.throws(() => {
+                index.generateShopperToken("chauntaktEyeDee", {validityInSeconds: 600});
+            });
+        });
+    });
+
+    describe("formatFilterParams(p)", () => {
+        it("handles null or blank params object", () => {
+            chai.assert.deepEqual(formatFilterParams({}), {});
+            chai.assert.deepEqual(formatFilterParams(null), {});
+        });
+
+        it("doesn't modify a normal object", () => {
+            const obj = {test: 1, test2: "test2"};
+            chai.assert.deepEqual(formatFilterParams(obj), obj);
+        });
+
+        it("formats objects with nested values in the key.key format", () => {
+            const obj = {test: 1, test2: "test2", test3: {gt: 4, lt: 8}};
+            chai.assert.deepEqual(formatFilterParams(obj), {test: 1, test2: "test2", "test3.gt": 4, "test3.lt": 8});
         });
     });
 });
