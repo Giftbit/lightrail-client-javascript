@@ -95,15 +95,16 @@ export type TransactionType = "debit" | "credit" | "checkout" | "transfer" | str
 
 export interface Transaction {
     id: string;
-    tax: TaxRequestProperties;
+    tax: TaxRequestProperties | null;
     transactionType: TransactionType;
     currency: string;
     createdDate: string;
     totals: TransactionTotals;
     lineItems: LineItem[];
     steps: TransactionStep[];
-    paymentSources: TransactionParty[];
-    metadata: object;
+    paymentSources: TransactionParty[] | null;
+    metadata: object | null;
+    createdBy: string;
 }
 
 export interface DebitSource {
