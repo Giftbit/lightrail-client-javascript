@@ -1,21 +1,21 @@
-import {ValueRule} from "./ValueRule";
+import {BalanceRule} from "./BalanceRule";
 import {RedemptionRule} from "./RedemptionRule";
 
 export interface Value {
     id: string;
     currency: string;
     balance: number;
-    uses: number;
+    balanceRule: BalanceRule;
+    usesRemaining: number;
     programId: string;
     code: string;
     isGenericCode: boolean;
     contactId: string;
-    preTax: boolean;
+    pretax: boolean;
     active: boolean;
     frozen: boolean;
     canceled: boolean;
     redemptionRule: RedemptionRule;
-    valueRule: ValueRule;
     discount: boolean;
     discountSellerLiability: number;
     startDate: string;

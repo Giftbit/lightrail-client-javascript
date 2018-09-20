@@ -1,4 +1,4 @@
-import {ValueRule} from "./ValueRule";
+import {BalanceRule} from "./BalanceRule";
 import {RedemptionRule} from "./RedemptionRule";
 
 export interface Program {
@@ -7,14 +7,14 @@ export interface Program {
     currency: string;
     discount: boolean;
     discountSellerLiability: number;
-    preTax: boolean;
+    pretax: boolean;
     active: boolean;
     redemptionRule: RedemptionRule;
-    valueRule: ValueRule;
+    balanceRule: BalanceRule;
     minInitialBalance: number;
     maxInitialBalance: number;
     fixedInitialBalances: number[];
-    fixedInitialUses: number[];
+    fixedInitialUsesRemaining: number[];
     startDate: string;
     endDate: string;
     metadata: object;

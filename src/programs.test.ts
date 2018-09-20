@@ -1,6 +1,10 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
+import chaiExclude = require("chai-exclude");
+import {CreateIssuanceParams, CreateProgramParams} from "./params";
+
+chai.use(chaiExclude);
 
 describe("programs", () => {
     before(() => {
@@ -17,15 +21,40 @@ describe("programs", () => {
     // CREATE
     describe("createProgram()", () => {
         it("creates a program", async () => {
-            const program = await Lightrail.programs.createProgram({
+            const request: CreateProgramParams = {
                 id: testID,
                 name: "javascript programs unit test",
                 currency: "USD",
-            });
-
+                discount: false,
+                discountSellerLiability: 0,
+                pretax: false,
+                active: true,
+                redemptionRule: {
+                    rule: "1 == 1",
+                    explanation: "true"
+                },
+                balanceRule: {
+                    rule: "100",
+                    explanation: "$1",
+                },
+                minInitialBalance: null, // must be null if balanceRule
+                maxInitialBalance: null, // must be null if balanceRule
+                fixedInitialBalances: null, // must be null if balanceRule
+                fixedInitialUsesRemaining: [1],
+                startDate: new Date("3030-01-01").toISOString(),
+                endDate: new Date("4040-01-01").toISOString(),
+                metadata: {
+                    description: "a whole lotta program"
+                }
+            };
+            const program = await Lightrail.programs.createProgram(request);
             chai.assert.isNotNull(program);
-            chai.assert.isString(program.body.id);
-            chai.assert.equal(program.body.id, testID);
+            chai.assert.deepEqualExcluding(program.body, request,
+                [
+                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate",
+                    "fixedInitialUses" /* this has been deprecated in V2 to fixedInitialUsesRemaining but is still being returned */,
+                    "valueRule" /* this has been deprecated in V2 to balanceRule but is still being returned */
+                ]);
         });
     });
 
@@ -108,6 +137,25 @@ describe("/programs/issuance", () => {
                 balance: 500,
                 generateCode: {}
             });
+        });
+    });
+
+    describe("createIssuance(params) with usesRemaining and balanceRule", () => {
+        it("successfully generates and issuance", async () => {
+            const request: CreateIssuanceParams = {
+                id: uuid.v4().substring(0, 24),
+                name: "Custom Issuance Name",
+                count: 1,
+                balanceRule: {
+                    rule: "100",
+                    explanation: "$1"
+                },
+                usesRemaining: 1,
+                generateCode: {}
+            };
+            const issuance = await Lightrail.programs.createIssuance(programID, request);
+            chai.assert.deepEqual(issuance.body.balanceRule, request.balanceRule);
+            chai.assert.equal(issuance.body.usesRemaining, request.usesRemaining);
         });
     });
 

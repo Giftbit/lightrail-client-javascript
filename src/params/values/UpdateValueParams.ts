@@ -1,16 +1,16 @@
 import {LightrailResponse} from "../LightrailResponse";
 import {Value} from "../../model/Value";
-import {ValueRule} from "../../model/ValueRule";
+import {BalanceRule} from "../../model/BalanceRule";
 import {RedemptionRule} from "../../model/RedemptionRule";
 
 export interface UpdateValueParams {
     contactId?: string;
-    preTax?: boolean;
+    pretax?: boolean;
     active?: boolean;
     frozen?: boolean;
     canceled?: boolean;
     redemptionRule?: RedemptionRule;
-    valueRule?: ValueRule;
+    balanceRule?: BalanceRule;
     discount?: boolean;
     discountSellerLiability?: number;
     startDate?: string;

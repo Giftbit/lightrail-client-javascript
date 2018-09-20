@@ -7,12 +7,12 @@ export interface ListContactsValuesParams extends PaginationParams {
     programId?: FilterableString;
     currency?: FilterableString;
     balance?: FilterableNumber;
-    uses?: FilterableNumber;
+    usesRemaining?: FilterableNumber;
     discount?: boolean;
     active?: boolean;
     frozen?: boolean;
     canceled?: boolean;
-    preTax?: boolean;
+    pretax?: boolean;
     startDate?: FilterableString;
     endDate?: FilterableString;
     createdDate?: FilterableString;

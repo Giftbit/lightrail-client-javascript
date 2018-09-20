@@ -12,12 +12,12 @@ export interface ListValuesParams extends PaginationParams {
     code?: FilterableString;
     contactId?: FilterableString;
     balance?: FilterableNumber;
-    uses?: FilterableNumber;
+    usesRemaining?: FilterableNumber;
     discount?: boolean;
     active?: boolean;
     frozen?: boolean;
     canceled?: boolean;
-    preTax?: boolean;
+    pretax?: boolean;
     startDate?: FilterableString;
     endDate?: FilterableString;
     createdDate?: FilterableString;

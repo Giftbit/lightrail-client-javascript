@@ -1,5 +1,5 @@
 import {RedemptionRule} from "../../../model/RedemptionRule";
-import {ValueRule} from "../../../model/index";
+import {BalanceRule} from "../../../model/index";
 import {CodeGenerationParams} from "../CodeGenerationParams";
 import {LightrailResponse} from "../../LightrailResponse";
 import {Issuance} from "../../../model/Issuance";
@@ -12,11 +12,11 @@ export interface CreateIssuanceParams {
     code?: string;
     isGenericCode?: boolean;
     balance?: number;
-    uses?: number;
+    usesRemaining?: number;
     startDate?: string;
     endDate?: string;
     redemptionRule?: RedemptionRule;
-    valueRule?: ValueRule;
+    balanceRule?: BalanceRule;
     metadata?: object;
     createdDate?: string;
     updateDate?: string;

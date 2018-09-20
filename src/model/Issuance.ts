@@ -1,5 +1,5 @@
 import {RedemptionRule} from "./RedemptionRule";
-import {ValueRule} from "./ValueRule";
+import {BalanceRule} from "./BalanceRule";
 
 export interface Issuance {
     id: string;
@@ -7,9 +7,9 @@ export interface Issuance {
     programId: string;
     count: number;
     balance: number;
+    balanceRule: BalanceRule;
     redemptionRule: RedemptionRule;
-    valueRule: ValueRule;
-    uses: number;
+    usesRemaining: number;
     startDate: string;
     endDate: string;
     metadata: object;

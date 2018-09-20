@@ -5,11 +5,11 @@ export interface UpdateProgramParams {
     name?: string;
     active?: boolean;
     discount?: boolean;
-    preTax?: boolean;
+    pretax?: boolean;
     minInitialBalance?: number;
     maxInitialBalance?: number;
     fixedInitialBalances?: number[];
-    fixedInitialUses?: number[];
+    fixedInitialUsesRemaining?: number[];
     startDate?: string;
     endDate?: string;
     metadata?: object;

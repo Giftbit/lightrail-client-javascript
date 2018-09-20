@@ -1,23 +1,22 @@
 import {Program} from "../../model";
 import {LightrailResponse} from "../LightrailResponse";
-import {ValueRule} from "../../model/ValueRule";
+import {BalanceRule} from "../../model/BalanceRule";
 import {RedemptionRule} from "../../model/RedemptionRule";
 
 export interface CreateProgramParams {
     id: string;
     currency: string;
-
     name?: string;
     discount?: boolean;
     discountSellerLiability?: number;
-    preTax?: boolean;
+    pretax?: boolean;
     active?: boolean;
     redemptionRule?: RedemptionRule;
-    valueRule?: ValueRule;
+    balanceRule?: BalanceRule;
     minInitialBalance?: number;
     maxInitialBalance?: number;
     fixedInitialBalances?: number[];
-    fixedInitialUses?: number[];
+    fixedInitialUsesRemaining?: number[];
     startDate?: string;
     endDate?: string;
     metadata?: object;
