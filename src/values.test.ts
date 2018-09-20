@@ -166,7 +166,6 @@ describe("values", () => {
             chai.assert.isNotNull(value.body);
         });
 
-
         it("successful delete", async () => {
             const response = await Lightrail.values.deleteValue(valueId);
             chai.assert.isNotNull(response);
