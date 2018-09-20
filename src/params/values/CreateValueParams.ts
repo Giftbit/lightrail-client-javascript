@@ -18,7 +18,7 @@ export interface CreateValueParams {
     redemptionRule?: RedemptionRule;
     balanceRule?: BalanceRule;
     usesRemaining?: number;
-    pretax?: boolean,
+    pretax?: boolean;
     startDate?: string;
     endDate?: string;
     metadata?: object;
