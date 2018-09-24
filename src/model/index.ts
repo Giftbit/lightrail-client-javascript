@@ -3,4 +3,4 @@ export * from "../params/PaginatedResponse";
 export * from "./Program";
 export * from "./Transaction";
 export * from "./Value";
-export * from "./ValueRule";
+export * from "./BalanceRule";

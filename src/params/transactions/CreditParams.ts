@@ -6,7 +6,7 @@ export interface CreditParams {
     destination: TransactionDestination;
     amount: number;
     currency: string;
-    uses?: number;
+    usesRemaining?: number;
     simulate?: boolean;
     pending?: boolean;
     metadata?: object;

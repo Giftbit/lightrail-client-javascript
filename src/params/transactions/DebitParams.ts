@@ -6,7 +6,7 @@ export interface DebitParams {
     source: DebitSource;
     amount: number;
     currency: string;
-    uses?: number;
+    usesRemaining?: number;
     simulate?: boolean;
     allowRemainder?: boolean;
     pending?: boolean;

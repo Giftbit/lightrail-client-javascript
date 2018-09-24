@@ -24,7 +24,7 @@ describe("transactions", () => {
                 id: valueId,
                 code: "TRANSACTION_TEST_CODE",
                 currency: "USD",
-                balance: 0
+                balance: 0 // must be 0 for totals test
             });
         }
 
@@ -81,6 +81,17 @@ describe("transactions", () => {
 
             chai.assert.isNotNull(transaction);
             chai.assert.equal(transaction.body.transactionType, "checkout");
+            chai.assert.deepEqual(transaction.body.totals, {
+                discount: 0,
+                discountLightrail: 0,
+                paidInternal: 0,
+                paidLightrail: 100000,
+                paidStripe: 0,
+                payable: 100000,
+                remainder: 0,
+                subtotal: 100000,
+                tax: 0,
+            })
         });
     });
 

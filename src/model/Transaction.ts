@@ -80,6 +80,10 @@ export interface TransactionTotals {
     subtotal?: number;
     tax?: number;
     discount?: number;
+    discountLightrail?: number;
+    paidLightrail?: number;
+    paidStripe?: number;
+    paidInternal?: number;
     payable?: number;
     remainder?: number;
 }

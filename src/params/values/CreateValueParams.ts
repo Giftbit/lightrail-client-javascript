@@ -1,6 +1,6 @@
 import {Value} from "../../model/Value";
 import {LightrailResponse} from "../LightrailResponse";
-import {ValueRule} from "../../model/ValueRule";
+import {BalanceRule} from "../../model/BalanceRule";
 import {RedemptionRule} from "../../model/RedemptionRule";
 
 export interface CreateValueParams {
@@ -16,8 +16,9 @@ export interface CreateValueParams {
     discount?: boolean;
     discountSellerLiability?: number;
     redemptionRule?: RedemptionRule;
-    valueRule?: ValueRule;
-    uses?: number;
+    balanceRule?: BalanceRule;
+    usesRemaining?: number;
+    pretax?: boolean;
     startDate?: string;
     endDate?: string;
     metadata?: object;

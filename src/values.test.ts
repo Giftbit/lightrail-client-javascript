@@ -1,7 +1,9 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
+import chaiExclude = require("chai-exclude");
 import {CreateValueParams} from "./params/values/CreateValueParams";
+chai.use(chaiExclude);
 
 describe("values", () => {
     before(() => {
@@ -13,13 +15,27 @@ describe("values", () => {
         });
     });
 
-    const testValueId = "testValue";
+    const testValueId = uuid.v4().substring(0, 24);
     const testValue: CreateValueParams = {
         id: testValueId,
         currency: "USD",
-        uses: 1,
         code: uuid.v4().substring(0, 12),
+        contactId: null,
+        isGenericCode: false,
+        balance: 500,
         active: true,
+        frozen: false,
+        discount: true,
+        pretax: true,
+        discountSellerLiability: 1,
+        redemptionRule: {
+            rule: "1 == 1",
+            explanation: "true"
+        },
+        balanceRule: null,
+        usesRemaining: 1,
+        startDate: new Date("3030-01-01").toISOString(),
+        endDate: new Date("4040-01-01").toISOString(),
         metadata: {
             deepestFear: "spiders"
         }
@@ -30,12 +46,29 @@ describe("values", () => {
             const value = await Lightrail.values.createValue(testValue);
 
             chai.assert.isNotNull(value);
-            chai.assert.isNotNull(value.body);
-            chai.assert.isString(value.body.id);
-            chai.assert.equal(value.body.id, testValueId);
-            chai.assert.equal(value.body.programId, testValue.programId);
-            chai.assert.equal(value.body.currency, testValue.currency);
-            chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
+            chai.assert.deepEqualExcluding(value.body, testValue,
+                [
+                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate", "code", "issuanceId", "updatedContactIdDate", "canceled", "programId",
+                    "uses" /* this has been deprecated in V2 to usesRemaining but is still being returned */,
+                    "valueRule" /* this has been deprecated in V2 to balanceRule but is still being returned */
+                ]);
+        });
+    });
+
+    describe("createValue(value) all properties", () => {
+        it("creates the expected value", async () => {
+            let request = {
+                id: uuid.v4().substring(0, 24),
+                currency: "USD",
+                balanceRule: {
+                    rule: "500",
+                    explanation: "$5"
+                }
+            };
+
+            const value = await Lightrail.values.createValue(request);
+            chai.assert.isNotNull(value);
+            chai.assert.deepEqual(value.body.balanceRule, request.balanceRule);
         });
     });
 
@@ -113,7 +146,7 @@ describe("values", () => {
         it("changes the code", async () => {
             const value = await Lightrail.values.changeValuesCode(
                 testValueId,
-                {code: "haberdashery"}
+                {code: uuid.v4().substring(0, 7)+"haberdashery"}
             );
 
             chai.assert.isNotNull(value);
@@ -123,9 +156,18 @@ describe("values", () => {
     });
 
     describe("deleteValue(value)", () => {
-        it("successful delete", async () => {
-            const response = await Lightrail.values.deleteValue(testValueId);
+        const valueId = uuid.v4().substring(0, 24);
+        it("create a value with 0 balance so that no transactions are created so that it can be deleted", async () => {
+            const value = await Lightrail.values.createValue({
+                id: valueId,
+                currency: "USD",
+                balance: 0
+            });
+            chai.assert.isNotNull(value.body);
+        });
 
+        it("successful delete", async () => {
+            const response = await Lightrail.values.deleteValue(valueId);
             chai.assert.isNotNull(response);
             chai.assert.isNotNull(response.body);
             chai.assert.isTrue(response.body.success);
