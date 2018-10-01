@@ -1,3 +1,3 @@
 export interface FormattingParams {
-    formatCurrencyUnits?: boolean
+    formatCurrencies?: boolean
 }
