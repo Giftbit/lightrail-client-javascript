@@ -91,7 +91,7 @@ describe("transactions", () => {
                 remainder: 0,
                 subtotal: 100000,
                 tax: 0,
-            })
+            });
         });
     });
 
