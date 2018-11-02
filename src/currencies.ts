@@ -6,7 +6,7 @@ import {Currency} from "./model/Currency";
 import {ListCurreniesResponse} from "./params";
 import {GetCurrencyResponse} from "./params/currencies/GetCurrencyParams";
 import {UpdateCurrencyParams, UpdateCurrencyResponse} from "./params/currencies/UpdateCurrencyParams";
-import {DeleteCurrencyRequest} from "./params/currencies/DeleteCurrencyParms";
+import {DeleteCurrencyResponse} from "./params/currencies/DeleteCurrencyParams";
 
 // CREATE
 export async function createCurrency(params: CreateCurrencyParams): Promise<CreateCurrencyResponse> {
@@ -71,7 +71,7 @@ export async function updateCurrency(currency: string | Currency, params: Update
 }
 
 // DELETE
-export async function deleteCurrency(currency: string | Currency): Promise<DeleteCurrencyRequest> {
+export async function deleteCurrency(currency: string | Currency): Promise<DeleteCurrencyResponse> {
     const currencyCode = getCurrencyCode(currency);
 
     const resp = await lightrail.request("DELETE", `currencies/${encodeURIComponent(currencyCode)}`);
