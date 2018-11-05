@@ -89,13 +89,13 @@ export async function deleteCurrency(currency: string | Currency): Promise<Delet
  * Get currency code from the string (as the ID itself) or Currency object.
  */
 export function getCurrencyCode(currency: string | Currency): string {
-    if (!currency) {
-        throw new Error("currency issuance not set");
+    if (currency == null || currency === undefined) {
+        throw new Error("currency not set");
     } else if (typeof currency === "string") {
         return currency;
     } else if (currency.code) {
         return currency.code;
     } else {
-        throw new Error("issuance must be a string for issuanceId or a Issuance object");
+        throw new Error("currency must be a string or Currency object");
     }
 }
