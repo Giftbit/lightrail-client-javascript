@@ -15,7 +15,7 @@ describe("currencies", () => {
         code: "XXS",
         name: "Some Fake Dollars",
         symbol: "$",
-        decimalPlaces: 2
+        decimalPlaces: 0
     };
 
     describe("createCurrency(currency)", () => {

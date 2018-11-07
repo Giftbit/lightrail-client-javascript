@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0.2
+[Fixed Delete Currency Params](https://github.com/Giftbit/lightrail-client-javascript/pull/24)
+ - Fixed Typo in DeleteCurrencyParams file name
+ - Fixed Response definition, DeleteCurrencyRequest to DeleteCurrencyResponse
+ - Fixed validateRequiredParams method to to avoid issues with valid falsy values (ie: 0)
+
+
 ## 3.0.0
 [Deprecation updates and minor naming bug fixes.](https://github.com/Giftbit/lightrail-client-javascript/pull/22) 
 - Renamed:
