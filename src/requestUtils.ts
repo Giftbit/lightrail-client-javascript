@@ -3,7 +3,7 @@ import {Response} from "superagent";
 import * as parseLinkHeader from "parse-link-header";
 
 export const validateRequiredParams = (keys: string[], params: object): boolean => keys.every(key => {
-    if (params[key] === undefined || params[key] === null) {
+    if (params[key] === null) {
         throw new Error("params." + key + " not set");
     }
 
