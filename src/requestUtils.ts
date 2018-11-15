@@ -35,7 +35,7 @@ export const formatFilterParams = (params?: object): object => {
 };
 
 export function isSuccessStatus(status: number): boolean {
-    return (status >= 200 && status < 300 || status === 404);
+    return ((status >= 200 && status < 300) || status === 404);
 }
 
 /**
