@@ -10,6 +10,7 @@ export interface Issuance {
     balanceRule: BalanceRule;
     redemptionRule: RedemptionRule;
     usesRemaining: number;
+    active: boolean;
     startDate: string;
     endDate: string;
     metadata: object;

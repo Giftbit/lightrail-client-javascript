@@ -13,6 +13,7 @@ export interface CreateIssuanceParams {
     isGenericCode?: boolean;
     balance?: number;
     usesRemaining?: number;
+    active?: boolean;
     startDate?: string;
     endDate?: string;
     redemptionRule?: RedemptionRule;
