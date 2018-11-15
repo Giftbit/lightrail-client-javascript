@@ -5,6 +5,7 @@ export interface LightrailResponse<T> {
     body: T;
     text: string;
     links?: Links;
+    status: number;
 }
 
 export interface PaginatedLightrailResponse<T> extends LightrailResponse<T>, PaginationHeaders {

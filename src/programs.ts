@@ -2,7 +2,7 @@ import * as lightrail from "./";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {ListProgramsParams, ListProgramsResponse} from "./params";
 import {CreateProgramParams, CreateProgramResponse} from "./params/programs/CreateProgramParams";
-import {formatResponse, validateRequiredParams} from "./requestUtils";
+import {formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {DeleteProgramResponse} from "./params/programs/DeleteProgramParams";
 import {UpdateProgramParams, UpdateProgramResponse} from "./params/programs/UpdateProgramParams";
 import {GetProgramResponse} from "./params/programs/GetProgramParams";
@@ -21,7 +21,7 @@ export async function createProgram(params: CreateProgramParams): Promise<Create
     }
 
     const resp = await lightrail.request("POST", "programs").send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -31,7 +31,7 @@ export async function createProgram(params: CreateProgramParams): Promise<Create
 // READ
 export async function listPrograms(params?: ListProgramsParams): Promise<ListProgramsResponse> {
     const resp = await lightrail.request("GET", "programs").query(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
@@ -41,10 +41,8 @@ export async function getProgram(program: string | Program): Promise<GetProgramR
     const programId = getProgramId(program);
 
     const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}`);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
-    } else if (resp.status === 404) {
-        return null;
     }
     throw new LightrailRequestError(resp);
 }
@@ -58,10 +56,8 @@ export async function updateProgram(program: string | Program, params: UpdatePro
     }
 
     const resp = await lightrail.request("PATCH", `programs/${encodeURIComponent(programId)}`).send(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
-    } else if (resp.status === 404) {
-        return null;
     }
     throw new LightrailRequestError(resp);
 }
@@ -71,12 +67,10 @@ export async function deleteProgram(program: string | Program): Promise<DeletePr
     const programId = getProgramId(program);
 
     const resp = await lightrail.request("DELETE", `programs/${encodeURIComponent(programId)}`);
-
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
-    } else if (resp.status === 404) {
-        return null;
     }
+
     throw new LightrailRequestError(resp);
 }
 
@@ -94,7 +88,7 @@ export async function createIssuance(program: string | Program, params: CreateIs
     }
 
     const resp = await lightrail.request("POST", `programs/${encodeURIComponent(programId)}/issuances`).send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -106,7 +100,7 @@ export async function listIssuances(program: string | Program, params?: ListIssu
     const programId = getProgramId(program);
 
     const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}/issuances`).query(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -122,7 +116,7 @@ export async function getIssuance(program: string | Program, issuance: string | 
     }
 
     const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}/issuances/${encodeURIComponent(issuanceId)}`);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
