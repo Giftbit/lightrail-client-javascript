@@ -104,7 +104,8 @@ describe("contacts", () => {
             chai.assert.isTrue(deleted.body.success);
 
             const contact = await Lightrail.contacts.getContact(id);
-            chai.assert.isNull(contact);
+            chai.assert.isNull(contact.body);
+            chai.assert.equal(contact.status, 404);
         });
     });
 

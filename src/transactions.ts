@@ -1,7 +1,7 @@
 // CREATE
 import * as lightrail from "./index";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {formatResponse, validateRequiredParams} from "./requestUtils";
+import {formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {
     CheckoutParams,
     CheckoutResponse,
@@ -26,7 +26,7 @@ export async function checkout(params: CheckoutParams): Promise<CheckoutResponse
     }
 
     const resp = await lightrail.request("POST", "transactions/checkout").send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -41,7 +41,7 @@ export async function debit(params: DebitParams): Promise<DebitResponse> {
     }
 
     const resp = await lightrail.request("POST", "transactions/debit").send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -56,7 +56,7 @@ export async function credit(params: CreditParams): Promise<CreditResponse> {
     }
 
     const resp = await lightrail.request("POST", "transactions/credit").send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -71,7 +71,7 @@ export async function transfer(params: TransferParams): Promise<TransferResponse
     }
 
     const resp = await lightrail.request("POST", "transactions/transfer").send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -81,7 +81,7 @@ export async function transfer(params: TransferParams): Promise<TransferResponse
 // READ
 export async function listTransactions(params?: ListTransactionsParams): Promise<ListTransactionsResponse> {
     const resp = await lightrail.request("GET", "transactions").query(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
@@ -91,11 +91,10 @@ export async function getTransaction(transaction: string | Transaction): Promise
     const transactionId = getTransactionId(transaction);
 
     const resp = await lightrail.request("GET", `transactions/${encodeURIComponent(transactionId)}`);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
-    } else if (resp.status === 404) {
-        return null;
     }
+
     throw new LightrailRequestError(resp);
 }
 

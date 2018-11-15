@@ -1,8 +1,9 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
-import chaiExclude = require("chai-exclude");
 import {CreateValueParams} from "./params/values/CreateValueParams";
+import chaiExclude = require("chai-exclude");
+
 chai.use(chaiExclude);
 
 describe("values", () => {
@@ -108,6 +109,13 @@ describe("values", () => {
             chai.assert.equal(value.body.programId, testValue.programId);
             chai.assert.equal(value.body.currency, testValue.currency);
             chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
+        });
+        it("returns the expected 404", async () => {
+            const value = await Lightrail.values.getValue("SOME_VALUE_ID_THAT_SHOULD_NEVER_EXIST_WOIFSDLKFJSDLFKJSDLF", {showCode: true});
+
+            chai.assert.isNotNull(value);
+            chai.assert.isNull(value.body);
+            chai.assert.equal(value.status, 404);
         });
     });
 
