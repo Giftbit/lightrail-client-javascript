@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.4
+[Modified 404 responses](https://github.com/Giftbit/lightrail-client-javascript/pull/26)
+ - 404 Responses now come back in the LightrailResponse format, with body set to null
+ - Added status to LightrailResponse
+
 ## 3.0.2
 [Fixed Delete Currency Params](https://github.com/Giftbit/lightrail-client-javascript/pull/24)
  - Fixed Typo in DeleteCurrencyParams file name
