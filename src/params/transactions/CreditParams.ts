@@ -4,9 +4,9 @@ import {Transaction, TransactionDestination} from "../../model";
 export interface CreditParams {
     id: string;
     destination: TransactionDestination;
-    amount: number;
     currency: string;
-    usesRemaining?: number;
+    amount?: number;
+    uses?: number;
     simulate?: boolean;
     pending?: boolean;
     metadata?: object;
