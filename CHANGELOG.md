@@ -1,6 +1,14 @@
 # Changelog
 
+## 3.1.2
+[Updated LightrailTransactionStep](https://github.com/Giftbit/lightrail-client-javascript/pull/29)
+ - Added usesRemaining properties to LightrailTransactionStep
+
 ## 3.1.1
+[Fixed Debit/Credit params](https://github.com/Giftbit/lightrail-client-javascript/pull/28)
+ - Debit/Credit Uses Bugfix (removed req check for amount), added tests
+
+## 3.1.0
 [Fixed Debit/Credit params](https://github.com/Giftbit/lightrail-client-javascript/pull/27)
  - Fixed Uses param, updated amount to optional
 
