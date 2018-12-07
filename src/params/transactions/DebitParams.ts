@@ -4,9 +4,9 @@ import {LightrailResponse} from "../LightrailResponse";
 export interface DebitParams {
     id: string;
     source: DebitSource;
-    amount: number;
     currency: string;
-    usesRemaining?: number;
+    amount?: number;
+    uses?: number;
     simulate?: boolean;
     allowRemainder?: boolean;
     pending?: boolean;
