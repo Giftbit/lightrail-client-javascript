@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.5
+[Fixed Debit/Credit params](https://github.com/Giftbit/lightrail-client-javascript/pull/27)
+ - Fixed Uses param, updated amount to optional
+
 ## 3.0.4
 [Modified 404 responses](https://github.com/Giftbit/lightrail-client-javascript/pull/26)
  - 404 Responses now come back in the LightrailResponse format with body set to null
