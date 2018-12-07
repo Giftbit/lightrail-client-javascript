@@ -33,6 +33,9 @@ export interface LightrailTransactionStep {
     balanceBefore: number;
     balanceAfter: number;
     balanceChange: number;
+    usesRemainingBefore: number;
+    usesRemainingAfter: number;
+    usesRemainingChange: number;
 }
 
 export interface StripeTransactionStep {
