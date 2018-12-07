@@ -4,8 +4,8 @@ import * as uuid from "uuid";
 import {getTransaction, listTransactions} from "./transactions";
 
 describe("transactions", () => {
-    const sourceValueId = "transferSoruceValueTest";
-    const valueId = "transactionTestValueId";
+    const sourceValueId = "transferSoruceValueTest1";
+    const valueId = "transactionTestValueId1";
 
     before(async () => {
         before(() => {
@@ -19,22 +19,24 @@ describe("transactions", () => {
 
         const value = await Lightrail.values.getValue(valueId);
 
-        if (!value) {
+        if (!value.body) {
             await Lightrail.values.createValue({
                 id: valueId,
-                code: "TRANSACTION_TEST_CODE",
+                code: "TRANSACTION_TEST_CODE_1",
                 currency: "USD",
+                usesRemaining: 100,
                 balance: 0 // must be 0 for totals test
             });
         }
 
         const srcValue = await Lightrail.values.getValue(sourceValueId);
 
-        if (!srcValue) {
+        if (!srcValue.body) {
             await Lightrail.values.createValue({
                 id: sourceValueId,
-                code: "TRANSACTION_SOURCE_CODE",
+                code: "TRANSACTION_SOURCE_CODE_1",
                 currency: "USD",
+                usesRemaining: 100,
                 balance: 0
             });
         }
@@ -48,6 +50,23 @@ describe("transactions", () => {
                 id: creditId,
                 currency: "USD",
                 amount: 100000,
+                destination: {
+                    rail: "lightrail",
+                    valueId: valueId
+                }
+            });
+
+            chai.assert.isNotNull(credit);
+            chai.assert.equal(credit.body.transactionType, "credit");
+        });
+    });
+
+    describe("credit Uses", () => {
+        it("successfully creates a credit transaction with uses instead of amount", async () => {
+            const credit = await Lightrail.transactions.credit({
+                id: uuid.v4().substring(0, 24),
+                currency: "USD",
+                uses: 2,
                 destination: {
                     rail: "lightrail",
                     valueId: valueId
@@ -127,11 +146,28 @@ describe("transactions", () => {
     });
 
     describe("debit()", () => {
-        it("successfully creates a credit transaction", async () => {
+        it("successfully creates a debit transaction", async () => {
             const transaction = await Lightrail.transactions.debit({
                 id: uuid.v4().substring(0, 24),
                 currency: "USD",
                 amount: 5000,
+                source: {
+                    rail: "lightrail",
+                    valueId: valueId
+                }
+            });
+
+            chai.assert.isNotNull(transaction);
+            chai.assert.equal(transaction.body.transactionType, "debit");
+        });
+    });
+
+    describe("debit Uses", () => {
+        it("successfully creates a debit transaction with uses instead of amount", async () => {
+            const transaction = await Lightrail.transactions.debit({
+                id: uuid.v4().substring(0, 24),
+                currency: "USD",
+                uses: 2,
                 source: {
                     rail: "lightrail",
                     valueId: valueId
