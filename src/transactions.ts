@@ -37,7 +37,7 @@ export async function debit(params: DebitParams): Promise<DebitResponse> {
     if (!params) {
         throw new Error("debit params not set");
     } else {
-        validateRequiredParams(["id", "currency", "source", "amount"], params);
+        validateRequiredParams(["id", "currency", "source"], params);
     }
 
     const resp = await lightrail.request("POST", "transactions/debit").send(params);
@@ -52,7 +52,7 @@ export async function credit(params: CreditParams): Promise<CreditResponse> {
     if (!params) {
         throw new Error("credit params not set");
     } else {
-        validateRequiredParams(["id", "currency", "destination", "amount"], params);
+        validateRequiredParams(["id", "currency", "destination"], params);
     }
 
     const resp = await lightrail.request("POST", "transactions/credit").send(params);
