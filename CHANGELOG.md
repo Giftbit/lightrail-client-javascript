@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.0.5
+## 3.1.0
 [Fixed Debit/Credit params](https://github.com/Giftbit/lightrail-client-javascript/pull/27)
  - Fixed Uses param, updated amount to optional
 
