@@ -7,4 +7,5 @@ export interface Contact {
     metadata: object;
     createdDate: string;
     updatedDate: string;
+    createdBy: string;
 }

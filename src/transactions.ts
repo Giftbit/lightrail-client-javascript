@@ -1,8 +1,9 @@
-// CREATE
 import * as lightrail from "./index";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {
+    CapturePendingParams,
+    CapturePendingResponse,
     CheckoutParams,
     CheckoutResponse,
     CreditParams,
@@ -10,12 +11,16 @@ import {
     DebitParams,
     DebitResponse,
     GetTransactionResponse,
+    ListTransactionsParams,
+    ListTransactionsResponse,
+    ReverseParams,
+    ReverseResponse,
     TransferParams,
-    TransferResponse
+    TransferResponse,
+    VoidPendingParams,
+    VoidPendingResponse
 } from "./params";
 import {Transaction} from "./model";
-import {ListTransactionsParams, ListTransactionsResponse} from "./params/transactions/ListTransactionsParams";
-
 
 // CREATE
 export async function checkout(params: CheckoutParams): Promise<CheckoutResponse> {
@@ -71,6 +76,51 @@ export async function transfer(params: TransferParams): Promise<TransferResponse
     }
 
     const resp = await lightrail.request("POST", "transactions/transfer").send(params);
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
+    }
+
+    throw new LightrailRequestError(resp);
+}
+
+export async function reverse(transactionToReverse: string | Transaction, params: ReverseParams): Promise<ReverseResponse> {
+    if (!params) {
+        throw new Error("reverse params not set");
+    } else {
+        validateRequiredParams(["id"], params);
+    }
+
+    const resp = await lightrail.request("POST", `transactions/${encodeURIComponent(getTransactionId(transactionToReverse))}/reverse`).send(params);
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
+    }
+
+    throw new LightrailRequestError(resp);
+}
+
+export async function capturePending(transactionToCapture: string | Transaction, params: CapturePendingParams): Promise<CapturePendingResponse> {
+    if (!params) {
+        throw new Error("capture params not set");
+    } else {
+        validateRequiredParams(["id"], params);
+    }
+
+    const resp = await lightrail.request("POST", `transactions/${encodeURIComponent(getTransactionId(transactionToCapture))}/capture`).send(params);
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
+    }
+
+    throw new LightrailRequestError(resp);
+}
+
+export async function voidPending(transactionToVoid: string | Transaction, params: VoidPendingParams): Promise<VoidPendingResponse> {
+    if (!params) {
+        throw new Error("void params not set");
+    } else {
+        validateRequiredParams(["id"], params);
+    }
+
+    const resp = await lightrail.request("POST", `transactions/${encodeURIComponent(getTransactionId(transactionToVoid))}/void`).send(params);
     if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }

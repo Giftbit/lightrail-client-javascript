@@ -20,4 +20,5 @@ export interface Program {
     metadata: object;
     createdDate: string;
     updatedDate: string;
+    createdBy: string;
 }

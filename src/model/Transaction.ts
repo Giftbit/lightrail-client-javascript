@@ -91,14 +91,13 @@ export interface TransactionTotals {
     remainder?: number;
 }
 
-
 export type TaxRoundingMode = "HALF_EVEN" | "HALF_UP";
 
 export interface TaxRequestProperties {
     roundingMode: TaxRoundingMode;
 }
 
-export type TransactionType = "debit" | "credit" | "checkout" | "transfer" | string;
+export type TransactionType = "debit" | "credit" | "checkout" | "transfer" | "reverse" | "capture" | "void" | string;
 
 export interface Transaction {
     id: string;

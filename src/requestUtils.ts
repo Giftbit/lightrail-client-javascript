@@ -1,4 +1,4 @@
-import {LightrailResponse, PaginatedLightrailResponse} from "./params/LightrailResponse";
+import {LightrailResponse, PaginatedLightrailResponse} from "./params";
 import {Response} from "superagent";
 import * as parseLinkHeader from "parse-link-header";
 
@@ -35,7 +35,7 @@ export const formatFilterParams = (params?: object): object => {
 };
 
 export function isSuccessStatus(status: number): boolean {
-    return ((status >= 200 && status < 300) || status === 404);
+    return status >= 200 && status < 300;
 }
 
 /**

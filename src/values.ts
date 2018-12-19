@@ -1,13 +1,20 @@
-import {CreateValueParams, CreateValueRespone} from "./params/values/CreateValueParams";
+import {
+    ChangeValuesCodeParams,
+    ChangeValuesCodeResponse,
+    CreateValueParams,
+    CreateValueRespone,
+    DeleteValueResponse,
+    GetValueParams,
+    GetValueResponse,
+    ListValuesParams,
+    ListValuesResponse,
+    UpdateValueParams,
+    UpdateValueResponse
+} from "./params";
 import {formatFilterParams, formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {LightrailRequestError} from "./LightrailRequestError";
 import * as lightrail from "./index";
-import {GetValueParams, GetValueResponse} from "./params/values/GetValueParams";
-import {ListValuesParams, ListValuesResponse} from "./params/values/ListValuesParams";
-import {Value} from "./model/Value";
-import {UpdateValueParams, UpdateValueResponse} from "./params/values/UpdateValueParams";
-import {ChangeValuesCodeParams, ChangeValuesCodeResponse} from "./params/values/ChangeValuesCodeParams";
-import {DeleteValueResponse} from "./params/values/DeleteValueParams";
+import {Value} from "./model";
 
 // CREATE
 export async function createValue(params: CreateValueParams): Promise<CreateValueRespone> {
@@ -43,7 +50,7 @@ export async function getValue(value: string | Value, params?: GetValueParams): 
     const valueId = getValueId(value);
 
     const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}`).query(params);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return (
             formatResponse(resp)
         );
@@ -84,7 +91,7 @@ export async function deleteValue(value: string | Value): Promise<DeleteValueRes
     const valueId = getValueId(value);
 
     const resp = await lightrail.request("DELETE", `values/${encodeURIComponent(valueId)}`);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return (
             formatResponse(resp)
         );
