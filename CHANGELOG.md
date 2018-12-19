@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2.0
+[Added new transaction types](https://github.com/Giftbit/lightrail-client-javascript/pull/30)
+ - Added reverse to transactions
+ - Added capturePending to transactions
+ - Added voidPending to transactions 
+ - Added createdBy to Contact, Program and Value
+
 ## 3.1.2
 [Updated LightrailTransactionStep](https://github.com/Giftbit/lightrail-client-javascript/pull/29)
  - Added usesRemaining properties to LightrailTransactionStep
@@ -25,7 +32,6 @@
  - Fixed Typo in DeleteCurrencyParams file name
  - Fixed Response definition, DeleteCurrencyRequest to DeleteCurrencyResponse
  - Fixed validateRequiredParams method to to avoid issues with valid falsy values (ie: 0)
-
 
 ## 3.0.0
 [Deprecation updates and minor naming bug fixes.](https://github.com/Giftbit/lightrail-client-javascript/pull/22) 
