@@ -2,18 +2,20 @@ import * as lightrail from "./";
 import {formatFilterParams, formatResponse, isSuccessStatus} from "./requestUtils";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {
+    AttachContactToValueParams,
+    AttachContactToValueResponse,
     CreateContactParams,
     CreateContactResponse,
+    DeleteContactResponse,
+    GetContactResponse,
     ListContactsParams,
     ListContactsResponse,
-    UpdateContactParams
+    ListContactsValuesParams,
+    ListContactsValuesResponse,
+    UpdateContactParams,
+    UpdateContactResponse
 } from "./params";
 import {Contact} from "./model";
-import {DeleteContactResponse} from "./params/contacts/DeleteContactParams";
-import {UpdateContactResponse} from "./params/contacts/UpdateContactParams";
-import {GetContactResponse} from "./params/contacts/GetContactParams";
-import {ListContactsValuesParams, ListContactsValuesResponse} from "./params/contacts/ListContactsValuesParams";
-import {AttachContactToValueParams, AttachContactToValueResponse} from "./params/contacts/AttachContactToValueParams";
 
 // CREATE
 export async function createContact(params: CreateContactParams): Promise<CreateContactResponse> {
@@ -35,7 +37,7 @@ export async function getContact(contact: string | Contact): Promise<GetContactR
     const contactId = getContactId(contact);
 
     const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(contactId)}`);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
@@ -85,7 +87,7 @@ export async function deleteContact(contact: string | Contact): Promise<DeleteCo
     const contactId = getContactId(contact);
 
     const resp = await lightrail.request("DELETE", `contacts/${encodeURIComponent(contactId)}`);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
     }
 

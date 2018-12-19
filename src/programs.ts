@@ -1,16 +1,22 @@
 import * as lightrail from "./";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {ListProgramsParams, ListProgramsResponse} from "./params";
-import {CreateProgramParams, CreateProgramResponse} from "./params/programs/CreateProgramParams";
+import {
+    CreateIssuanceParams,
+    CreateIssuanceResponse,
+    CreateProgramParams,
+    CreateProgramResponse,
+    DeleteProgramResponse,
+    GetIssuanceResponse,
+    GetProgramResponse,
+    ListIssuancesParams,
+    ListIssuancesResponse,
+    ListProgramsParams,
+    ListProgramsResponse,
+    UpdateProgramParams,
+    UpdateProgramResponse
+} from "./params";
 import {formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
-import {DeleteProgramResponse} from "./params/programs/DeleteProgramParams";
-import {UpdateProgramParams, UpdateProgramResponse} from "./params/programs/UpdateProgramParams";
-import {GetProgramResponse} from "./params/programs/GetProgramParams";
-import {CreateIssuanceParams, CreateIssuanceResponse} from "./params/programs/issuance/CreateIssuanceParams";
-import {Program} from "./model";
-import {ListIssuancesParams, ListIssuancesResponse} from "./params/programs/issuance/ListIssuancesParams";
-import {GetIssuanceResponse} from "./params/programs/issuance/GetIssuanceParams";
-import {Issuance} from "./model/Issuance";
+import {Issuance, Program} from "./model";
 
 // CREATE
 export async function createProgram(params: CreateProgramParams): Promise<CreateProgramResponse> {
@@ -41,7 +47,7 @@ export async function getProgram(program: string | Program): Promise<GetProgramR
     const programId = getProgramId(program);
 
     const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}`);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
@@ -67,7 +73,7 @@ export async function deleteProgram(program: string | Program): Promise<DeletePr
     const programId = getProgramId(program);
 
     const resp = await lightrail.request("DELETE", `programs/${encodeURIComponent(programId)}`);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
     }
 
@@ -116,7 +122,7 @@ export async function getIssuance(program: string | Program, issuance: string | 
     }
 
     const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}/issuances/${encodeURIComponent(issuanceId)}`);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
     }
 

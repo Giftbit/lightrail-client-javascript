@@ -1,8 +1,9 @@
 import * as chai from "chai";
 import * as jsonwebtoken from "jsonwebtoken";
+import * as http from "http";
+import * as mitm from "mitm";
 import * as index from "./index";
 import {formatFilterParams} from "./requestUtils";
-import * as http from "http";
 
 describe("index", () => {
     describe("configure()", () => {
@@ -12,7 +13,7 @@ describe("index", () => {
             // mitm shims node's internal request/response constructs so they can be intercepted.
             // A similar project called nock works at a higher level but can't do assertions on
             // the header based on the whole request.
-            // mitmInstance = mitm();   MITM is currently broken
+            mitmInstance = mitm();
         });
 
         afterEach(() => {
@@ -36,7 +37,7 @@ describe("index", () => {
             chai.assert.equal(index.configuration.restRoot, "http://www.example.com/");
         });
 
-        it.skip("sets the User-Agent", async () => {
+        it("sets the User-Agent", async () => {
             index.configure({
                 apiKey: "abcd"
             });
@@ -54,7 +55,7 @@ describe("index", () => {
             chai.assert.isTrue(mitmHit);
         });
 
-        it.skip("configure additionalHeaders is set correctly", async () => {
+        it("configure additionalHeaders is set correctly", async () => {
             index.configure({
                 apiKey: "does.not.matter",
                 restRoot: "https://api.lightrail.com/v2/",
@@ -69,7 +70,7 @@ describe("index", () => {
                 mitmHit = true;
                 chai.assert.equal(req.method, "POST");
                 chai.assert.equal(req.headers["host"], "api.lightrail.com");
-                chai.assert.equal(req.url, "/v1/cards");
+                chai.assert.equal(req.url, "/v2/contacts");
                 chai.assert.equal(req.headers["headerone"], "this is header one");
                 chai.assert.equal(req.headers["headertwo"], "this is header two");
                 res.statusCode = 200;

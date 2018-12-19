@@ -1,12 +1,16 @@
 import {formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {LightrailRequestError} from "./LightrailRequestError";
 import * as lightrail from "./index";
-import {CreateCurrencyParams, CreateCurrencyResponse} from "./params/currencies/CreateCurrencyParams";
+import {
+    CreateCurrencyParams,
+    CreateCurrencyResponse,
+    DeleteCurrencyResponse,
+    GetCurrencyResponse,
+    ListCurreniesResponse,
+    UpdateCurrencyParams,
+    UpdateCurrencyResponse
+} from "./params";
 import {Currency} from "./model/Currency";
-import {ListCurreniesResponse} from "./params";
-import {GetCurrencyResponse} from "./params/currencies/GetCurrencyParams";
-import {UpdateCurrencyParams, UpdateCurrencyResponse} from "./params/currencies/UpdateCurrencyParams";
-import {DeleteCurrencyResponse} from "./params/currencies/DeleteCurrencyParams";
 
 // CREATE
 export async function createCurrency(params: CreateCurrencyParams): Promise<CreateCurrencyResponse> {
@@ -42,7 +46,7 @@ export async function getCurrency(currency: string | Currency): Promise<GetCurre
     }
 
     const resp = await lightrail.request("GET", `currencies/${encodeURIComponent(currencyCode)}`);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
     }
 
@@ -73,7 +77,7 @@ export async function deleteCurrency(currency: string | Currency): Promise<Delet
     const currencyCode = getCurrencyCode(currency);
 
     const resp = await lightrail.request("DELETE", `currencies/${encodeURIComponent(currencyCode)}`);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
     }
 
@@ -85,7 +89,7 @@ export async function deleteCurrency(currency: string | Currency): Promise<Delet
  * Get currency code from the string (as the ID itself) or Currency object.
  */
 export function getCurrencyCode(currency: string | Currency): string {
-    if (currency == null || currency === undefined) {
+    if (currency == null) {
         throw new Error("currency not set");
     } else if (typeof currency === "string") {
         return currency;

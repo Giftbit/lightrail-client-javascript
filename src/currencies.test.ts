@@ -3,8 +3,6 @@ import * as Lightrail from "./index";
 
 describe("currencies", () => {
     before(() => {
-        chai.assert.isString(process.env.LIGHTRAIL_API_PATH, "env var LIGHTRAIL_API_PATH must be set ot run the tests (for example set it in the .env file)");
-        chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
         Lightrail.configure({
             restRoot: process.env.LIGHTRAIL_API_PATH || "",
             apiKey: process.env.LIGHTRAIL_API_KEY || "",

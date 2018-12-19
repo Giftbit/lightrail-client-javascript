@@ -1,15 +1,13 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
-import {CreateValueParams} from "./params/values/CreateValueParams";
+import {CreateValueParams} from "./params";
 import chaiExclude = require("chai-exclude");
 
 chai.use(chaiExclude);
 
 describe("values", () => {
     before(() => {
-        chai.assert.isString(process.env.LIGHTRAIL_API_PATH, "env var LIGHTRAIL_API_PATH must be set ot run the tests (for example set it in the .env file)");
-        chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
         Lightrail.configure({
             restRoot: process.env.LIGHTRAIL_API_PATH || "",
             apiKey: process.env.LIGHTRAIL_API_KEY || "",
@@ -49,10 +47,8 @@ describe("values", () => {
             chai.assert.isNotNull(value);
             chai.assert.deepEqualExcluding(value.body, testValue,
                 [
-                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate", "code", "issuanceId", "updatedContactIdDate", "canceled", "programId",
-                    "uses" /* this has been deprecated in V2 to usesRemaining but is still being returned */,
-                    "valueRule" /* this has been deprecated in V2 to balanceRule but is still being returned */
-                ]);
+                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate", "code", "issuanceId", "updatedContactIdDate", "canceled", "programId"
+                ] as any);
         });
     });
 
@@ -154,7 +150,7 @@ describe("values", () => {
         it("changes the code", async () => {
             const value = await Lightrail.values.changeValuesCode(
                 testValueId,
-                {code: uuid.v4().substring(0, 7)+"haberdashery"}
+                {code: uuid.v4().substring(0, 7) + "haberdashery"}
             );
 
             chai.assert.isNotNull(value);
