@@ -6,7 +6,7 @@ import {RedemptionRule} from "../../model/RedemptionRule";
 export interface CreateProgramParams {
     id: string;
     currency: string;
-    name?: string;
+    name: string;
     discount?: boolean;
     discountSellerLiability?: number;
     pretax?: boolean;
