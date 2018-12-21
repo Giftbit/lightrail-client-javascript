@@ -1,19 +1,21 @@
 import * as lightrail from "./";
-import {formatFilterParams, formatResponse} from "./requestUtils";
+import {formatFilterParams, formatResponse, isSuccessStatus} from "./requestUtils";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {
+    AttachContactToValueParams,
+    AttachContactToValueResponse,
     CreateContactParams,
     CreateContactResponse,
+    DeleteContactResponse,
+    GetContactResponse,
     ListContactsParams,
     ListContactsResponse,
-    UpdateContactParams
+    ListContactsValuesParams,
+    ListContactsValuesResponse,
+    UpdateContactParams,
+    UpdateContactResponse
 } from "./params";
 import {Contact} from "./model";
-import {DeleteContactResponse} from "./params/contacts/DeleteContactParams";
-import {UpdateContactResponse} from "./params/contacts/UpdateContactParams";
-import {GetContactResponse} from "./params/contacts/GetContactParams";
-import {ListContactsValuesParams, ListContactsValuesResponse} from "./params/contacts/ListContactsValuesParams";
-import {AttachContactToValueParams, AttachContactToValueResponse} from "./params/contacts/AttachContactToValueParams";
 
 // CREATE
 export async function createContact(params: CreateContactParams): Promise<CreateContactResponse> {
@@ -24,10 +26,8 @@ export async function createContact(params: CreateContactParams): Promise<Create
     }
 
     const resp = await lightrail.request("POST", "contacts").send(params);
-    if (resp.status === 200 || resp.status === 201) {
-        return (
-            formatResponse(resp)
-        );
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
 }
@@ -37,22 +37,16 @@ export async function getContact(contact: string | Contact): Promise<GetContactR
     const contactId = getContactId(contact);
 
     const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(contactId)}`);
-    if (resp.status === 200) {
-        return (
-            formatResponse(resp)
-        );
-    } else if (resp.status === 404) {
-        return null;
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
+        return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
 }
 
 export async function listContacts(params?: ListContactsParams): Promise<ListContactsResponse> {
     const resp = await lightrail.request("GET", "contacts").query(formatFilterParams(params));
-    if (resp.status === 200) {
-        return (
-            formatResponse(resp)
-        );
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
 }
@@ -61,12 +55,8 @@ export async function listContactsValues(contact: string | Contact, params?: Lis
     const contactId = getContactId(contact);
 
     const resp = await lightrail.request("GET", `contacts/${encodeURIComponent(contactId)}/values`).query(params);
-    if (resp.status === 200) {
-        return (
-            formatResponse(resp)
-        );
-    } else if (resp.status === 404) {
-        return null;
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
 }
@@ -76,7 +66,7 @@ export async function updateContact(contact: string | Contact, params: UpdateCon
     const contactId = getContactId(contact);
 
     const resp = await lightrail.request("PATCH", `contacts/${encodeURIComponent(contactId)}`).send(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
@@ -86,7 +76,7 @@ export async function attachContactToValue(contact: string | Contact, params: At
     const contactId = getContactId(contact);
 
     const resp = await lightrail.request("POST", `contacts/${encodeURIComponent(contactId)}/values/attach`).send(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
@@ -97,13 +87,10 @@ export async function deleteContact(contact: string | Contact): Promise<DeleteCo
     const contactId = getContactId(contact);
 
     const resp = await lightrail.request("DELETE", `contacts/${encodeURIComponent(contactId)}`);
-    if (resp.status === 200) {
-        return (
-            formatResponse(resp)
-        );
-    } else if (resp.status === 404) {
-        return null;
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
+        return formatResponse(resp);
     }
+
     throw new LightrailRequestError(resp);
 }
 

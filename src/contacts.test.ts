@@ -5,8 +5,6 @@ import {CreateContactParams} from "./params";
 
 describe("contacts", () => {
     before(() => {
-        chai.assert.isString(process.env.LIGHTRAIL_API_PATH, "env var LIGHTRAIL_API_PATH must be set ot run the tests (for example set it in the .env file)");
-        chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
         Lightrail.configure({
             restRoot: process.env.LIGHTRAIL_API_PATH || "",
             apiKey: process.env.LIGHTRAIL_API_KEY || "",
@@ -104,7 +102,8 @@ describe("contacts", () => {
             chai.assert.isTrue(deleted.body.success);
 
             const contact = await Lightrail.contacts.getContact(id);
-            chai.assert.isNull(contact);
+            chai.assert.isNull(contact.body);
+            chai.assert.equal(contact.status, 404);
         });
     });
 
@@ -124,7 +123,7 @@ describe("contacts", () => {
 
             // Create Contact and Attach Value
             let contact = await Lightrail.contacts.getContact(attachToContactID);
-            if (!contact) {
+            if (!contact.body) {
                 await Lightrail.contacts.createContact({
                     ...testContact,
                     id: attachToContactID,

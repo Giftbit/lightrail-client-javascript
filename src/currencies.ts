@@ -1,12 +1,16 @@
-import {formatResponse, validateRequiredParams} from "./requestUtils";
+import {formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {LightrailRequestError} from "./LightrailRequestError";
 import * as lightrail from "./index";
-import {CreateCurrencyParams, CreateCurrencyResponse} from "./params/currencies/CreateCurrencyParams";
+import {
+    CreateCurrencyParams,
+    CreateCurrencyResponse,
+    DeleteCurrencyResponse,
+    GetCurrencyResponse,
+    ListCurreniesResponse,
+    UpdateCurrencyParams,
+    UpdateCurrencyResponse
+} from "./params";
 import {Currency} from "./model/Currency";
-import {ListCurreniesResponse} from "./params";
-import {GetCurrencyResponse} from "./params/currencies/GetCurrencyParams";
-import {UpdateCurrencyParams, UpdateCurrencyResponse} from "./params/currencies/UpdateCurrencyParams";
-import {DeleteCurrencyRequest} from "./params/currencies/DeleteCurrencyParms";
 
 // CREATE
 export async function createCurrency(params: CreateCurrencyParams): Promise<CreateCurrencyResponse> {
@@ -17,18 +21,17 @@ export async function createCurrency(params: CreateCurrencyParams): Promise<Crea
     }
 
     const resp = await lightrail.request("POST", "currencies").send(params);
-    if (resp.status === 200 || resp.status === 201) {
-        return (
-            formatResponse(resp)
-        );
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
     }
+
     throw new LightrailRequestError(resp);
 }
 
 // READ
 export async function listCurrencies(): Promise<ListCurreniesResponse> {
     const resp = await lightrail.request("GET", `currencies`);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -43,7 +46,7 @@ export async function getCurrency(currency: string | Currency): Promise<GetCurre
     }
 
     const resp = await lightrail.request("GET", `currencies/${encodeURIComponent(currencyCode)}`);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
     }
 
@@ -62,25 +65,22 @@ export async function updateCurrency(currency: string | Currency, params: Update
     }
 
     const resp = await lightrail.request("PATCH", `currencies/${encodeURIComponent(currencyCode)}`).send(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
-    } else if (resp.status === 404) {
-        return null;
     }
+
     throw new LightrailRequestError(resp);
 }
 
 // DELETE
-export async function deleteCurrency(currency: string | Currency): Promise<DeleteCurrencyRequest> {
+export async function deleteCurrency(currency: string | Currency): Promise<DeleteCurrencyResponse> {
     const currencyCode = getCurrencyCode(currency);
 
     const resp = await lightrail.request("DELETE", `currencies/${encodeURIComponent(currencyCode)}`);
-
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
-    } else if (resp.status === 404) {
-        return null;
     }
+
     throw new LightrailRequestError(resp);
 }
 
@@ -89,13 +89,13 @@ export async function deleteCurrency(currency: string | Currency): Promise<Delet
  * Get currency code from the string (as the ID itself) or Currency object.
  */
 export function getCurrencyCode(currency: string | Currency): string {
-    if (!currency) {
-        throw new Error("currency issuance not set");
+    if (currency == null) {
+        throw new Error("currency not set");
     } else if (typeof currency === "string") {
         return currency;
     } else if (currency.code) {
         return currency.code;
     } else {
-        throw new Error("issuance must be a string for issuanceId or a Issuance object");
+        throw new Error("currency must be a string or Currency object");
     }
 }

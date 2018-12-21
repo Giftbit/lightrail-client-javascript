@@ -17,7 +17,7 @@ Create, Get by Id, Get by FullCode, List, Update, Delete
 Create, Get, List, Update, Delete, Create Issuance, Get Issuance, List Issuances
 
 ##### Transactions
-Checkout, Debit, Credit, Transfer, Get , List
+Checkout, Debit, Credit, Transfer, Get, List
   
 ##### Currencies
 Create, Get, List, Update, Delete

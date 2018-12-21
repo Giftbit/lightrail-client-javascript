@@ -8,8 +8,6 @@ chai.use(chaiExclude);
 
 describe("programs", () => {
     before(() => {
-        chai.assert.isString(process.env.LIGHTRAIL_API_PATH, "env var LIGHTRAIL_API_PATH must be set ot run the tests (for example set it in the .env file)");
-        chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
         Lightrail.configure({
             restRoot: process.env.LIGHTRAIL_API_PATH || "",
             apiKey: process.env.LIGHTRAIL_API_KEY || "",
@@ -51,10 +49,8 @@ describe("programs", () => {
             chai.assert.isNotNull(program);
             chai.assert.deepEqualExcluding(program.body, request,
                 [
-                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate",
-                    "fixedInitialUses" /* this has been deprecated in V2 to fixedInitialUsesRemaining but is still being returned */,
-                    "valueRule" /* this has been deprecated in V2 to balanceRule but is still being returned */
-                ]);
+                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate"
+                ] as any);
         });
     });
 
@@ -108,7 +104,7 @@ describe("programs", () => {
 // Issuance
 describe("/programs/issuance", () => {
     before(() => {
-        chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
+        chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set to run the tests (for example set it in the .env file)");
         Lightrail.configure({
             apiKey: process.env.LIGHTRAIL_API_KEY || "",
         });

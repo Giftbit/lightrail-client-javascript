@@ -1,14 +1,13 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
+import {CreateValueParams} from "./params";
 import chaiExclude = require("chai-exclude");
-import {CreateValueParams} from "./params/values/CreateValueParams";
+
 chai.use(chaiExclude);
 
 describe("values", () => {
     before(() => {
-        chai.assert.isString(process.env.LIGHTRAIL_API_PATH, "env var LIGHTRAIL_API_PATH must be set ot run the tests (for example set it in the .env file)");
-        chai.assert.isString(process.env.LIGHTRAIL_API_KEY, "env var LIGHTRAIL_API_KEY must be set ot run the tests (for example set it in the .env file)");
         Lightrail.configure({
             restRoot: process.env.LIGHTRAIL_API_PATH || "",
             apiKey: process.env.LIGHTRAIL_API_KEY || "",
@@ -48,10 +47,8 @@ describe("values", () => {
             chai.assert.isNotNull(value);
             chai.assert.deepEqualExcluding(value.body, testValue,
                 [
-                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate", "code", "issuanceId", "updatedContactIdDate", "canceled", "programId",
-                    "uses" /* this has been deprecated in V2 to usesRemaining but is still being returned */,
-                    "valueRule" /* this has been deprecated in V2 to balanceRule but is still being returned */
-                ]);
+                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate", "code", "issuanceId", "updatedContactIdDate", "canceled", "programId"
+                ] as any);
         });
     });
 
@@ -109,6 +106,13 @@ describe("values", () => {
             chai.assert.equal(value.body.currency, testValue.currency);
             chai.assert.equal(value.body.metadata["deepestFear"], testValue.metadata["deepestFear"]);
         });
+        it("returns the expected 404", async () => {
+            const value = await Lightrail.values.getValue("SOME_VALUE_ID_THAT_SHOULD_NEVER_EXIST_WOIFSDLKFJSDLFKJSDLF", {showCode: true});
+
+            chai.assert.isNotNull(value);
+            chai.assert.isNull(value.body);
+            chai.assert.equal(value.status, 404);
+        });
     });
 
     describe("getValues(filters)", () => {
@@ -146,7 +150,7 @@ describe("values", () => {
         it("changes the code", async () => {
             const value = await Lightrail.values.changeValuesCode(
                 testValueId,
-                {code: uuid.v4().substring(0, 7)+"haberdashery"}
+                {code: uuid.v4().substring(0, 7) + "haberdashery"}
             );
 
             chai.assert.isNotNull(value);

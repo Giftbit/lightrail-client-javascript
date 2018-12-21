@@ -1,9 +1,9 @@
-import {LightrailResponse, PaginatedLightrailResponse} from "./params/LightrailResponse";
+import {LightrailResponse, PaginatedLightrailResponse} from "./params";
 import {Response} from "superagent";
 import * as parseLinkHeader from "parse-link-header";
 
 export const validateRequiredParams = (keys: string[], params: object): boolean => keys.every(key => {
-    if (!params[key]) {
+    if (params[key] === undefined || params[key] === null) {
         throw new Error("params." + key + " not set");
     }
 
@@ -34,6 +34,9 @@ export const formatFilterParams = (params?: object): object => {
     return formattedParams;
 };
 
+export function isSuccessStatus(status: number): boolean {
+    return status >= 200 && status < 300;
+}
 
 /**
  * Formats a response object into a standardized/predictable response, should be used to format all responses
@@ -42,8 +45,9 @@ export const formatFilterParams = (params?: object): object => {
  */
 export function formatResponse<T>(response: Response): LightrailResponse<T> | PaginatedLightrailResponse<T> {
     const lr: any = {
-        body: response.body,
-        text: response.text
+        body: (response.status !== 404) ? response.body : null,
+        text: response.text,
+        status: response.status
     };
 
     if (response.header) {

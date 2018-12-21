@@ -1,4 +1,7 @@
 {
+    "linterOptions": {
+        "exclude": ["**/*.json"]
+    },
     "rules": {
         "class-name": true,
         "comment-format": [

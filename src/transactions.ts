@@ -1,8 +1,9 @@
-// CREATE
 import * as lightrail from "./index";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {formatResponse, validateRequiredParams} from "./requestUtils";
+import {formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {
+    CapturePendingParams,
+    CapturePendingResponse,
     CheckoutParams,
     CheckoutResponse,
     CreditParams,
@@ -10,12 +11,16 @@ import {
     DebitParams,
     DebitResponse,
     GetTransactionResponse,
+    ListTransactionsParams,
+    ListTransactionsResponse,
+    ReverseParams,
+    ReverseResponse,
     TransferParams,
-    TransferResponse
+    TransferResponse,
+    VoidPendingParams,
+    VoidPendingResponse
 } from "./params";
 import {Transaction} from "./model";
-import {ListTransactionsParams, ListTransactionsResponse} from "./params/transactions/ListTransactionsParams";
-
 
 // CREATE
 export async function checkout(params: CheckoutParams): Promise<CheckoutResponse> {
@@ -26,7 +31,7 @@ export async function checkout(params: CheckoutParams): Promise<CheckoutResponse
     }
 
     const resp = await lightrail.request("POST", "transactions/checkout").send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -37,11 +42,11 @@ export async function debit(params: DebitParams): Promise<DebitResponse> {
     if (!params) {
         throw new Error("debit params not set");
     } else {
-        validateRequiredParams(["id", "currency", "source", "amount"], params);
+        validateRequiredParams(["id", "currency", "source"], params);
     }
 
     const resp = await lightrail.request("POST", "transactions/debit").send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -52,11 +57,11 @@ export async function credit(params: CreditParams): Promise<CreditResponse> {
     if (!params) {
         throw new Error("credit params not set");
     } else {
-        validateRequiredParams(["id", "currency", "destination", "amount"], params);
+        validateRequiredParams(["id", "currency", "destination"], params);
     }
 
     const resp = await lightrail.request("POST", "transactions/credit").send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -71,7 +76,52 @@ export async function transfer(params: TransferParams): Promise<TransferResponse
     }
 
     const resp = await lightrail.request("POST", "transactions/transfer").send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
+    }
+
+    throw new LightrailRequestError(resp);
+}
+
+export async function reverse(transactionToReverse: string | Transaction, params: ReverseParams): Promise<ReverseResponse> {
+    if (!params) {
+        throw new Error("reverse params not set");
+    } else {
+        validateRequiredParams(["id"], params);
+    }
+
+    const resp = await lightrail.request("POST", `transactions/${encodeURIComponent(getTransactionId(transactionToReverse))}/reverse`).send(params);
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
+    }
+
+    throw new LightrailRequestError(resp);
+}
+
+export async function capturePending(transactionToCapture: string | Transaction, params: CapturePendingParams): Promise<CapturePendingResponse> {
+    if (!params) {
+        throw new Error("capture params not set");
+    } else {
+        validateRequiredParams(["id"], params);
+    }
+
+    const resp = await lightrail.request("POST", `transactions/${encodeURIComponent(getTransactionId(transactionToCapture))}/capture`).send(params);
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
+    }
+
+    throw new LightrailRequestError(resp);
+}
+
+export async function voidPending(transactionToVoid: string | Transaction, params: VoidPendingParams): Promise<VoidPendingResponse> {
+    if (!params) {
+        throw new Error("void params not set");
+    } else {
+        validateRequiredParams(["id"], params);
+    }
+
+    const resp = await lightrail.request("POST", `transactions/${encodeURIComponent(getTransactionId(transactionToVoid))}/void`).send(params);
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
 
@@ -81,7 +131,7 @@ export async function transfer(params: TransferParams): Promise<TransferResponse
 // READ
 export async function listTransactions(params?: ListTransactionsParams): Promise<ListTransactionsResponse> {
     const resp = await lightrail.request("GET", "transactions").query(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
     throw new LightrailRequestError(resp);
@@ -91,11 +141,10 @@ export async function getTransaction(transaction: string | Transaction): Promise
     const transactionId = getTransactionId(transaction);
 
     const resp = await lightrail.request("GET", `transactions/${encodeURIComponent(transactionId)}`);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
-    } else if (resp.status === 404) {
-        return null;
     }
+
     throw new LightrailRequestError(resp);
 }
 

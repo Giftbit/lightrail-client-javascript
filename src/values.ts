@@ -1,13 +1,20 @@
-import {CreateValueParams, CreateValueRespone} from "./params/values/CreateValueParams";
-import {formatFilterParams, formatResponse, validateRequiredParams} from "./requestUtils";
+import {
+    ChangeValuesCodeParams,
+    ChangeValuesCodeResponse,
+    CreateValueParams,
+    CreateValueRespone,
+    DeleteValueResponse,
+    GetValueParams,
+    GetValueResponse,
+    ListValuesParams,
+    ListValuesResponse,
+    UpdateValueParams,
+    UpdateValueResponse
+} from "./params";
+import {formatFilterParams, formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {LightrailRequestError} from "./LightrailRequestError";
 import * as lightrail from "./index";
-import {GetValueParams, GetValueResponse} from "./params/values/GetValueParams";
-import {ListValuesParams, ListValuesResponse} from "./params/values/ListValuesParams";
-import {Value} from "./model/Value";
-import {UpdateValueParams, UpdateValueResponse} from "./params/values/UpdateValueParams";
-import {ChangeValuesCodeParams, ChangeValuesCodeResponse} from "./params/values/ChangeValuesCodeParams";
-import {DeleteValueResponse} from "./params/values/DeleteValueParams";
+import {Value} from "./model";
 
 // CREATE
 export async function createValue(params: CreateValueParams): Promise<CreateValueRespone> {
@@ -18,18 +25,19 @@ export async function createValue(params: CreateValueParams): Promise<CreateValu
     }
 
     const resp = await lightrail.request("POST", "values").send(params);
-    if (resp.status === 200 || resp.status === 201) {
+    if (isSuccessStatus(resp.status)) {
         return (
             formatResponse(resp)
         );
     }
+
     throw new LightrailRequestError(resp);
 }
 
 // READ
 export async function listValues(params?: ListValuesParams): Promise<ListValuesResponse> {
     const resp = await lightrail.request("GET", "values").set("accept", (!!params && !!params.csv) ? "text/csv" : "application/json").query(formatFilterParams(params));
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return (
             formatResponse(resp)
         );
@@ -42,12 +50,10 @@ export async function getValue(value: string | Value, params?: GetValueParams): 
     const valueId = getValueId(value);
 
     const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}`).query(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return (
             formatResponse(resp)
         );
-    } else if (resp.status === 404) {
-        return null;
     }
 
     throw new LightrailRequestError(resp);
@@ -58,12 +64,10 @@ export async function updateValue(value: string | Value, params: UpdateValuePara
     const valueId = getValueId(value);
 
     const resp = await lightrail.request("PATCH", `values/${encodeURIComponent(valueId)}`).send(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return (
             formatResponse(resp)
         );
-    } else if (resp.status === 404) {
-        return null;
     }
 
     throw new LightrailRequestError(resp);
@@ -73,12 +77,10 @@ export async function changeValuesCode(value: string | Value, params: ChangeValu
     const valueId = getValueId(value);
 
     const resp = await lightrail.request("POST", `values/${encodeURIComponent(valueId)}/changeCode`).send(params);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status)) {
         return (
             formatResponse(resp)
         );
-    } else if (resp.status === 404) {
-        return null;
     }
 
     throw new LightrailRequestError(resp);
@@ -89,12 +91,10 @@ export async function deleteValue(value: string | Value): Promise<DeleteValueRes
     const valueId = getValueId(value);
 
     const resp = await lightrail.request("DELETE", `values/${encodeURIComponent(valueId)}`);
-    if (resp.status === 200) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return (
             formatResponse(resp)
         );
-    } else if (resp.status === 404) {
-        return null;
     }
 
     throw new LightrailRequestError(resp);
