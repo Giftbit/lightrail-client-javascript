@@ -24,5 +24,5 @@ export interface CreateValueParams {
     metadata?: object;
 }
 
-export interface CreateValueRespone extends LightrailResponse<Value> {
+export interface CreateValueResponse extends LightrailResponse<Value> {
 }

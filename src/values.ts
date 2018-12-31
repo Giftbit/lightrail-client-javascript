@@ -2,7 +2,7 @@ import {
     ChangeValuesCodeParams,
     ChangeValuesCodeResponse,
     CreateValueParams,
-    CreateValueRespone,
+    CreateValueResponse,
     DeleteValueResponse,
     GetValueParams,
     GetValueResponse,
@@ -17,7 +17,7 @@ import * as lightrail from "./index";
 import {Value} from "./model";
 
 // CREATE
-export async function createValue(params: CreateValueParams): Promise<CreateValueRespone> {
+export async function createValue(params: CreateValueParams): Promise<CreateValueResponse> {
     if (!params) {
         throw new Error("params not set");
     } else {
