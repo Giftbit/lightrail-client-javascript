@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.2.1
+[Program Creation name](https://github.com/Giftbit/lightrail-client-javascript/pull/31)
+ - Made Program name required
+ - Fixed Value Creation Response typo
+ 
 ## 3.2.0
 [Added new transaction types](https://github.com/Giftbit/lightrail-client-javascript/pull/30)
  - Added reverse to transactions
