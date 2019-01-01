@@ -11,7 +11,6 @@ import * as transactions from "./transactions";
 import {LightrailOptions} from "./LightrailOptions";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {GenerateShopperTokenOptions} from "./GenerateShopperTokenOptions";
-import packageJson = require("../package.json");
 
 export {LightrailOptions, LightrailRequestError, contacts, model, params, programs, values, currencies, transactions};
 
@@ -92,7 +91,8 @@ export function request(method: string, path: string): superagent.Request {
         r.set("Authorization", `Bearer ${configuration.apiKey}`);
     }
     if (!configuration.isBrowser) {
-        r.set("User-Agent", `Lightrail-JavaScript/${packageJson.version}`);
+        //TODO Review how this version get set, previous import of package.json was breaking publish
+        r.set("User-Agent", "Lightrail-JavaScript/3.2.3");
     }
     if (configuration.isBrowser) {
         r.set("X-Requested-With", "XMLHttpRequest");
