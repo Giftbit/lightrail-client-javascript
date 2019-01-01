@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.3
+[Fixed Dist Dir](https://github.com/Giftbit/lightrail-client-javascript/pull/32)
+ - Fixed missing dist folder
+
 ## 3.2.1
 [Program Creation name](https://github.com/Giftbit/lightrail-client-javascript/pull/31)
  - Made Program name required
