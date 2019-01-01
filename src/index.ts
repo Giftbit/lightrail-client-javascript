@@ -91,7 +91,7 @@ export function request(method: string, path: string): superagent.Request {
         r.set("Authorization", `Bearer ${configuration.apiKey}`);
     }
     if (!configuration.isBrowser) {
-        //TODO Review how this version get set, previous import of package.json was breaking publish
+        // TODO@Dan Review Previous import of package.json to dynamically set this was breaking publish (dist included src/ & package.json file)
         r.set("User-Agent", "Lightrail-JavaScript/3.2.3");
     }
     if (configuration.isBrowser) {
