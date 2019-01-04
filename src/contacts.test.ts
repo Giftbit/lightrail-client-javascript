@@ -139,6 +139,31 @@ describe("contacts", () => {
             chai.assert.notEqual(value.body.contactId, attachedValue.body.contactId);
             chai.assert.equal(attachedValue.body.contactId, attachToContactID);
         });
+
+        it("attaches a generic Value as a new Value to the Contact", async () => {
+            // Create Value
+            const valueID = uuid.v4().substring(0, 20);
+            const value = await Lightrail.values.createValue({
+                id: valueID,
+                currency: "USD",
+                balance: 33,
+                isGenericCode: true
+            });
+
+            // Create Contact and Attach Value
+            let contact = await Lightrail.contacts.getContact(attachToContactID);
+            if (!contact.body) {
+                await Lightrail.contacts.createContact({
+                    ...testContact,
+                    id: attachToContactID,
+                    email: "testAttach@fake.com"
+                });
+            }
+            const attachedValue = await Lightrail.contacts.attachContactToValue(attachToContactID, {valueId: valueID, attachGenericAsNewValue: true});
+            chai.assert.equal(attachedValue.status, 200);
+            chai.assert.notEqual(value.body.id, attachedValue.body.id);
+            chai.assert.equal(contact.body.id, attachedValue.body.contactId);
+        });
     });
 
     describe("listContactValues(id, params)", () => {

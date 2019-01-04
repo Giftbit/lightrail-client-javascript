@@ -5,7 +5,7 @@ import {
     CreateValueResponse,
     DeleteValueResponse,
     GetValueParams,
-    GetValueResponse,
+    GetValueResponse, ListContactsParams, ListContactsResponse, ListTransactionsParams, ListTransactionsResponse,
     ListValuesParams,
     ListValuesResponse,
     UpdateValueParams,
@@ -92,6 +92,34 @@ export async function deleteValue(value: string | Value): Promise<DeleteValueRes
 
     const resp = await lightrail.request("DELETE", `values/${encodeURIComponent(valueId)}`);
     if (isSuccessStatus(resp.status) || resp.status === 404) {
+        return (
+            formatResponse(resp)
+        );
+    }
+
+    throw new LightrailRequestError(resp);
+}
+
+// LIST VALUES TRANSACTIONS
+export async function listValuesTransactions(value: string | Value, params?: ListTransactionsParams): Promise<ListTransactionsResponse> {
+    const valueId = getValueId(value);
+
+    const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}/transactions`).query(formatFilterParams(params));
+    if (isSuccessStatus(resp.status)) {
+        return (
+            formatResponse(resp)
+        );
+    }
+
+    throw new LightrailRequestError(resp);
+}
+
+// LIST VALUES ATTACHED CONTACTS
+export async function listValuesAttachedContacts(value: string | Value, params?: ListContactsParams): Promise<ListContactsResponse> {
+    const valueId = getValueId(value);
+
+    const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}/contacts`).set("accept", (!!params && !!params.csv) ? "text/csv" : "application/json").query(formatFilterParams(params));
+    if (isSuccessStatus(resp.status)) {
         return (
             formatResponse(resp)
         );

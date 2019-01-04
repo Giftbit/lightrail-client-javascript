@@ -2,10 +2,10 @@ import {PaginatedLightrailResponse} from "../LightrailResponse";
 import {Value} from "../../model/Value";
 import {FilterableNumber, FilterableString} from "../FilterableParams";
 import {PaginationParams} from "../PaginationParams";
+import {ContentTypeParams} from "../ContentTypeParams";
 
-export interface ListValuesParams extends PaginationParams {
+export interface ListValuesParams extends PaginationParams, ContentTypeParams {
     formatCurrencies?: boolean;
-    csv?: boolean;
     issuanceId?: string;
     showCode?: boolean;
     programId?: FilterableString;
