@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.0
+- Added listValuesTransactions to values
+- Added listValuesAttachedContacts to values
+- Breaking change refactoring how setting contentType:text/csv was accessed
+
 ## 3.2.3
 [Fixed Dist Dir](https://github.com/Giftbit/lightrail-client-javascript/pull/32)
  - Fixed missing dist folder

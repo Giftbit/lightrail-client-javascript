@@ -1,13 +1,13 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
-import {CreateValueParams} from "./params";
+import {CreateContactParams, CreateValueParams} from "./params";
 import chaiExclude = require("chai-exclude");
 
 chai.use(chaiExclude);
 
 describe("values", () => {
-    before(() => {
+    before(async () => {
         Lightrail.configure({
             restRoot: process.env.LIGHTRAIL_API_PATH || "",
             apiKey: process.env.LIGHTRAIL_API_KEY || "",
@@ -132,6 +132,11 @@ describe("values", () => {
             chai.assert.isTrue(!!values.body.length);
             chai.assert.equal(values.body.length, 1);
         });
+
+        it("gets values as csv", async () => {
+            const values = await Lightrail.values.listValues({}, "text/csv");
+            chai.assert.include(values.text, "id,currency,balance,")
+        });
     });
 
     describe("updateValue(value, updates)", () => {
@@ -176,5 +181,42 @@ describe("values", () => {
             chai.assert.isNotNull(response.body);
             chai.assert.isTrue(response.body.success);
         });
+    });
+
+    it("listValuesTransactions(value)", async () => {
+        const valueParams: CreateValueParams = {
+            id: uuid.v4().substring(0, 12),
+            currency: "USD",
+            balance: 500,
+        };
+        const value = await Lightrail.values.createValue(valueParams);
+        chai.assert.equal(value.status, 201);
+
+        const getValuesAttachedContacts = await Lightrail.values.listValuesTransactions(valueParams.id);
+        chai.assert.equal(getValuesAttachedContacts.status, 200);
+        chai.assert.equal(getValuesAttachedContacts.body.length, 1);
+        chai.assert.equal(getValuesAttachedContacts.body[0].transactionType, "initialBalance");
+    });
+
+    it("listValuesAttachedContacts(value)", async () => {
+        const testContact: CreateContactParams = {
+            id: uuid.v4().substring(0, 24),
+            email: "test@example.com"
+        };
+        const contact = await Lightrail.contacts.createContact(testContact);
+        chai.assert.equal(contact.status, 201);
+
+        const valueParams: CreateValueParams = {
+            id: uuid.v4().substring(0, 24),
+            currency: "USD",
+            contactId: testContact.id,
+            balance: 500,
+        };
+        const value = await Lightrail.values.createValue(valueParams);
+        chai.assert.equal(contact.status, 201);
+
+        const getValuesAttachedContacts = await Lightrail.values.listValuesAttachedContacts(value.body);
+        chai.assert.equal(getValuesAttachedContacts.status, 200);
+        chai.assert.deepEqual(getValuesAttachedContacts.body, [contact.body]);
     });
 });

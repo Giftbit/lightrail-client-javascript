@@ -24,7 +24,7 @@ describe("programs", () => {
                 name: "javascript programs unit test",
                 currency: "USD",
                 discount: false,
-                discountSellerLiability: 0,
+                discountSellerLiability: null,
                 pretax: false,
                 active: true,
                 redemptionRule: {

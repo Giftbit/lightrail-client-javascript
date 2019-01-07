@@ -12,7 +12,6 @@ import {
 } from "./params";
 import {Currency} from "./model/Currency";
 
-// CREATE
 export async function createCurrency(params: CreateCurrencyParams): Promise<CreateCurrencyResponse> {
     if (!params) {
         throw new Error("missing currency");
@@ -28,7 +27,6 @@ export async function createCurrency(params: CreateCurrencyParams): Promise<Crea
     throw new LightrailRequestError(resp);
 }
 
-// READ
 export async function listCurrencies(): Promise<ListCurreniesResponse> {
     const resp = await lightrail.request("GET", `currencies`);
     if (isSuccessStatus(resp.status)) {
@@ -53,7 +51,6 @@ export async function getCurrency(currency: string | Currency): Promise<GetCurre
     throw new LightrailRequestError(resp);
 }
 
-// UPDATE
 export async function updateCurrency(currency: string | Currency, params: UpdateCurrencyParams): Promise<UpdateCurrencyResponse> {
     const currencyCode = getCurrencyCode(currency);
 
@@ -72,7 +69,6 @@ export async function updateCurrency(currency: string | Currency, params: Update
     throw new LightrailRequestError(resp);
 }
 
-// DELETE
 export async function deleteCurrency(currency: string | Currency): Promise<DeleteCurrencyResponse> {
     const currencyCode = getCurrencyCode(currency);
 

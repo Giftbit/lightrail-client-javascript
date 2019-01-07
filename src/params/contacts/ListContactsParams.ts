@@ -9,6 +9,7 @@ export interface ListContactsParams extends PaginationParams {
     firstName?: FilterableString;
     lastName?: FilterableString;
     email?: FilterableString;
+    valueId?: FilterableString;
 }
 
 export interface ListContactsResponse extends PaginatedLightrailResponse<Array<Contact>> {

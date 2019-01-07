@@ -5,7 +5,6 @@ import {PaginationParams} from "../PaginationParams";
 
 export interface ListValuesParams extends PaginationParams {
     formatCurrencies?: boolean;
-    csv?: boolean;
     issuanceId?: string;
     showCode?: boolean;
     programId?: FilterableString;
