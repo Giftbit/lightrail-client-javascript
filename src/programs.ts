@@ -18,7 +18,6 @@ import {
 import {formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {Issuance, Program} from "./model";
 
-// CREATE
 export async function createProgram(params: CreateProgramParams): Promise<CreateProgramResponse> {
     if (!params) {
         throw new Error("params not set");
@@ -34,7 +33,6 @@ export async function createProgram(params: CreateProgramParams): Promise<Create
     throw new LightrailRequestError(resp);
 }
 
-// READ
 export async function listPrograms(params?: ListProgramsParams): Promise<ListProgramsResponse> {
     const resp = await lightrail.request("GET", "programs").query(params);
     if (isSuccessStatus(resp.status)) {
@@ -53,7 +51,6 @@ export async function getProgram(program: string | Program): Promise<GetProgramR
     throw new LightrailRequestError(resp);
 }
 
-// UPDATE
 export async function updateProgram(program: string | Program, params: UpdateProgramParams): Promise<UpdateProgramResponse> {
     const programId = getProgramId(program);
 
@@ -68,7 +65,6 @@ export async function updateProgram(program: string | Program, params: UpdatePro
     throw new LightrailRequestError(resp);
 }
 
-// DELETE
 export async function deleteProgram(program: string | Program): Promise<DeleteProgramResponse> {
     const programId = getProgramId(program);
 
@@ -80,10 +76,6 @@ export async function deleteProgram(program: string | Program): Promise<DeletePr
     throw new LightrailRequestError(resp);
 }
 
-///////////////////
-// [ ISSUANCE ]
-
-// CREATE
 export async function createIssuance(program: string | Program, params: CreateIssuanceParams): Promise<CreateIssuanceResponse> {
     const programId = getProgramId(program);
 
@@ -101,7 +93,6 @@ export async function createIssuance(program: string | Program, params: CreateIs
     throw new LightrailRequestError(resp);
 }
 
-// READ
 export async function listIssuances(program: string | Program, params?: ListIssuancesParams): Promise<ListIssuancesResponse> {
     const programId = getProgramId(program);
 
@@ -129,8 +120,6 @@ export async function getIssuance(program: string | Program, issuance: string | 
     throw new LightrailRequestError(resp);
 }
 
-
-///////////////////
 /**
  * Get programId from the string (as the ID itself) or Program object.
  */

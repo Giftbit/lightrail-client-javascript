@@ -132,6 +132,11 @@ describe("values", () => {
             chai.assert.isTrue(!!values.body.length);
             chai.assert.equal(values.body.length, 1);
         });
+
+        it("gets values as csv", async () => {
+            const values = await Lightrail.values.listValues({}, "text/csv");
+            chai.assert.include(values.text, "id,currency,balance,")
+        });
     });
 
     describe("updateValue(value, updates)", () => {

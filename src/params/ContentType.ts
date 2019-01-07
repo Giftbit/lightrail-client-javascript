@@ -1,0 +1,1 @@
+export type ContentType = "application/json" | "text/csv";

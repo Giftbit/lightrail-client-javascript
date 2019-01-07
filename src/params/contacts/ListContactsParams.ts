@@ -2,9 +2,8 @@ import {Contact} from "../../model";
 import {FilterableString} from "../FilterableParams";
 import {PaginatedLightrailResponse} from "../LightrailResponse";
 import {PaginationParams} from "../PaginationParams";
-import {ContentTypeParams} from "../ContentTypeParams";
 
-export interface ListContactsParams extends PaginationParams, ContentTypeParams {
+export interface ListContactsParams extends PaginationParams {
     id?: FilterableString;
     tags?: FilterableString;
     firstName?: FilterableString;

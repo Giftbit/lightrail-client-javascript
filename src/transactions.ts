@@ -22,7 +22,6 @@ import {
 } from "./params";
 import {Transaction} from "./model";
 
-// CREATE
 export async function checkout(params: CheckoutParams): Promise<CheckoutResponse> {
     if (!params) {
         throw new Error("checkout params not set");
@@ -128,7 +127,6 @@ export async function voidPending(transactionToVoid: string | Transaction, param
     throw new LightrailRequestError(resp);
 }
 
-// READ
 export async function listTransactions(params?: ListTransactionsParams): Promise<ListTransactionsResponse> {
     const resp = await lightrail.request("GET", "transactions").query(params);
     if (isSuccessStatus(resp.status)) {
@@ -148,8 +146,6 @@ export async function getTransaction(transaction: string | Transaction): Promise
     throw new LightrailRequestError(resp);
 }
 
-
-///////////////////
 /**
  * Get transactionId from the string (as the ID itself) or Transaction object.
  */

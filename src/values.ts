@@ -5,7 +5,11 @@ import {
     CreateValueResponse,
     DeleteValueResponse,
     GetValueParams,
-    GetValueResponse, ListContactsParams, ListContactsResponse, ListTransactionsParams, ListTransactionsResponse,
+    GetValueResponse,
+    ListContactsParams,
+    ListContactsResponse,
+    ListTransactionsParams,
+    ListTransactionsResponse,
     ListValuesParams,
     ListValuesResponse,
     UpdateValueParams,
@@ -15,8 +19,8 @@ import {formatFilterParams, formatResponse, isSuccessStatus, validateRequiredPar
 import {LightrailRequestError} from "./LightrailRequestError";
 import * as lightrail from "./index";
 import {Value} from "./model";
+import {ContentType} from "./params/ContentType";
 
-// CREATE
 export async function createValue(params: CreateValueParams): Promise<CreateValueResponse> {
     if (!params) {
         throw new Error("params not set");
@@ -34,9 +38,8 @@ export async function createValue(params: CreateValueParams): Promise<CreateValu
     throw new LightrailRequestError(resp);
 }
 
-// READ
-export async function listValues(params?: ListValuesParams): Promise<ListValuesResponse> {
-    const resp = await lightrail.request("GET", "values").set("accept", (!!params && !!params.csv) ? "text/csv" : "application/json").query(formatFilterParams(params));
+export async function listValues(params?: ListValuesParams, contentType: ContentType = "application/json"): Promise<ListValuesResponse> {
+    const resp = await lightrail.request("GET", "values").set("accept", contentType).query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
         return (
             formatResponse(resp)
@@ -59,7 +62,6 @@ export async function getValue(value: string | Value, params?: GetValueParams): 
     throw new LightrailRequestError(resp);
 }
 
-// UPDATE
 export async function updateValue(value: string | Value, params: UpdateValueParams): Promise<UpdateValueResponse> {
     const valueId = getValueId(value);
 
@@ -86,7 +88,6 @@ export async function changeValuesCode(value: string | Value, params: ChangeValu
     throw new LightrailRequestError(resp);
 }
 
-// DELETE
 export async function deleteValue(value: string | Value): Promise<DeleteValueResponse> {
     const valueId = getValueId(value);
 
@@ -100,7 +101,6 @@ export async function deleteValue(value: string | Value): Promise<DeleteValueRes
     throw new LightrailRequestError(resp);
 }
 
-// LIST VALUES TRANSACTIONS
 export async function listValuesTransactions(value: string | Value, params?: ListTransactionsParams): Promise<ListTransactionsResponse> {
     const valueId = getValueId(value);
 
@@ -114,11 +114,10 @@ export async function listValuesTransactions(value: string | Value, params?: Lis
     throw new LightrailRequestError(resp);
 }
 
-// LIST VALUES ATTACHED CONTACTS
 export async function listValuesAttachedContacts(value: string | Value, params?: ListContactsParams): Promise<ListContactsResponse> {
     const valueId = getValueId(value);
 
-    const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}/contacts`).set("accept", (!!params && !!params.csv) ? "text/csv" : "application/json").query(formatFilterParams(params));
+    const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}/contacts`).query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
         return (
             formatResponse(resp)

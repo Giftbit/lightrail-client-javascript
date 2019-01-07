@@ -17,7 +17,6 @@ import {
 } from "./params";
 import {Contact} from "./model";
 
-// CREATE
 export async function createContact(params: CreateContactParams): Promise<CreateContactResponse> {
     if (!params) {
         throw new Error("params not set");
@@ -32,7 +31,6 @@ export async function createContact(params: CreateContactParams): Promise<Create
     throw new LightrailRequestError(resp);
 }
 
-// READ
 export async function getContact(contact: string | Contact): Promise<GetContactResponse> {
     const contactId = getContactId(contact);
 
@@ -61,7 +59,6 @@ export async function listContactsValues(contact: string | Contact, params?: Lis
     throw new LightrailRequestError(resp);
 }
 
-// UPDATE
 export async function updateContact(contact: string | Contact, params: UpdateContactParams): Promise<UpdateContactResponse> {
     const contactId = getContactId(contact);
 
@@ -82,7 +79,6 @@ export async function attachContactToValue(contact: string | Contact, params: At
     throw new LightrailRequestError(resp);
 }
 
-// DELETE
 export async function deleteContact(contact: string | Contact): Promise<DeleteContactResponse> {
     const contactId = getContactId(contact);
 
