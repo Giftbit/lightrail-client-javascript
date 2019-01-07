@@ -159,7 +159,7 @@ describe("contacts", () => {
                     email: "testAttach@fake.com"
                 });
             }
-            const attachedValue = await Lightrail.contacts.attachContactToValue(attachToContactID, {valueId: valueID, attachGenericAsNewValue: true});
+            const attachedValue = await Lightrail.contacts.attachContactToValue(attachToContactID, {valueId: valueID});
             chai.assert.equal(attachedValue.status, 200);
             chai.assert.notEqual(value.body.id, attachedValue.body.id);
             chai.assert.equal(contact.body.id, attachedValue.body.contactId);
