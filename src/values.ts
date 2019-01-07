@@ -30,9 +30,7 @@ export async function createValue(params: CreateValueParams): Promise<CreateValu
 
     const resp = await lightrail.request("POST", "values").send(params);
     if (isSuccessStatus(resp.status)) {
-        return (
-            formatResponse(resp)
-        );
+        return formatResponse(resp);
     }
 
     throw new LightrailRequestError(resp);
@@ -41,9 +39,7 @@ export async function createValue(params: CreateValueParams): Promise<CreateValu
 export async function listValues(params?: ListValuesParams, contentType: ContentType = "application/json"): Promise<ListValuesResponse> {
     const resp = await lightrail.request("GET", "values").set("accept", contentType).query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
-        return (
-            formatResponse(resp)
-        );
+        return formatResponse(resp);
     }
 
     throw new LightrailRequestError(resp);
@@ -54,9 +50,7 @@ export async function getValue(value: string | Value, params?: GetValueParams): 
 
     const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}`).query(params);
     if (isSuccessStatus(resp.status) || resp.status === 404) {
-        return (
-            formatResponse(resp)
-        );
+        return formatResponse(resp);
     }
 
     throw new LightrailRequestError(resp);
@@ -67,9 +61,7 @@ export async function updateValue(value: string | Value, params: UpdateValuePara
 
     const resp = await lightrail.request("PATCH", `values/${encodeURIComponent(valueId)}`).send(params);
     if (isSuccessStatus(resp.status)) {
-        return (
-            formatResponse(resp)
-        );
+        return formatResponse(resp);
     }
 
     throw new LightrailRequestError(resp);
@@ -80,9 +72,7 @@ export async function changeValuesCode(value: string | Value, params: ChangeValu
 
     const resp = await lightrail.request("POST", `values/${encodeURIComponent(valueId)}/changeCode`).send(params);
     if (isSuccessStatus(resp.status)) {
-        return (
-            formatResponse(resp)
-        );
+        return formatResponse(resp);
     }
 
     throw new LightrailRequestError(resp);
@@ -93,9 +83,7 @@ export async function deleteValue(value: string | Value): Promise<DeleteValueRes
 
     const resp = await lightrail.request("DELETE", `values/${encodeURIComponent(valueId)}`);
     if (isSuccessStatus(resp.status) || resp.status === 404) {
-        return (
-            formatResponse(resp)
-        );
+        return formatResponse(resp);
     }
 
     throw new LightrailRequestError(resp);
@@ -106,9 +94,7 @@ export async function listValuesTransactions(value: string | Value, params?: Lis
 
     const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}/transactions`).query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
-        return (
-            formatResponse(resp)
-        );
+        return formatResponse(resp);
     }
 
     throw new LightrailRequestError(resp);
@@ -119,9 +105,7 @@ export async function listValuesAttachedContacts(value: string | Value, params?:
 
     const resp = await lightrail.request("GET", `values/${encodeURIComponent(valueId)}/contacts`).query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
-        return (
-            formatResponse(resp)
-        );
+        return formatResponse(resp);
     }
 
     throw new LightrailRequestError(resp);

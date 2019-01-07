@@ -183,7 +183,6 @@ describe("values", () => {
         });
     });
 
-
     it("listValuesTransactions(value)", async () => {
         const valueParams: CreateValueParams = {
             id: uuid.v4().substring(0, 12),
