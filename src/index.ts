@@ -92,7 +92,7 @@ export function request(method: string, path: string): superagent.Request {
     }
     if (!configuration.isBrowser) {
         // TODO@Dan Review Previous import of package.json to dynamically set this was breaking publish (dist included src/ & package.json file)
-        r.set("User-Agent", "Lightrail-JavaScript/3.2.3");
+        r.set("User-Agent", "Lightrail-JavaScript/4.0.0");
     }
     if (configuration.isBrowser) {
         r.set("X-Requested-With", "XMLHttpRequest");
