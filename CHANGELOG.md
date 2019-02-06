@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.0
+- getTransactionChain
+- Added Transaction properties -> simulated | pending | pendingVoidDate
+
 ## 4.0.0
 - Added listValuesTransactions to values
 - Added listValuesAttachedContacts to values
