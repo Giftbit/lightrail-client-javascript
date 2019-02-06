@@ -21,6 +21,7 @@ import {
     VoidPendingResponse
 } from "./params";
 import {Transaction} from "./model";
+import {GetTransactionChainResponse, TransactionChainResponse} from "./params/transactions/GetTransactionChainParams";
 
 export async function checkout(params: CheckoutParams): Promise<CheckoutResponse> {
     if (!params) {
@@ -139,6 +140,17 @@ export async function getTransaction(transaction: string | Transaction): Promise
     const transactionId = getTransactionId(transaction);
 
     const resp = await lightrail.request("GET", `transactions/${encodeURIComponent(transactionId)}`);
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
+    }
+
+    throw new LightrailRequestError(resp);
+}
+
+export async function getTransactionChain(transaction: string | Transaction): Promise<GetTransactionChainResponse> {
+    const transactionId = getTransactionId(transaction);
+
+    const resp = await lightrail.request("GET", `transactions/${encodeURIComponent(transactionId)}/chain`);
     if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
