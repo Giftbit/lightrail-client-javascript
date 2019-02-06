@@ -31,6 +31,7 @@ export * from "./transactions/ListTransactionsParams";
 export * from "./transactions/ReverseParams";
 export * from "./transactions/TransferParams";
 export * from "./transactions/VoidPendingParams";
+export * from "./transactions/GetTransactionChainParams";
 
 export * from "./values/ChangeValuesCodeParams";
 export * from "./values/CreateValueParams";

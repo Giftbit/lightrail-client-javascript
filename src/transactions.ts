@@ -10,6 +10,7 @@ import {
     CreditResponse,
     DebitParams,
     DebitResponse,
+    GetTransactionChainResponse,
     GetTransactionResponse,
     ListTransactionsParams,
     ListTransactionsResponse,
@@ -21,7 +22,6 @@ import {
     VoidPendingResponse
 } from "./params";
 import {Transaction} from "./model";
-import {GetTransactionChainResponse, TransactionChainResponse} from "./params/transactions/GetTransactionChainParams";
 
 export async function checkout(params: CheckoutParams): Promise<CheckoutResponse> {
     if (!params) {
