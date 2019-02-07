@@ -142,6 +142,5 @@ export interface CheckoutSource {
 export interface TransactionDestination {
     rail: "lightrail";
     code?: string;
-    contactId?: string;
     valueId?: string;
 }
