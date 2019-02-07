@@ -9,7 +9,6 @@ export interface TransferParams {
     currency: string;
     simulate?: boolean;
     allowRemainder?: boolean;
-    pending?: boolean;
     metadata?: object;
 }
 

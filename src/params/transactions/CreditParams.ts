@@ -8,7 +8,6 @@ export interface CreditParams {
     amount?: number;
     uses?: number;
     simulate?: boolean;
-    pending?: boolean;
     metadata?: object;
 }
 
