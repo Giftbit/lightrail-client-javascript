@@ -134,7 +134,7 @@ export interface CheckoutSource {
     source?: string;
     customer?: string;
     maxAmount?: number;
-    id?: string;
+    internalId?: string;
     balance?: number;
     beforeLightrail?: boolean;
 }
