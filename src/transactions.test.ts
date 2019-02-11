@@ -254,6 +254,41 @@ describe("transactions", () => {
         });
     });
 
+    describe("getTransactionChain", () => {
+        it("successfully captures a pending transaction and fetches the chain", async () => {
+            const debitTxId = uuid.v4().substring(0, 24);
+            const captureTxId = uuid.v4().substring(0, 24);
+
+            const debitTx = await Lightrail.transactions.debit({
+                id: debitTxId,
+                currency: "USD",
+                amount: 100,
+                source: {
+                    rail: "lightrail",
+                    valueId: valueId
+                },
+                pending: true
+            });
+
+            chai.assert.isNotNull(debitTx);
+            chai.assert.equal(debitTx.body.transactionType, "debit");
+
+            const captureTx = await Lightrail.transactions.capturePending(debitTx.body, {
+                id: captureTxId
+            });
+
+            chai.assert.isNotNull(captureTx);
+            chai.assert.equal(captureTx.body.transactionType, "capture");
+
+            const transactionChain = await Lightrail.transactions.getTransactionChain(debitTxId);
+
+            chai.assert.isNotNull(transactionChain);
+            chai.assert.equal(transactionChain.body.length, 2);
+            chai.assert.isNotNull(transactionChain.body.find(p => p.id === debitTxId));
+            chai.assert.isNotNull(transactionChain.body.find(p => p.id === captureTxId));
+        });
+    });
+
     describe("getTransaction()", () => {
         it("successfully fetches a transaction by id", async () => {
             const transaction = await getTransaction(creditId);
