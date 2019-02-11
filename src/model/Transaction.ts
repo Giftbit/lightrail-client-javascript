@@ -111,6 +111,9 @@ export interface Transaction {
     paymentSources: TransactionParty[] | null;
     metadata: object | null;
     createdBy: string;
+    pending?: boolean;
+    pendingVoidDate?: string;
+    simulated?: true;
 }
 
 export interface DebitSource {
