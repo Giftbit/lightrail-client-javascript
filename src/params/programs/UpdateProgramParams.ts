@@ -1,11 +1,14 @@
-import {Program} from "../../model";
+import {BalanceRule, Program, RedemptionRule} from "../../model";
 import {LightrailResponse} from "../LightrailResponse";
 
 export interface UpdateProgramParams {
     name?: string;
-    active?: boolean;
     discount?: boolean;
+    discountSellerLiability?: number;
     pretax?: boolean;
+    active?: boolean;
+    redemptionRule?: RedemptionRule;
+    balanceRule?: BalanceRule;
     minInitialBalance?: number;
     maxInitialBalance?: number;
     fixedInitialBalances?: number[];
