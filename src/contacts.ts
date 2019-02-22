@@ -16,6 +16,10 @@ import {
     UpdateContactResponse
 } from "./params";
 import {Contact} from "./model";
+import {
+    DetachContactFromValueParams,
+    DetachContactFromValueResponse
+} from "./params/contacts/DetachContactFromValueParams";
 
 export async function createContact(params: CreateContactParams): Promise<CreateContactResponse> {
     if (!params) {
@@ -73,6 +77,16 @@ export async function attachContactToValue(contact: string | Contact, params: At
     const contactId = getContactId(contact);
 
     const resp = await lightrail.request("POST", `contacts/${encodeURIComponent(contactId)}/values/attach`).send(params);
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
+    }
+    throw new LightrailRequestError(resp);
+}
+
+export async function detachContactFromValue(contact: string | Contact, params: DetachContactFromValueParams): Promise<DetachContactFromValueResponse> {
+    const contactId = getContactId(contact);
+
+    const resp = await lightrail.request("POST", `contacts/${encodeURIComponent(contactId)}/values/detach`).send(params);
     if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
