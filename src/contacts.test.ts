@@ -144,7 +144,7 @@ describe("contacts", () => {
     describe("detachContactFromValue", () => {
         it("detaches an attached value", async () => {
 
-            // Ensure we have Value
+            // Ensure we have a Value
             let value = await Lightrail.values.getValue(attachValueID);
             if (!value.body) {
                 value = await Lightrail.values.createValue({
@@ -170,12 +170,12 @@ describe("contacts", () => {
 
             const attachedValue = await Lightrail.contacts.attachContactToValue(attachToContactID, {valueId: attachValueID});
             chai.assert.isNotNull(attachedValue);
+            chai.assert.equal(attachedValue.body.contactId, attachToContactID);
 
             const detachedValue = await Lightrail.contacts.detachContactFromValue(attachToContactID, {valueId: attachValueID});
             chai.assert.isNotNull(detachedValue);
-            chai.assert.equal(attachedValue.body.contactId, attachToContactID);
-            chai.assert.equal(attachedValue.body.id, detachedValue.body.id);
-            chai.assert.notEqual(attachedValue.body.contactId, detachedValue.body.contactId);
+            chai.assert.equal(detachedValue.body.id, attachedValue.body.id);
+            chai.assert.notEqual(detachedValue.body.contactId, attachedValue.body.contactId);
             chai.assert.isNull(detachedValue.body.contactId);
         });
     });
