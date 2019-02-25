@@ -6,7 +6,7 @@ import {LightrailTransactionStep} from "./model";
 
 describe("transactions", () => {
     const sourceValueId = "transferSoruceValueTest1";
-    const valueId = "transactionTestValueId1";
+    const valueId = "transactionTestValueId2";
 
     before(async () => {
         before(() => {
@@ -21,7 +21,7 @@ describe("transactions", () => {
         if (!value.body) {
             await Lightrail.values.createValue({
                 id: valueId,
-                code: "TRANSACTION_TEST_CODE_1",
+                code: "TRANSACTION_TEST_CODE_2",
                 currency: "USD",
                 usesRemaining: 100,
                 balance: 0 // must be 0 for totals test
@@ -48,7 +48,7 @@ describe("transactions", () => {
             const credit = await Lightrail.transactions.credit({
                 id: creditId,
                 currency: "USD",
-                amount: 1000000000,
+                amount: 1000000,
                 destination: {
                     rail: "lightrail",
                     valueId: valueId
