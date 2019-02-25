@@ -153,6 +153,7 @@ describe("contacts", () => {
                     balance: 33
                 });
             }
+            chai.assert.isNotNull(value);
 
             if (value.body.contactId !== attachToContactID) {
                 // Ensure Contact Exists
@@ -164,13 +165,13 @@ describe("contacts", () => {
                         email: "testAttach@fake.com"
                     });
                 }
+                chai.assert.isNotNull(contact);
             }
 
             const attachedValue = await Lightrail.contacts.attachContactToValue(attachToContactID, {valueId: attachValueID});
-            const detachedValue = await Lightrail.contacts.detachContactFromValue(attachToContactID, {valueId: attachValueID});
-
-            chai.assert.isNotNull(value);
             chai.assert.isNotNull(attachedValue);
+
+            const detachedValue = await Lightrail.contacts.detachContactFromValue(attachToContactID, {valueId: attachValueID});
             chai.assert.isNotNull(detachedValue);
             chai.assert.equal(attachedValue.body.contactId, attachToContactID);
             chai.assert.equal(attachedValue.body.id, detachedValue.body.id);
