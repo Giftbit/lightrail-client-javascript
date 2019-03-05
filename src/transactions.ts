@@ -140,7 +140,7 @@ export async function getTransaction(transaction: string | Transaction): Promise
     const transactionId = getTransactionId(transaction);
 
     const resp = await lightrail.request("GET", `transactions/${encodeURIComponent(transactionId)}`);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
     }
 
@@ -151,7 +151,7 @@ export async function getTransactionChain(transaction: string | Transaction): Pr
     const transactionId = getTransactionId(transaction);
 
     const resp = await lightrail.request("GET", `transactions/${encodeURIComponent(transactionId)}/chain`);
-    if (isSuccessStatus(resp.status)) {
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
         return formatResponse(resp);
     }
 

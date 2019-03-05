@@ -48,7 +48,7 @@ describe("transactions", () => {
             const credit = await Lightrail.transactions.credit({
                 id: creditId,
                 currency: "USD",
-                amount: 100000,
+                amount: 100200,
                 destination: {
                     rail: "lightrail",
                     valueId: valueId
