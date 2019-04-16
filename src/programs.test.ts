@@ -1,7 +1,7 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
 import * as uuid from "uuid";
-import chaiExclude = require("chai-exclude");
+import chaiExclude from "chai-exclude";
 import {CreateIssuanceParams, CreateProgramParams} from "./params";
 
 chai.use(chaiExclude);

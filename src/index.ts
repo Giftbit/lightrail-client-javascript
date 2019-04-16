@@ -82,10 +82,10 @@ export function request(method: string, path: string): superagent.Request {
         throw new Error("apiKey not set");
     }
 
-    // We can do some fancy things with superagent here like request rate
-    // throttling or automatic retry on particular codes.
+    // We can do some fancy things with superagent here like request rate throttling.
     let r = superagent(method, configuration.restRoot + path)
-        .ok(() => true);
+        .ok(() => true)
+        .retry();
 
     if (!!configuration.apiKey) {
         r.set("Authorization", `Bearer ${configuration.apiKey}`);
