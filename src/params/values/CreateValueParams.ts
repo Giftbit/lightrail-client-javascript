@@ -2,6 +2,7 @@ import {Value} from "../../model/Value";
 import {LightrailResponse} from "../LightrailResponse";
 import {BalanceRule} from "../../model/BalanceRule";
 import {RedemptionRule} from "../../model/RedemptionRule";
+import {GenericCodeOptions} from "../../model/GenericCodeOptions";
 
 export interface CreateValueParams {
     id: string;
@@ -15,6 +16,8 @@ export interface CreateValueParams {
     frozen?: boolean;
     discount?: boolean;
     discountSellerLiability?: number;
+    attachedFromValueId?: string; // not super sure about this
+    genericCodeOptions?: GenericCodeOptions;
     redemptionRule?: RedemptionRule;
     balanceRule?: BalanceRule;
     usesRemaining?: number;

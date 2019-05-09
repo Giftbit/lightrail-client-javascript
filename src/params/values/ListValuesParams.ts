@@ -13,6 +13,8 @@ export interface ListValuesParams extends PaginationParams {
     contactId?: FilterableString;
     balance?: FilterableNumber;
     usesRemaining?: FilterableNumber;
+    attachedFromValueId?: FilterableString;
+    isGenericCode?: boolean;
     discount?: boolean;
     active?: boolean;
     frozen?: boolean;
