@@ -1,6 +1,6 @@
 {
   "name": "lightrail-client",
-  "version": "4.1.6",
+  "version": "4.2.0",
   "description": "A Javascript and Typescript client for Lightrail",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

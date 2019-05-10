@@ -16,7 +16,6 @@ export interface CreateValueParams {
     frozen?: boolean;
     discount?: boolean;
     discountSellerLiability?: number;
-    attachedFromValueId?: string;
     genericCodeOptions?: GenericCodeOptions;
     redemptionRule?: RedemptionRule;
     balanceRule?: BalanceRule;
