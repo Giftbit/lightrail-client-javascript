@@ -166,11 +166,14 @@ describe("values", () => {
 
     describe("deleteValue(value)", () => {
         const valueId = uuid.v4().substring(0, 24);
-        it("successful delete", async () => {
+        it("create a value with a balanceRule so that no transactions are created so that it can be successfully deleted", async () => {
             const value = await Lightrail.values.createValue({
                 id: valueId,
                 currency: "USD",
-                balance: 0
+                balanceRule: {
+                    rule: "0",
+                    explanation: "nada"
+                }
             });
             chai.assert.isNotNull(value.body);
 
