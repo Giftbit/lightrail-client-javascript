@@ -150,7 +150,12 @@ describe("contacts", () => {
                 currency: "USD",
                 balance: 3333,
                 isGenericCode: true,
-                code: "SPRING_2019"
+                code: "SPRING_2019",
+                genericCodeOptions: {
+                    perContact: {
+                        usesRemaining: 1
+                    }
+                }
             });
 
             // Create Contact and Attach Generic Code Value
