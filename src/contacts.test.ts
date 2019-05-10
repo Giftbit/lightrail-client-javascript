@@ -150,7 +150,7 @@ describe("contacts", () => {
                 currency: "USD",
                 balance: 3333,
                 isGenericCode: true,
-                code: "SPRING_2019",
+                code: `SEASONAL_${uuid.v4().substring(0, 4)}`,
                 genericCodeOptions: {
                     perContact: {
                         usesRemaining: 1
