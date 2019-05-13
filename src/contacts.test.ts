@@ -148,7 +148,10 @@ describe("contacts", () => {
             const value = await Lightrail.values.createValue({
                 id: attachGenericCodeValueID,
                 currency: "USD",
-                balance: 3333,
+                balanceRule: {
+                    rule: "currentLineItem.lineTotal.subtotal * 0.5",
+                    explanation: "50% off"
+                },
                 isGenericCode: true,
                 code: `SEASONAL_${uuid.v4().substring(0, 4)}`,
                 genericCodeOptions: {
