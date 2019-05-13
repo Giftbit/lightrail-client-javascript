@@ -1,5 +1,6 @@
 import {BalanceRule} from "./BalanceRule";
 import {RedemptionRule} from "./RedemptionRule";
+import {GenericCodeOptions} from "./GenericCodeOptions";
 
 export interface Value {
     id: string;
@@ -10,6 +11,8 @@ export interface Value {
     programId: string;
     code: string;
     isGenericCode: boolean;
+    genericCodeOptions: GenericCodeOptions;
+    attachedFromValueId: string;
     contactId: string;
     pretax: boolean;
     active: boolean;

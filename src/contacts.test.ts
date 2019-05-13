@@ -108,7 +108,7 @@ describe("contacts", () => {
     });
 
 
-    // TEST ADDITIONAL ACTIONS USING PERSISTANT CONTACT
+    // TEST ADDITIONAL ACTIONS USING PERSISTENT CONTACT
     const attachValueID = uuid.v4().substring(0, 20);
     const attachToContactID = "TESTS_ATTACH_TO";
 
@@ -138,6 +138,44 @@ describe("contacts", () => {
             chai.assert.equal(value.body.id, attachedValue.body.id);
             chai.assert.notEqual(value.body.contactId, attachedValue.body.contactId);
             chai.assert.equal(attachedValue.body.contactId, attachToContactID);
+        });
+    });
+
+    const attachGenericCodeValueID = uuid.v4().substring(0, 20);
+    describe("attachContactToGenericCodeValue", () => {
+        it("attaches a new Generic Code to the Contact", async () => {
+            // Create Value
+            const value = await Lightrail.values.createValue({
+                id: attachGenericCodeValueID,
+                currency: "USD",
+                balanceRule: {
+                    rule: "currentLineItem.lineTotal.subtotal * 0.5",
+                    explanation: "50% off"
+                },
+                isGenericCode: true,
+                code: `SEASONAL_${uuid.v4().substring(0, 4)}`,
+                genericCodeOptions: {
+                    perContact: {
+                        usesRemaining: 1
+                    }
+                }
+            });
+
+            // Create Contact and Attach Generic Code Value
+            let contact = await Lightrail.contacts.getContact(attachToContactID);
+            if (!contact.body) {
+                await Lightrail.contacts.createContact({
+                    ...testContact,
+                    id: attachToContactID,
+                    email: "testAttach@fake.com"
+                });
+            }
+            const attachedValue = await Lightrail.contacts.attachContactToValue(attachToContactID, {valueId: attachGenericCodeValueID});
+
+            chai.assert.isNull(value.body.contactId);
+            chai.assert.notEqual(value.body.id, attachedValue.body.id);
+            chai.assert.equal(value.body.id, attachedValue.body.attachedFromValueId);
+            chai.assert.equal(attachToContactID, attachedValue.body.contactId);
         });
     });
 
