@@ -124,6 +124,16 @@ describe("values", () => {
             chai.assert.isTrue(!!values.body.length);
         });
 
+        it("gets values by id(s)", async () => {
+            const values = await Lightrail.values.listValues({
+                id: {in: testValueId}
+            });
+
+            chai.assert.isNotNull(values);
+            chai.assert.isNotNull(values.body);
+            chai.assert.isTrue(!!values.body.length);
+        });
+
         it("gets values with a pagination limit", async () => {
             const values = await Lightrail.values.listValues({limit: 1});
 
@@ -135,7 +145,7 @@ describe("values", () => {
 
         it("gets values as csv", async () => {
             const values = await Lightrail.values.listValues({}, "text/csv");
-            chai.assert.include(values.text, "id,currency,balance,")
+            chai.assert.include(values.text, "id,currency,balance,");
         });
     });
 
