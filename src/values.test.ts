@@ -130,6 +130,7 @@ describe("values", () => {
             });
 
             chai.assert.isNotNull(values);
+            chai.assert.equal(values.body[0].id, testValueId);
             chai.assert.isNotNull(values.body);
             chai.assert.isTrue(!!values.body.length);
         });
