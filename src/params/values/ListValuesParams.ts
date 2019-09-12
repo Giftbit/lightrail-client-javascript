@@ -4,6 +4,7 @@ import {FilterableNumber, FilterableString} from "../FilterableParams";
 import {PaginationParams} from "../PaginationParams";
 
 export interface ListValuesParams extends PaginationParams {
+    id?: string;
     formatCurrencies?: boolean;
     issuanceId?: string;
     showCode?: boolean;
