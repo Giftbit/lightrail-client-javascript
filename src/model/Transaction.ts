@@ -84,6 +84,7 @@ export interface TransactionTotals {
     tax?: number;
     discount?: number;
     discountLightrail?: number;
+    forgiven?: number;
     paidLightrail?: number;
     paidStripe?: number;
     paidInternal?: number;

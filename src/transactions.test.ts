@@ -100,6 +100,7 @@ describe("transactions", () => {
             chai.assert.deepEqual(transaction.body.totals, {
                 discount: 0,
                 discountLightrail: 0,
+                forgiven: 0,
                 paidInternal: 0,
                 paidLightrail: 100000,
                 paidStripe: 0,
