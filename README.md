@@ -1,6 +1,6 @@
 # Lightrail Client for JavaScript and TypeScript
 
-Lightrail is a modern platform for digital account credits, gift cards, promotions, and points (to learn more, visit [Lightrail](https://www.lightrail.com/)). This is a basic library for developers to easily connect with the Lightrail API using Javascript or Typescript. If you are looking for specific use cases or other languages, check out the complete list of all [Lightrail libraries and integrations](https://github.com/Giftbit/Lightrail-API-Docs/blob/master/README.md#lightrail-integrations).
+Lightrail is a modern platform for digital account credits, gift cards, promotions, and points (to learn more, visit [Lightrail](https://www.lightrail.com/)). This is a basic library for developers to easily connect with the Lightrail API using Javascript or Typescript.
 
 ## Features
 
@@ -54,6 +54,12 @@ Then you can run `npm test`.
 ### Contributing
 
 Bug reports and pull requests are welcome on GitHub at <https://github.com/Giftbit/lightrail-client-javascript>.
+
+### Releasing (Lightrail team only)
+
+1. Update the version of the project in `package.json` following [semantic versioning](https://docs.npmjs.com/about-semantic-versioning).
+2. Publish to npm with the command `npm publish`.  Tests and linting run as part of this script.
+3. [Create a GitHub release](https://help.github.com/en/articles/creating-releases).   The release name and tag must be `v` followed by the version number (eg: `v1.2.3`).    The description must list changes and highlight any breaking changes.
 
 ## License
 
