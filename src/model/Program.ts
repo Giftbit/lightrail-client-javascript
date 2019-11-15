@@ -1,5 +1,6 @@
 import {BalanceRule} from "./BalanceRule";
 import {RedemptionRule} from "./RedemptionRule";
+import {DiscountSellerLiabilityRule} from "./DiscountSellerLiabilityRule";
 
 export interface Program {
     id: string;
@@ -7,6 +8,7 @@ export interface Program {
     currency: string;
     discount: boolean;
     discountSellerLiability: number;
+    discountSellerLiabilityRule?: DiscountSellerLiabilityRule;
     pretax: boolean;
     active: boolean;
     redemptionRule: RedemptionRule;

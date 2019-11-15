@@ -23,8 +23,7 @@ describe("programs", () => {
                 id: testID,
                 name: "javascript programs unit test",
                 currency: "USD",
-                discount: false,
-                discountSellerLiability: null,
+                discount: true,
                 pretax: false,
                 active: true,
                 redemptionRule: {
@@ -34,6 +33,10 @@ describe("programs", () => {
                 balanceRule: {
                     rule: "100",
                     explanation: "$1",
+                },
+                discountSellerLiabilityRule: {
+                    rule: "0.5",
+                    explanation: "seller is 50% liable"
                 },
                 minInitialBalance: null, // must be null if balanceRule
                 maxInitialBalance: null, // must be null if balanceRule
@@ -47,9 +50,9 @@ describe("programs", () => {
             };
             const program = await Lightrail.programs.createProgram(request);
             chai.assert.isNotNull(program);
-            chai.assert.deepEqualExcluding(program.body, request,
+            chai.assert.deepEqualExcluding(program.body, {...request, discountSellerLiability: 0.5},
                 [
-                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate"
+                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate",
                 ] as any);
         });
     });

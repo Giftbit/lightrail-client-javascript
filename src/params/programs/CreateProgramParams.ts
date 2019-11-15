@@ -2,6 +2,7 @@ import {Program} from "../../model";
 import {LightrailResponse} from "../LightrailResponse";
 import {BalanceRule} from "../../model/BalanceRule";
 import {RedemptionRule} from "../../model/RedemptionRule";
+import {DiscountSellerLiabilityRule} from "../../model/DiscountSellerLiabilityRule";
 
 export interface CreateProgramParams {
     id: string;
@@ -9,6 +10,7 @@ export interface CreateProgramParams {
     name: string;
     discount?: boolean;
     discountSellerLiability?: number;
+    discountSellerLiabilityRule?: DiscountSellerLiabilityRule;
     pretax?: boolean;
     active?: boolean;
     redemptionRule?: RedemptionRule;

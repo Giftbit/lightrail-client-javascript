@@ -1,6 +1,7 @@
 import {BalanceRule} from "./BalanceRule";
 import {RedemptionRule} from "./RedemptionRule";
 import {GenericCodeOptions} from "./GenericCodeOptions";
+import {DiscountSellerLiabilityRule} from "./DiscountSellerLiabilityRule";
 
 export interface Value {
     id: string;
@@ -21,6 +22,7 @@ export interface Value {
     redemptionRule: RedemptionRule;
     discount: boolean;
     discountSellerLiability: number;
+    discountSellerLiabilityRule: DiscountSellerLiabilityRule;
     startDate: string;
     endDate: string;
     tags: string[];
