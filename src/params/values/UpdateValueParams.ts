@@ -1,8 +1,9 @@
 import {LightrailResponse} from "../LightrailResponse";
-import {Value} from "../../model/Value";
-import {BalanceRule} from "../../model/BalanceRule";
-import {RedemptionRule} from "../../model/RedemptionRule";
-import {DiscountSellerLiabilityRule} from "../../model/DiscountSellerLiabilityRule";
+import {Value} from "../../model";
+import {BalanceRule} from "../../model";
+import {RedemptionRule} from "../../model";
+/** @deprecated discountSellerLiability since v4.3.0 - use DiscountSellerLiabilityRule instead. */
+import {DiscountSellerLiabilityRule} from "../../model";
 
 export interface UpdateValueParams {
     contactId?: string;

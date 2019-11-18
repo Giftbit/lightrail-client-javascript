@@ -1,6 +1,7 @@
 import {BalanceRule, Program, RedemptionRule} from "../../model";
 import {LightrailResponse} from "../LightrailResponse";
-import {DiscountSellerLiabilityRule} from "../../model/DiscountSellerLiabilityRule";
+/** @deprecated discountSellerLiability since v4.3.0 - use DiscountSellerLiabilityRule instead. */
+import {DiscountSellerLiabilityRule} from "../../model";
 
 export interface UpdateProgramParams {
     name?: string;

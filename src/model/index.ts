@@ -7,3 +7,4 @@ export * from "./RedemptionRule";
 export * from "./Transaction";
 export * from "./Value";
 export * from "./GenericCodeOptions";
+export * from "./DiscountSellerLiabilityRule";
