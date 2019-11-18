@@ -1,6 +1,5 @@
 import {BalanceRule} from "./BalanceRule";
 import {RedemptionRule} from "./RedemptionRule";
-/** @deprecated discountSellerLiability since v4.3.0 - use DiscountSellerLiabilityRule instead. */
 import {DiscountSellerLiabilityRule} from "./DiscountSellerLiabilityRule";
 
 export interface Program {
@@ -8,6 +7,7 @@ export interface Program {
     name: string;
     currency: string;
     discount: boolean;
+    /** @deprecated since v4.3.0 - use DiscountSellerLiabilityRule instead. */
     discountSellerLiability: number;
     discountSellerLiabilityRule: DiscountSellerLiabilityRule;
     pretax: boolean;

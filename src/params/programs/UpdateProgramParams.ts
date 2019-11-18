@@ -1,11 +1,11 @@
 import {BalanceRule, Program, RedemptionRule} from "../../model";
 import {LightrailResponse} from "../LightrailResponse";
-/** @deprecated discountSellerLiability since v4.3.0 - use DiscountSellerLiabilityRule instead. */
 import {DiscountSellerLiabilityRule} from "../../model";
 
 export interface UpdateProgramParams {
     name?: string;
     discount?: boolean;
+    /** @deprecated since v4.3.0 - use DiscountSellerLiabilityRule instead. */
     discountSellerLiability?: number;
     discountSellerLiabilityRule?: DiscountSellerLiabilityRule;
     pretax?: boolean;

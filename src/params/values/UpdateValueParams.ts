@@ -2,7 +2,6 @@ import {LightrailResponse} from "../LightrailResponse";
 import {Value} from "../../model";
 import {BalanceRule} from "../../model";
 import {RedemptionRule} from "../../model";
-/** @deprecated discountSellerLiability since v4.3.0 - use DiscountSellerLiabilityRule instead. */
 import {DiscountSellerLiabilityRule} from "../../model";
 
 export interface UpdateValueParams {
@@ -14,6 +13,7 @@ export interface UpdateValueParams {
     redemptionRule?: RedemptionRule;
     balanceRule?: BalanceRule;
     discount?: boolean;
+    /** @deprecated since v4.3.0 - use DiscountSellerLiabilityRule instead. */
     discountSellerLiability?: number;
     discountSellerLiabilityRule?: DiscountSellerLiabilityRule;
     startDate?: string;

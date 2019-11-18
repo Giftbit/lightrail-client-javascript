@@ -2,7 +2,6 @@ import {Program} from "../../model";
 import {LightrailResponse} from "../LightrailResponse";
 import {BalanceRule} from "../../model";
 import {RedemptionRule} from "../../model";
-/** @deprecated discountSellerLiability since v4.3.0 - use DiscountSellerLiabilityRule instead. */
 import {DiscountSellerLiabilityRule} from "../../model";
 
 export interface CreateProgramParams {
@@ -10,6 +9,7 @@ export interface CreateProgramParams {
     currency: string;
     name: string;
     discount?: boolean;
+    /** @deprecated since v4.3.0 - use DiscountSellerLiabilityRule instead. */
     discountSellerLiability?: number;
     discountSellerLiabilityRule?: DiscountSellerLiabilityRule;
     pretax?: boolean;
