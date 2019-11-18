@@ -8,7 +8,7 @@ export interface Program {
     currency: string;
     discount: boolean;
     discountSellerLiability: number;
-    discountSellerLiabilityRule?: DiscountSellerLiabilityRule;
+    discountSellerLiabilityRule: DiscountSellerLiabilityRule;
     pretax: boolean;
     active: boolean;
     redemptionRule: RedemptionRule;
