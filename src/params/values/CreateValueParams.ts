@@ -1,8 +1,9 @@
-import {Value} from "../../model/Value";
+import {Value} from "../../model";
 import {LightrailResponse} from "../LightrailResponse";
-import {BalanceRule} from "../../model/BalanceRule";
-import {RedemptionRule} from "../../model/RedemptionRule";
-import {GenericCodeOptions} from "../../model/GenericCodeOptions";
+import {BalanceRule} from "../../model";
+import {RedemptionRule} from "../../model";
+import {GenericCodeOptions} from "../../model";
+import {DiscountSellerLiabilityRule} from "../../model";
 
 export interface CreateValueParams {
     id: string;
@@ -15,7 +16,9 @@ export interface CreateValueParams {
     active?: boolean;
     frozen?: boolean;
     discount?: boolean;
+    /** @deprecated since v4.3.0 - use DiscountSellerLiabilityRule instead. */
     discountSellerLiability?: number;
+    discountSellerLiabilityRule?: DiscountSellerLiabilityRule;
     genericCodeOptions?: GenericCodeOptions;
     redemptionRule?: RedemptionRule;
     balanceRule?: BalanceRule;

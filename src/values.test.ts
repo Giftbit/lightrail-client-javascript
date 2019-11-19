@@ -26,10 +26,13 @@ describe("values", () => {
         frozen: false,
         discount: true,
         pretax: true,
-        discountSellerLiability: 1,
         redemptionRule: {
             rule: "1 == 1",
             explanation: "true"
+        },
+        discountSellerLiabilityRule: {
+            rule: "0.5",
+            explanation: "seller is 50% liable"
         },
         balanceRule: null,
         usesRemaining: 1,
@@ -45,9 +48,9 @@ describe("values", () => {
             const value = await Lightrail.values.createValue(testValue);
 
             chai.assert.isNotNull(value);
-            chai.assert.deepEqualExcluding(value.body, testValue,
+            chai.assert.deepEqualExcluding(value.body, {...testValue, discountSellerLiability: 0.5},
                 [
-                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate", "code", "issuanceId", "updatedContactIdDate", "canceled", "programId"
+                    "startDate", "endDate", "createdBy", "createdDate", "updatedDate", "code", "issuanceId", "updatedContactIdDate", "canceled", "programId",
                 ] as any);
         });
     });
