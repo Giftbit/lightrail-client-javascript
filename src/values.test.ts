@@ -6,7 +6,7 @@ import chaiExclude from "chai-exclude";
 
 chai.use(chaiExclude);
 
-describe("values", () => {
+describe.only("values", () => {
     before(async () => {
         Lightrail.configure({
             restRoot: process.env.LIGHTRAIL_API_PATH || "",
@@ -55,20 +55,20 @@ describe("values", () => {
         });
     });
 
-    describe("createValue(value) all properties", () => {
-        it("creates the expected value", async () => {
-            let request = {
-                id: uuid.v4().substring(0, 24),
-                currency: "USD",
-                balanceRule: {
-                    rule: "500",
-                    explanation: "$5"
-                }
-            };
+    const valueWithoutEndDate: CreateValueParams = {
+        id: uuid.v4().substring(0, 24),
+        currency: "USD",
+        balanceRule: {
+            rule: "500",
+            explanation: "$5"
+        }
+    };
 
-            const value = await Lightrail.values.createValue(request);
+    describe("createValue(value) with no endDate", () => {
+        it("creates the expected value", async () => {
+            const value = await Lightrail.values.createValue(valueWithoutEndDate);
             chai.assert.isNotNull(value);
-            chai.assert.deepEqual(value.body.balanceRule, request.balanceRule);
+            chai.assert.deepEqual(value.body.balanceRule, valueWithoutEndDate.balanceRule);
         });
     });
 
@@ -136,6 +136,45 @@ describe("values", () => {
             chai.assert.equal(values.body[0].id, testValueId);
             chai.assert.isNotNull(values.body);
             chai.assert.isTrue(!!values.body.length);
+        });
+
+        it("gets values without endDate", async () => {
+            const values = await Lightrail.values.listValues({
+                endDate: {isNull: true}
+            });
+
+            chai.assert.equal(values.body.filter(v => v.endDate != null).length, 0, `expected 0 results with a non-null endDate`);
+        });
+
+        it("gets values with endDate", async () => {
+            const values = await Lightrail.values.listValues({
+                endDate: {isNull: false}
+            });
+
+            chai.assert.equal(values.body.filter(v => v.endDate == null).length, 0, `expected 0 results with a null endDate`);
+        });
+
+        it.only("can use orNull:true operator", async () => {
+            const values = await Lightrail.values.listValues({
+                endDate: {
+                    lt: "1970-01-01", // no values have an endDate less than this day
+                    orNull: true
+                }
+            });
+
+            chai.assert.equal(values.body.filter(v => v.endDate !== null).length, 0, `expected 0 results with a null endDate`);
+        });
+
+
+        it.only("can use orNull:false operator", async () => {
+            const values = await Lightrail.values.listValues({
+                endDate: {
+                    lt: "1970-01-01", // no values have an endDate less than this day
+                    orNull: false
+                }
+            });
+
+            chai.assert.equal(values.body.filter(v => v.endDate === null).length, 0, `expected 0 results with a null endDate`);
         });
 
         it("gets values with a pagination limit", async () => {

@@ -31,6 +31,7 @@ export const formatFilterParams = (params?: object): object => {
         }
     }
 
+    console.log("formatted params " + JSON.stringify(formattedParams, null, 4));
     return formattedParams;
 };
 
