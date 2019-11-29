@@ -167,7 +167,7 @@ describe("values", () => {
                 }
             });
 
-            chai.assert.isObject(values.body.find(v => v.endDate === null));
+            chai.assert.isObject(values.body.find(v => v.endDate !== null));
             chai.assert.equal(values.body.filter(v => v.endDate === null).length, 0, `expected 0 results with a null endDate`);
         });
 
