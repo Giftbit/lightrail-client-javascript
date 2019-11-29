@@ -143,15 +143,8 @@ describe("values", () => {
                 endDate: {isNull: true}
             });
 
+            chai.assert.isArray(values.body.filter(v => v.endDate === null));
             chai.assert.equal(values.body.filter(v => v.endDate != null).length, 0, `expected 0 results with a non-null endDate`);
-        });
-
-        it("gets values with endDate", async () => {
-            const values = await Lightrail.values.listValues({
-                endDate: {isNull: false}
-            });
-
-            chai.assert.equal(values.body.filter(v => v.endDate == null).length, 0, `expected 0 results with a null endDate`);
         });
 
         it("can use orNull:true operator", async () => {
@@ -162,6 +155,7 @@ describe("values", () => {
                 }
             });
 
+            chai.assert.isArray(values.body.filter(v => v.endDate === null));
             chai.assert.equal(values.body.filter(v => v.endDate !== null).length, 0, `expected 0 results with a non-null endDate`);
         });
 
@@ -173,6 +167,7 @@ describe("values", () => {
                 }
             });
 
+            chai.assert.isArray(values.body.filter(v => v.endDate !== null));
             chai.assert.equal(values.body.filter(v => v.endDate === null).length, 0, `expected 0 results with a null endDate`);
         });
 
