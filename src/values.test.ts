@@ -6,7 +6,7 @@ import chaiExclude from "chai-exclude";
 
 chai.use(chaiExclude);
 
-describe.only("values", () => {
+describe("values", () => {
     before(async () => {
         Lightrail.configure({
             restRoot: process.env.LIGHTRAIL_API_PATH || "",
@@ -154,7 +154,7 @@ describe.only("values", () => {
             chai.assert.equal(values.body.filter(v => v.endDate == null).length, 0, `expected 0 results with a null endDate`);
         });
 
-        it.only("can use orNull:true operator", async () => {
+        it("can use orNull:true operator", async () => {
             const values = await Lightrail.values.listValues({
                 endDate: {
                     lt: "1970-01-01", // no values have an endDate less than this day
@@ -165,8 +165,7 @@ describe.only("values", () => {
             chai.assert.equal(values.body.filter(v => v.endDate !== null).length, 0, `expected 0 results with a null endDate`);
         });
 
-
-        it.only("can use orNull:false operator", async () => {
+        it("can use orNull:false operator", async () => {
             const values = await Lightrail.values.listValues({
                 endDate: {
                     lt: "1970-01-01", // no values have an endDate less than this day
