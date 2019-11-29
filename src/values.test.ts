@@ -162,7 +162,7 @@ describe("values", () => {
                 }
             });
 
-            chai.assert.equal(values.body.filter(v => v.endDate !== null).length, 0, `expected 0 results with a null endDate`);
+            chai.assert.equal(values.body.filter(v => v.endDate !== null).length, 0, `expected 0 results with a non-null endDate`);
         });
 
         it("can use orNull:false operator", async () => {
