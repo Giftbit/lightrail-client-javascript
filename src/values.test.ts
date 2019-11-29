@@ -55,20 +55,20 @@ describe.only("values", () => {
         });
     });
 
-    const valueWithoutEndDate: CreateValueParams = {
-        id: uuid.v4().substring(0, 24),
-        currency: "USD",
-        balanceRule: {
-            rule: "500",
-            explanation: "$5"
-        }
-    };
-
-    describe("createValue(value) with no endDate", () => {
+    describe("createValue(value) all properties", () => {
         it("creates the expected value", async () => {
-            const value = await Lightrail.values.createValue(valueWithoutEndDate);
+            let request = {
+                id: uuid.v4().substring(0, 24),
+                currency: "USD",
+                balanceRule: {
+                    rule: "500",
+                    explanation: "$5"
+                }
+            };
+
+            const value = await Lightrail.values.createValue(request);
             chai.assert.isNotNull(value);
-            chai.assert.deepEqual(value.body.balanceRule, valueWithoutEndDate.balanceRule);
+            chai.assert.deepEqual(value.body.balanceRule, request.balanceRule);
         });
     });
 
