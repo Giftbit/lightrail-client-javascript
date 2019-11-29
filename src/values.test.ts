@@ -138,6 +138,39 @@ describe("values", () => {
             chai.assert.isTrue(!!values.body.length);
         });
 
+        it("gets values without endDate", async () => {
+            const values = await Lightrail.values.listValues({
+                endDate: {isNull: true}
+            });
+
+            chai.assert.isObject(values.body.find(v => v.endDate === null));
+            chai.assert.equal(values.body.filter(v => v.endDate != null).length, 0, `expected 0 results with a non-null endDate`);
+        });
+
+        it("can use orNull:true operator", async () => {
+            const values = await Lightrail.values.listValues({
+                endDate: {
+                    lt: "1970-01-01", // no values have an endDate less than this day
+                    orNull: true
+                }
+            });
+
+            chai.assert.isObject(values.body.find(v => v.endDate === null));
+            chai.assert.equal(values.body.filter(v => v.endDate !== null).length, 0, `expected 0 results with a non-null endDate`);
+        });
+
+        it("can use orNull:false operator", async () => {
+            const values = await Lightrail.values.listValues({
+                endDate: {
+                    lt: "1970-01-01", // no values have an endDate less than this day
+                    orNull: false
+                }
+            });
+
+            chai.assert.isObject(values.body.find(v => v.endDate !== null));
+            chai.assert.equal(values.body.filter(v => v.endDate === null).length, 0, `expected 0 results with a null endDate`);
+        });
+
         it("gets values with a pagination limit", async () => {
             const values = await Lightrail.values.listValues({limit: 1});
 
