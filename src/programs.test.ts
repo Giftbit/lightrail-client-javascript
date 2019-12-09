@@ -81,9 +81,10 @@ describe("programs", () => {
 
         it("can filter programs by gt", async () => {
             const programs = await Lightrail.programs.listPrograms({
-                endDate: {gt: "3030-01-01"}
+                endDate: {gt: "6060-01-01"}
             });
 
+            console.log(JSON.stringify(programs, null, 4));
             chai.assert.isNotNull(programs);
             chai.assert.isArray(programs.body);
             chai.assert.equal(programs.body.length, 0);
