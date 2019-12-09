@@ -15,7 +15,7 @@ import {
     UpdateProgramParams,
     UpdateProgramResponse
 } from "./params";
-import {formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
+import {formatFilterParams, formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {Issuance, Program} from "./model";
 
 export async function createProgram(params: CreateProgramParams): Promise<CreateProgramResponse> {
@@ -34,7 +34,7 @@ export async function createProgram(params: CreateProgramParams): Promise<Create
 }
 
 export async function listPrograms(params?: ListProgramsParams): Promise<ListProgramsResponse> {
-    const resp = await lightrail.request("GET", "programs").query(params);
+    const resp = await lightrail.request("GET", "programs").query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
@@ -96,7 +96,7 @@ export async function createIssuance(program: string | Program, params: CreateIs
 export async function listIssuances(program: string | Program, params?: ListIssuancesParams): Promise<ListIssuancesResponse> {
     const programId = getProgramId(program);
 
-    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}/issuances`).query(params);
+    const resp = await lightrail.request("GET", `programs/${encodeURIComponent(programId)}/issuances`).query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
