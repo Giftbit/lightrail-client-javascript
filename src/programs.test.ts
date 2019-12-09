@@ -78,6 +78,16 @@ describe("programs", () => {
             chai.assert.isArray(programs.body);
             chai.assert.isTrue(!!programs.body.length);
         });
+
+        it("can filter programs by gt", async () => {
+            const programs = await Lightrail.programs.listPrograms({
+                endDate: {gt: "3030-01-01"}
+            });
+
+            chai.assert.isNotNull(programs);
+            chai.assert.isArray(programs.body);
+            chai.assert.equal(programs.body.length, 0);
+        });
     });
 
     // UPDATE

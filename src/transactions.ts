@@ -1,6 +1,6 @@
 import * as lightrail from "./index";
 import {LightrailRequestError} from "./LightrailRequestError";
-import {formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
+import {formatFilterParams, formatResponse, isSuccessStatus, validateRequiredParams} from "./requestUtils";
 import {
     CapturePendingParams,
     CapturePendingResponse,
@@ -129,7 +129,7 @@ export async function voidPending(transactionToVoid: string | Transaction, param
 }
 
 export async function listTransactions(params?: ListTransactionsParams): Promise<ListTransactionsResponse> {
-    const resp = await lightrail.request("GET", "transactions").query(params);
+    const resp = await lightrail.request("GET", "transactions").query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
