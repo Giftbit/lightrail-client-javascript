@@ -1,70 +1,72 @@
 import * as chai from "chai";
 import * as Lightrail from "./index";
+import chaiExclude from "chai-exclude";
+import {CreateCurrencyParams, UpdateCurrencyParams} from "./params";
+import {Currency} from "./model/Currency";
+
+chai.use(chaiExclude);
 
 describe("currencies", () => {
-    before(() => {
+
+    const testCurrencyCode = "XXS";
+
+    before(async () => {
         Lightrail.configure({
             restRoot: process.env.LIGHTRAIL_API_PATH || "",
             apiKey: process.env.LIGHTRAIL_API_KEY || "",
         });
+
+        // This set of tests adds a currency with code XXS and delete it at the end.
+        // In case it doesn't delete in a previous run attempt to delete before.
+        await Lightrail.currencies.deleteCurrency(testCurrencyCode);
     });
 
-    const Currency = {
-        code: "XXS",
-        name: "Some Fake Dollars",
-        symbol: "$",
-        decimalPlaces: 0
-    };
-
-    describe("createCurrency(currency)", () => {
-        it("creates " + Currency.code + " Currency", async () => {
-            const currency = await Lightrail.currencies.createCurrency(Currency);
-
-            chai.assert.isNotNull(currency);
-            chai.assert.deepEqual(currency.body, Currency);
-        });
+    let currency: Currency;
+    it("can create a curreny", async () => {
+        const createParams: CreateCurrencyParams = {
+            code: testCurrencyCode,
+            name: "Some Fake Dollars",
+            symbol: "$",
+            decimalPlaces: 0
+        };
+        currency = (await Lightrail.currencies.createCurrency(createParams)).body;
+        chai.assert.deepEqualExcluding(currency as any, createParams, ["createdBy", "createdDate", 'updatedDate']);
+        chai.assert.isNotNull(currency.createdBy);
+        chai.assert.isNotNull(currency.createdDate);
+        chai.assert.isNotNull(currency.updatedDate);
     });
 
-    describe("listCurrencies({limit})", function () {
-        it("should return a limited list", async () => {
-            const currencies = await Lightrail.currencies.listCurrencies();
+    it("should return a limited list", async () => {
+        chai.assert.isNotNull(currency, "this test depends on the create");
 
-            chai.assert.isNotNull(currencies);
-            chai.assert.isArray(currencies.body);
-            chai.assert.hasAllKeys(currencies.body[0], ["code", "name", "symbol", "decimalPlaces"]);
-        });
+        const list = await Lightrail.currencies.listCurrencies();
+        chai.assert.isArray(list.body);
+        chai.assert.hasAllKeys(list.body[0], Object.keys(currency));
     });
 
-    describe("getCurrency(code)", () => {
-        it("should return our newly created currency", async () => {
-            const currency = await Lightrail.currencies.getCurrency(Currency.code);
+    it("can get currency", async () => {
+        chai.assert.isNotNull(currency, "this test depends on the create");
 
-            chai.assert.isNotNull(currency);
-            chai.assert.deepEqual(currency.body, Currency);
-            chai.assert.hasAllKeys(currency.body, ["code", "name", "symbol", "decimalPlaces"]);
-        });
+        const get = await Lightrail.currencies.getCurrency(currency.code);
+        chai.assert.deepEqual(get.body, currency);
     });
 
-    describe("updateCurrency(code, {})", () => {
-        it("should update our currency with a new name and symbol", async () => {
-            const currency = await Lightrail.currencies.updateCurrency(Currency.code, {
-                name: "Forever Bucks",
-                symbol: "))<>(("
-            });
+    it("can update currency", async () => {
+        chai.assert.isNotNull(currency, "this test depends on the create");
 
-            chai.assert.isNotNull(currency);
-            chai.assert.hasAllKeys(currency.body, ["code", "name", "symbol", "decimalPlaces"]);
-            chai.assert.equal(currency.body.name, "Forever Bucks");
-            chai.assert.equal(currency.body.symbol, "))<>((");
-        });
+        const updateParams: UpdateCurrencyParams = {
+            name: "Forever Bucks",
+            symbol: "))<>(("
+        };
+        const update = await Lightrail.currencies.updateCurrency(currency.code, updateParams);
+        chai.assert.deepEqualExcluding(update.body, {...currency, ...updateParams}, ["updatedDate"]);
     });
 
-    describe("deleteCurrency(code)", () => {
-        it("should delete our gross new currency", async () => {
-            const deleted = await Lightrail.currencies.deleteCurrency(Currency);
+    it("can delete currency", async () => {
+        chai.assert.isNotNull(currency, "this test depends on the create");
 
-            chai.assert.isNotNull(deleted);
-            chai.assert.isTrue(deleted.body.success);
-        });
+        const del = await Lightrail.currencies.deleteCurrency(currency.code);
+        chai.assert.isNotNull(del);
+        chai.assert.isTrue(del.body.success);
     });
 });
