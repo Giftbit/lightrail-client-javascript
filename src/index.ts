@@ -8,11 +8,23 @@ import * as programs from "./programs";
 import * as values from "./values";
 import * as currencies from "./currencies";
 import * as transactions from "./transactions";
+import * as webhooks from "./webhooks";
 import {LightrailOptions} from "./LightrailOptions";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {GenerateShopperTokenOptions} from "./GenerateShopperTokenOptions";
 
-export {LightrailOptions, LightrailRequestError, contacts, model, params, programs, values, currencies, transactions};
+export {
+    LightrailOptions,
+    LightrailRequestError,
+    contacts,
+    model,
+    params,
+    programs,
+    values,
+    currencies,
+    transactions,
+    webhooks
+};
 
 /**
  * These values are all configurable from configure().

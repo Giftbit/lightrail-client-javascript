@@ -1,39 +1,42 @@
-import {verifySignature} from "./webhooks";
 import * as chai from "chai";
+import * as Lightrail from "./index";
 
 describe("webhooks", () => {
+
+    before(async () => {
+        Lightrail.configure({
+            restRoot: process.env.LIGHTRAIL_API_PATH || "",
+            apiKey: process.env.LIGHTRAIL_API_KEY || "",
+        });
+    });
 
     const secret = "ABCDE";
     const payload = '{"id":"1","nested":{"num":1,"bool":false}}';
     const goodSignature = "828c719f4e058351f153d76221ebff6ab240cc20ed56ca54783dcf766e6eb3c9";
 
     it("can validate a good signature", () => {
-        chai.assert.isTrue(verifySignature(goodSignature, secret, payload));
+        chai.assert.isTrue(Lightrail.webhooks.verifySignature(goodSignature, secret, payload));
     });
 
     it("can validate a good and bad signature", () => {
-        const signatureHeader = `${goodSignature},bad`;
-        chai.assert.isTrue(verifySignature(signatureHeader, secret, payload));
+        chai.assert.isTrue(Lightrail.webhooks.verifySignature(`${goodSignature},bad`, secret, payload));
     });
 
     it("can validate a bad and good signature", () => {
-        const signatureHeader = `bad,${goodSignature}`;
-        chai.assert.isTrue(verifySignature(signatureHeader, secret, payload));
+        chai.assert.isTrue(Lightrail.webhooks.verifySignature(`bad,${goodSignature}`, secret, payload));
     });
 
     it("can invalidate a bad signature", () => {
-        const signatureHeader = "wrong";
-        chai.assert.isFalse(verifySignature(signatureHeader, secret, payload));
+        chai.assert.isFalse(Lightrail.webhooks.verifySignature("wrong", secret, payload));
     });
 
     it("can invalidate two bad signatures", () => {
-        const signatureHeader = "bad,alsoBad";
-        chai.assert.isFalse(verifySignature(signatureHeader, secret, payload));
+        chai.assert.isFalse(Lightrail.webhooks.verifySignature("bad,alsoBad", secret, payload));
     });
 
     it("can't validate without providing signatureHeader", () => {
         try {
-            verifySignature(null, secret, payload);
+            Lightrail.webhooks.verifySignature(null, secret, payload);
             chai.assert.fail("this should not happen");
         } catch (e) {
             // do nothing, test passes
@@ -42,7 +45,7 @@ describe("webhooks", () => {
 
     it("can't validate without providing signatureHeader", () => {
         try {
-            verifySignature(goodSignature, null, payload);
+            Lightrail.webhooks.verifySignature(goodSignature, null, payload);
             chai.assert.fail("this should not happen");
         } catch (e) {
             // do nothing, test passes
@@ -51,7 +54,7 @@ describe("webhooks", () => {
 
     it("can't validate without providing signatureHeader", () => {
         try {
-            verifySignature(goodSignature, secret, null);
+            Lightrail.webhooks.verifySignature(goodSignature, secret, null);
             chai.assert.fail("this should not happen");
         } catch (e) {
             // do nothing, test passes

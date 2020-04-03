@@ -18,5 +18,5 @@ export function verifySignature(signatureHeader: string, secret: string, payload
         .digest('hex');
 
     // constant time string comparison to prevent timing attacks (see: https://codahale.com/a-lesson-in-timing-attacks)
-    return eventSignatures.reduce((prev, cur) => prev || crypto.timingSafeEqual(Buffer.from(cur), Buffer.from(signature)), false);
+    return eventSignatures.reduce((prev, cur) => prev || (cur.length === signature.length && crypto.timingSafeEqual(Buffer.from(cur), Buffer.from(signature))), false);
 }
