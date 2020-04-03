@@ -45,7 +45,7 @@ describe("index", () => {
             let mitmHit = false;
             mitmInstance.on("request", (req: http.IncomingMessage, res: http.ServerResponse) => {
                 mitmHit = true;
-                chai.assert.match(req.headers["user-agent"] as string, /^Lightrail-JavaScript\/\d+\.\d+\.\d+$/);
+                chai.assert.match(req.headers["lightrail-client"] as string, /^Lightrail-JavaScript\/\d+\.\d+\.\d+$/);
                 res.statusCode = 200;
                 res.setHeader("Content-Type", "application/json");
                 res.end(JSON.stringify({success: true}));
