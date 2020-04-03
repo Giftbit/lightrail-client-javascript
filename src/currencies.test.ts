@@ -22,7 +22,7 @@ describe("currencies", () => {
     });
 
     let currency: Currency;
-    it("can create a curreny", async () => {
+    it("can create a currency", async () => {
         const createParams: CreateCurrencyParams = {
             code: testCurrencyCode,
             name: "Some Fake Dollars",
