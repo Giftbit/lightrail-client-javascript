@@ -18,16 +18,16 @@ describe("webhooks", () => {
         chai.assert.isTrue(Lightrail.webhooks.verifySignature(goodSignature, secret, payload));
     });
 
-    it("can validate a good and bad signature", () => {
+    it("can validate a signature if there is a good signature accompanied by a bad signature in signatureHeader", () => {
         chai.assert.isTrue(Lightrail.webhooks.verifySignature(`${goodSignature},bad`, secret, payload));
     });
 
-    it("can validate a bad and good signature", () => {
+    it("can validate a signature if there is a bad signature accompanied by a good signature in signatureHeader", () => {
         chai.assert.isTrue(Lightrail.webhooks.verifySignature(`bad,${goodSignature}`, secret, payload));
     });
 
     it("can invalidate a bad signature", () => {
-        chai.assert.isFalse(Lightrail.webhooks.verifySignature("wrong", secret, payload));
+        chai.assert.isFalse(Lightrail.webhooks.verifySignature("bad", secret, payload));
     });
 
     it("can invalidate two bad signatures", () => {
@@ -43,7 +43,7 @@ describe("webhooks", () => {
         }
     });
 
-    it("can't validate without providing signatureHeader", () => {
+    it("can't validate without providing secret", () => {
         try {
             Lightrail.webhooks.verifySignature(goodSignature, null, payload);
             chai.assert.fail("this should not happen");
@@ -52,7 +52,7 @@ describe("webhooks", () => {
         }
     });
 
-    it("can't validate without providing signatureHeader", () => {
+    it("can't validate without providing paylod", () => {
         try {
             Lightrail.webhooks.verifySignature(goodSignature, secret, null);
             chai.assert.fail("this should not happen");

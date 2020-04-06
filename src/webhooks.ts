@@ -4,18 +4,18 @@ export function verifySignature(signatureHeader: string, secret: string, payload
     if (!signatureHeader) {
         throw new Error("The signatureHeader cannot be null");
     }
-    if (!signatureHeader) {
+    if (!secret) {
         throw new Error("The secret cannot be null");
     }
-    if (!signatureHeader) {
+    if (!payload) {
         throw new Error("The payload cannot be null");
     }
 
     const eventSignatures = signatureHeader.split(",");
     const signature = crypto
-        .createHmac('sha256', secret)
+        .createHmac("sha256", secret)
         .update(payload)
-        .digest('hex');
+        .digest("hex");
 
     // constant time string comparison to prevent timing attacks (see: https://codahale.com/a-lesson-in-timing-attacks)
     return eventSignatures.reduce((prev, cur) => prev || (cur.length === signature.length && crypto.timingSafeEqual(Buffer.from(cur), Buffer.from(signature))), false);

@@ -103,8 +103,7 @@ export function request(method: string, path: string): superagent.Request {
         r.set("Authorization", `Bearer ${configuration.apiKey}`);
     }
     if (!configuration.isBrowser) {
-        // TODO@Dan Review Previous import of package.json to dynamically set this was breaking publish (dist included src/ & package.json file)
-        r.set("Lightrail-Client", "Lightrail-JavaScript/4.4.0");
+        r.set("Lightrail-Client", `Lightrail-JavaScript/${process.env.npm_package_version}`);
     }
     if (configuration.isBrowser) {
         r.set("X-Requested-With", "XMLHttpRequest");
