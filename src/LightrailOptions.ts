@@ -24,6 +24,11 @@ export interface LightrailOptions {
     sharedSecret: string;
 
     /**
+     * The webhook secret as retrieved from the webhook you're wanting to validate in the web-app.
+     */
+    webhookSecret: string;
+
+    /**
      * Whether to log requests using superagent-logger.  If `true` then
      * superagent-logger must be available.
      */

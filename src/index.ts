@@ -34,6 +34,7 @@ export const configuration: LightrailOptions = {
     isBrowser: false,
     restRoot: "https://api.lightrail.com/v2/",
     sharedSecret: null,
+    webhookSecret: null,
     logRequests: false,
     additionalHeaders: {}
 };
@@ -68,6 +69,12 @@ export function configure(options: Partial<LightrailOptions>): void {
             throw new Error("sharedSecret must be a string");
         }
         configuration.sharedSecret = options.sharedSecret;
+    }
+    if (options.hasOwnProperty("webhookSecret")) {
+        if (typeof options.webhookSecret !== "string") {
+            throw new Error("webhookSecret must be a string");
+        }
+        configuration.webhookSecret = options.webhookSecret;
     }
     if (options.hasOwnProperty("additionalHeaders")) {
         if (typeof options.additionalHeaders !== "object") {
