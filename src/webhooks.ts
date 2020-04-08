@@ -1,7 +1,7 @@
 import * as crypto from "crypto";
 import {configuration} from "./index";
 
-export function verifySignature(signatureHeader: string, webhookSecret: string, payload: string): boolean {
+export function verifySignature(signatureHeader: string, payload: string, webhookSecret?: string): boolean {
     const secret = webhookSecret ? webhookSecret : configuration.webhookSecret;
     if (!signatureHeader) {
         throw new Error("The signatureHeader cannot be null");
