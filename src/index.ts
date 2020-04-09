@@ -8,11 +8,23 @@ import * as programs from "./programs";
 import * as values from "./values";
 import * as currencies from "./currencies";
 import * as transactions from "./transactions";
+import * as webhooks from "./webhooks";
 import {LightrailOptions} from "./LightrailOptions";
 import {LightrailRequestError} from "./LightrailRequestError";
 import {GenerateShopperTokenOptions} from "./GenerateShopperTokenOptions";
 
-export {LightrailOptions, LightrailRequestError, contacts, model, params, programs, values, currencies, transactions};
+export {
+    LightrailOptions,
+    LightrailRequestError,
+    contacts,
+    model,
+    params,
+    programs,
+    values,
+    currencies,
+    transactions,
+    webhooks
+};
 
 /**
  * These values are all configurable from configure().
@@ -22,6 +34,7 @@ export const configuration: LightrailOptions = {
     isBrowser: false,
     restRoot: "https://api.lightrail.com/v2/",
     sharedSecret: null,
+    webhookSecret: null,
     logRequests: false,
     additionalHeaders: {}
 };
@@ -57,6 +70,12 @@ export function configure(options: Partial<LightrailOptions>): void {
         }
         configuration.sharedSecret = options.sharedSecret;
     }
+    if (options.hasOwnProperty("webhookSecret")) {
+        if (typeof options.webhookSecret !== "string") {
+            throw new Error("webhookSecret must be a string");
+        }
+        configuration.webhookSecret = options.webhookSecret;
+    }
     if (options.hasOwnProperty("additionalHeaders")) {
         if (typeof options.additionalHeaders !== "object") {
             throw new Error("additionalHeaders must be an object");
@@ -91,8 +110,7 @@ export function request(method: string, path: string): superagent.Request {
         r.set("Authorization", `Bearer ${configuration.apiKey}`);
     }
     if (!configuration.isBrowser) {
-        // TODO@Dan Review Previous import of package.json to dynamically set this was breaking publish (dist included src/ & package.json file)
-        r.set("User-Agent", "Lightrail-JavaScript/4.3.2");
+        r.set("Lightrail-Client", `Lightrail-JavaScript/${process.env.npm_package_version}`);
     }
     if (configuration.isBrowser) {
         r.set("X-Requested-With", "XMLHttpRequest");

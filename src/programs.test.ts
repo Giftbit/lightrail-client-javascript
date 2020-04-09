@@ -83,8 +83,6 @@ describe("programs", () => {
             const programs = await Lightrail.programs.listPrograms({
                 endDate: {gt: "6060-01-01"}
             });
-
-            console.log(JSON.stringify(programs, null, 4));
             chai.assert.isNotNull(programs);
             chai.assert.isArray(programs.body);
             chai.assert.equal(programs.body.length, 0);

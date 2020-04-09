@@ -3,4 +3,7 @@ export interface Currency {
     name: string;
     symbol: string;
     decimalPlaces: number;
+    createdBy: string;
+    createdDate: string;
+    updatedDate: string;
 }
