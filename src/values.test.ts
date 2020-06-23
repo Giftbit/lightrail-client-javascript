@@ -48,7 +48,7 @@ describe("values", () => {
             const value = await Lightrail.values.createValue(testValue);
 
             chai.assert.isNotNull(value);
-            chai.assert.deepEqualExcluding(value.body, {...testValue, discountSellerLiability: 0.5},
+            chai.assert.deepEqualExcluding<any>(value.body, {...testValue, discountSellerLiability: 0.5},
                 [
                     "startDate", "endDate", "createdBy", "createdDate", "updatedDate", "code", "issuanceId", "updatedContactIdDate", "canceled", "programId",
                 ] as any);

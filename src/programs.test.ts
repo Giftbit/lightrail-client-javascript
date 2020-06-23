@@ -50,7 +50,7 @@ describe("programs", () => {
             };
             const program = await Lightrail.programs.createProgram(request);
             chai.assert.isNotNull(program);
-            chai.assert.deepEqualExcluding(program.body, {...request, discountSellerLiability: 0.5},
+            chai.assert.deepEqualExcluding<any>(program.body, {...request, discountSellerLiability: 0.5},
                 [
                     "startDate", "endDate", "createdBy", "createdDate", "updatedDate",
                 ] as any);
