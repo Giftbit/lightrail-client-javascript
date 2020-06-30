@@ -42,7 +42,7 @@ describe("requestUtils", () => {
     });
 
     describe("formatResponse(res:Response)", () => {
-        it("formats a getContacts response correctely", async () => {
+        it("formats a getContacts response correctly", async () => {
             const response = await listContacts({limit: 10});
 
             chai.assert.isNumber(response.limit);

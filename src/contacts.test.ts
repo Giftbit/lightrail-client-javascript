@@ -122,7 +122,7 @@ describe("contacts", () => {
             });
 
             // Create Contact and Attach Value
-            let contact = await Lightrail.contacts.getContact(attachToContactID);
+            const contact = await Lightrail.contacts.getContact(attachToContactID);
             if (!contact.body) {
                 await Lightrail.contacts.createContact({
                     ...testContact,
@@ -162,7 +162,7 @@ describe("contacts", () => {
             });
 
             // Create Contact and Attach Generic Code Value
-            let contact = await Lightrail.contacts.getContact(attachToContactID);
+            const contact = await Lightrail.contacts.getContact(attachToContactID);
             if (!contact.body) {
                 await Lightrail.contacts.createContact({
                     ...testContact,
@@ -195,7 +195,7 @@ describe("contacts", () => {
 
             if (value.body.contactId !== attachToContactID) {
                 // Ensure Contact Exists
-                let contact = await Lightrail.contacts.getContact(attachToContactID);
+                const contact = await Lightrail.contacts.getContact(attachToContactID);
                 if (!contact.body) {
                     await Lightrail.contacts.createContact({
                         ...testContact,

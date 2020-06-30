@@ -14,7 +14,7 @@ export class LightrailRequestError extends Error {
         this.status = response.status;
         this.messageCode = (response.body && response.body.messageCode) || null;
         this.body = response.body;
-        this.method = response.error.method;
-        this.path = response.error.path;
+        this.method = (response.error as superagent.HTTPError).method;
+        this.path = (response.error as superagent.HTTPError).path;
     }
 }
