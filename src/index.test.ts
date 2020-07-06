@@ -4,7 +4,6 @@ import * as http from "http";
 import * as mitm from "mitm";
 import * as Lightrail from "./index";
 import {formatFilterParams} from "./requestUtils";
-import {Contact} from "./model";
 
 describe("index", () => {
     describe("configure()", () => {
