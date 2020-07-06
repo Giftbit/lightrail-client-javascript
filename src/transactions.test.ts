@@ -123,6 +123,7 @@ describe("transactions", () => {
                     valueId: sourceValueId
                 }
             });
+            chai.assert.isNotNull(updateSource);
 
             const transfer = await Lightrail.transactions.transfer({
                 id: uuid.v4().substring(0, 24),

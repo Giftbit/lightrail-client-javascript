@@ -57,7 +57,7 @@ describe("values", () => {
 
     describe("createValue(value) all properties", () => {
         it("creates the expected value", async () => {
-            let request = {
+            const request = {
                 id: uuid.v4().substring(0, 24),
                 currency: "USD",
                 balanceRule: {

@@ -46,16 +46,16 @@ export function configure(options: Partial<LightrailOptions>): void {
     if (!options) {
         return;
     }
-    if (options.hasOwnProperty("apiKey")) {
+    if (options.apiKey !== undefined) {
         if (typeof options.apiKey !== "string") {
             throw new Error("apiKey must be a string");
         }
         configuration.apiKey = options.apiKey;
     }
-    if (options.hasOwnProperty("isBrowser")) {
+    if (options.isBrowser !== undefined) {
         configuration.isBrowser = options.isBrowser;
     }
-    if (options.hasOwnProperty("restRoot")) {
+    if (options.restRoot !== undefined) {
         if (typeof options.restRoot !== "string") {
             throw new Error("restRoot must be a string");
         }
@@ -64,25 +64,25 @@ export function configure(options: Partial<LightrailOptions>): void {
             configuration.restRoot = configuration.restRoot + "/";
         }
     }
-    if (options.hasOwnProperty("sharedSecret")) {
+    if (options.sharedSecret !== undefined) {
         if (typeof options.sharedSecret !== "string") {
             throw new Error("sharedSecret must be a string");
         }
         configuration.sharedSecret = options.sharedSecret;
     }
-    if (options.hasOwnProperty("webhookSecret")) {
+    if (options.webhookSecret !== undefined) {
         if (typeof options.webhookSecret !== "string") {
             throw new Error("webhookSecret must be a string");
         }
         configuration.webhookSecret = options.webhookSecret;
     }
-    if (options.hasOwnProperty("additionalHeaders")) {
-        if (typeof options.additionalHeaders !== "object") {
+    if (options.additionalHeaders !== undefined) {
+        if (options.additionalHeaders === null || typeof options.additionalHeaders !== "object") {
             throw new Error("additionalHeaders must be an object");
         }
         configuration.additionalHeaders = options.additionalHeaders;
     }
-    if (options.hasOwnProperty("logRequests")) {
+    if (options.logRequests !== undefined) {
         if (typeof options.logRequests !== "boolean") {
             throw new Error("logRequests must be a boolean");
         }
@@ -106,7 +106,7 @@ export function request(method: string, path: string): superagent.Request {
         .ok(() => true)
         .retry();
 
-    if (!!configuration.apiKey) {
+    if (configuration.apiKey) {
         r.set("Authorization", `Bearer ${configuration.apiKey}`);
     }
     if (!configuration.isBrowser) {
@@ -117,10 +117,8 @@ export function request(method: string, path: string): superagent.Request {
         r.set("Expires", "-1");
         r.set("Cache-Control", "no-cache,no-store,must-revalidate,max-age=-1,private");
     }
-    for (const key in configuration.additionalHeaders) {
-        if (configuration.additionalHeaders.hasOwnProperty(key)) {
-            r.set(key, configuration.additionalHeaders[key]);
-        }
+    if (configuration.additionalHeaders) {
+        r.set(configuration.additionalHeaders);
     }
     if (configuration.logRequests && superagentLogger) {
         r = r.use(superagentLogger);

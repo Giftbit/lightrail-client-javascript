@@ -2,7 +2,7 @@ import * as chai from "chai";
 import * as jsonwebtoken from "jsonwebtoken";
 import * as http from "http";
 import * as mitm from "mitm";
-import * as index from "./index";
+import * as Lightrail from "./index";
 import {formatFilterParams} from "./requestUtils";
 
 describe("index", () => {
@@ -17,7 +17,7 @@ describe("index", () => {
         });
 
         afterEach(() => {
-            index.configure({
+            Lightrail.configure({
                 apiKey: "",
                 restRoot: process.env.LIGHTRAIL_API_PATH
             });
@@ -28,17 +28,17 @@ describe("index", () => {
         });
 
         it("can set api key and restRoot", () => {
-            index.configure({
+            Lightrail.configure({
                 apiKey: "abcd",
                 restRoot: "http://www.example.com/"
             });
 
-            chai.assert.equal(index.configuration.apiKey, "abcd");
-            chai.assert.equal(index.configuration.restRoot, "http://www.example.com/");
+            chai.assert.equal(Lightrail.configuration.apiKey, "abcd");
+            chai.assert.equal(Lightrail.configuration.restRoot, "http://www.example.com/");
         });
 
         it("sets the User-Agent", async () => {
-            index.configure({
+            Lightrail.configure({
                 apiKey: "abcd"
             });
 
@@ -51,12 +51,12 @@ describe("index", () => {
                 res.end(JSON.stringify({success: true}));
             });
 
-            await index.contacts.createContact({id: "someId", firstName: "Some", lastName: "Name"});
+            await Lightrail.contacts.createContact({id: "someId", firstName: "Some", lastName: "Name"});
             chai.assert.isTrue(mitmHit);
         });
 
         it("configure additionalHeaders is set correctly", async () => {
-            index.configure({
+            Lightrail.configure({
                 apiKey: "does.not.matter",
                 restRoot: "https://api.lightrail.com/v2/",
                 additionalHeaders: {
@@ -78,19 +78,111 @@ describe("index", () => {
                 res.end(JSON.stringify({success: true}));
             });
 
-            await index.contacts.createContact({id: "someId", firstName: "Some", lastName: "Name"});
+            await Lightrail.contacts.createContact({id: "someId", firstName: "Some", lastName: "Name"});
             chai.assert.isTrue(mitmHit);
+        });
+    });
+
+    describe("request()", () => {
+        let mitmInstance: any;
+
+        before(() => {
+            // Not that we're making real requests but the library won't even
+            // try without the apiKey set.
+            Lightrail.configure({
+                restRoot: process.env.LIGHTRAIL_API_PATH || "",
+                apiKey: process.env.LIGHTRAIL_API_KEY || "",
+            });
+        });
+
+        beforeEach(() => {
+            mitmInstance = mitm();
+        });
+
+        afterEach(() => {
+            if (mitmInstance) {
+                mitmInstance.disable();
+                mitmInstance = null;
+            }
+        });
+
+        it("retries GET requests", async () => {
+            let reqCount = 0;
+
+            mitmInstance.on("request", (req: http.IncomingMessage, res: http.ServerResponse) => {
+                switch (reqCount++) {
+                    case 0:
+                        res.statusCode = 500;
+                        res.setHeader("Content-Type", "application/json");
+                        res.end(JSON.stringify({statusCode: 500, message: "Oh oh!"}));
+                        break;
+                    default:
+                        res.statusCode = 200;
+                        res.setHeader("Content-Type", "application/json");
+                        res.end(JSON.stringify({
+                            id: "foo",
+                            firstName: "first",
+                            lastName: "last",
+                            email: "foo@example.com",
+                            metadata: {},
+                            createdDate: new Date().toISOString(),
+                            updatedDate: new Date().toISOString(),
+                            createdBy: "me"
+                        }));
+                }
+            });
+
+            const contact = await Lightrail.contacts.getContact("foo");
+            chai.assert.equal(reqCount, 2);
+            chai.assert.equal(contact.status, 200);
+            chai.assert.equal(contact.body.id, "foo");
+        });
+
+        it("retries POST requests", async () => {
+            let reqCount = 0;
+
+            mitmInstance.on("request", (req: http.IncomingMessage, res: http.ServerResponse) => {
+                switch (reqCount++) {
+                    case 0:
+                        res.statusCode = 500;
+                        res.setHeader("Content-Type", "application/json");
+                        res.end(JSON.stringify({statusCode: 500, message: "Oh oh!"}));
+                        break;
+                    default:
+                        res.statusCode = 201;
+                        res.setHeader("Content-Type", "application/json");
+                        res.end(JSON.stringify({
+                            id: "foo",
+                            firstName: "first",
+                            lastName: "last",
+                            email: "foo@example.com",
+                            metadata: {},
+                            createdDate: new Date().toISOString(),
+                            updatedDate: new Date().toISOString(),
+                            createdBy: "me"
+                        }));
+                }
+            });
+
+            const contact = await Lightrail.contacts.createContact({
+                id: "foo", firstName: "first",
+                lastName: "last",
+                email: "foo@example.com"
+            });
+            chai.assert.equal(reqCount, 2);
+            chai.assert.equal(contact.status, 201);
+            chai.assert.equal(contact.body.id, "foo");
         });
     });
 
     describe("generateShopperToken()", () => {
         it("signs a contactId", () => {
-            index.configure({
+            Lightrail.configure({
                 apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc",
                 sharedSecret: "secret"
             });
 
-            const shopperToken = index.generateShopperToken("chauntaktEyeDee", {validityInSeconds: 600});
+            const shopperToken = Lightrail.generateShopperToken("chauntaktEyeDee", {validityInSeconds: 600});
             chai.assert.isString(shopperToken);
 
             const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
@@ -108,12 +200,12 @@ describe("index", () => {
         });
 
         it("signs an empty contactId", () => {
-            index.configure({
+            Lightrail.configure({
                 apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc",
                 sharedSecret: "secret"
             });
 
-            const shopperToken = index.generateShopperToken("", {validityInSeconds: 600});
+            const shopperToken = Lightrail.generateShopperToken("", {validityInSeconds: 600});
             chai.assert.isString(shopperToken);
 
             const payload = jsonwebtoken.verify(shopperToken, "secret") as any;
@@ -131,12 +223,12 @@ describe("index", () => {
         });
 
         it("signs a shopper token with metadata", () => {
-            index.configure({
+            Lightrail.configure({
                 apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIiwidG1pIjoidGVlbWllIn19.Xb8x158QIV2ukGuQ3L5u4KPrL8MC-BToabnzKMQy7oc",
                 sharedSecret: "secret"
             });
 
-            const shopperToken = index.generateShopperToken("zhopherId", {
+            const shopperToken = Lightrail.generateShopperToken("zhopherId", {
                 validityInSeconds: 999,
                 metadata: {foo: "xxxYYYzzz"}
             });
@@ -160,13 +252,13 @@ describe("index", () => {
         });
 
         it("fails if the API key does not have a `tmi`", () => {
-            index.configure({
+            Lightrail.configure({
                 apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
                 sharedSecret: "secret"
             });
 
             chai.assert.throws(() => {
-                index.generateShopperToken("chauntaktEyeDee", {validityInSeconds: 600});
+                Lightrail.generateShopperToken("chauntaktEyeDee", {validityInSeconds: 600});
             });
         });
     });

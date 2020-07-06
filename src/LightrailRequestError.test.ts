@@ -9,7 +9,7 @@ describe("LightrailRequestError", () => {
             message: "Card with id 'card-2e6eaf65592545c6a699410d10893412' does not exist.",
             messageCode: "CardNotFound"
         };
-        const responseError = new Error() as superagent.ResponseError;
+        const responseError = new Error() as superagent.HTTPError;
         responseError.status = body.status;
         responseError.text = "";
         responseError.method = "GET";

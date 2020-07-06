@@ -18,12 +18,12 @@ export const validateRequiredParams = (keys: string[], params: object): boolean 
 export const formatFilterParams = (params?: object): object => {
     const formattedParams: object = {};
     if (params) {
-        for (let key in params) {
+        for (const key in params) {
             if (typeof params[key] !== "object") {
                 formattedParams[key] = params[key];
             } else {
-                for (let filterKey in params[key]) {
-                    if (params[key].hasOwnProperty(filterKey)) {
+                for (const filterKey in params[key]) {
+                    if (params[key][filterKey] !== undefined) {
                         formattedParams[key + "." + filterKey] = params[key][filterKey];
                     }
                 }
@@ -51,15 +51,15 @@ export function formatResponse<T>(response: Response): LightrailResponse<T> | Pa
     };
 
     if (response.header) {
-        if (response.header.hasOwnProperty("max-limit")) {
+        if (response.header["max-limit"] !== undefined) {
             lr.maxLimit = parseInt(response.header["max-limit"]);
         }
 
-        if (response.header.hasOwnProperty("limit")) {
+        if (response.header["limit"] !== undefined) {
             lr.limit = parseInt(response.header.limit);
         }
 
-        if (response.header.hasOwnProperty("link")) {
+        if (response.header["link"] !== undefined) {
             lr.links = parseLinkHeader(response.header.link);
         }
     }
