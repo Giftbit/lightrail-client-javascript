@@ -30,7 +30,9 @@ Note that the Lightrail API supports many other features and we are still workin
 Before using this client, you'll need to configure it to use your API key:
 
 ```javascript
-const Lightrail = require('lightrail');
+import * as Lightrail from "lightrail-client";
+// or
+const Lightrail = require('lightrail-client');
 
 Lightrail.configure({
   apiKey: '<LIGHTRAIL API KEY>'
