@@ -44,7 +44,7 @@ Lightrail.configure({
 })
 ```
 
-The API key you configure here should not be shared publicly or sent to the browser.  Because code in the browser can be tampered with the browser cannot be trusted to interact with the Lightrail API directly.
+The API key you configure should not be shared publicly. Also, it should not be set in the browser or any client side code because it can be viewed and tampered with. The browser cannot be trusted to interact with the Lightrail API directly.
 
 ### Compiling for node with webpack
 
