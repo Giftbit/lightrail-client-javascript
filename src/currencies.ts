@@ -6,7 +6,7 @@ import {
     CreateCurrencyResponse,
     DeleteCurrencyResponse,
     GetCurrencyResponse,
-    ListCurreniesResponse,
+    ListCurrenciesResponse,
     UpdateCurrencyParams,
     UpdateCurrencyResponse
 } from "./params";
@@ -27,7 +27,7 @@ export async function createCurrency(params: CreateCurrencyParams): Promise<Crea
     throw new LightrailRequestError(resp);
 }
 
-export async function listCurrencies(): Promise<ListCurreniesResponse> {
+export async function listCurrencies(): Promise<ListCurrenciesResponse> {
     const resp = await lightrail.request("GET", `currencies`);
     if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
@@ -79,7 +79,6 @@ export async function deleteCurrency(currency: string | Currency): Promise<Delet
 
     throw new LightrailRequestError(resp);
 }
-
 
 /**
  * Get currency code from the string (as the ID itself) or Currency object.

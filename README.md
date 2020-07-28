@@ -7,7 +7,7 @@ Lightrail is a modern platform for digital account credits, gift cards, promotio
 The following features are supported in this version:
 
 ##### Contacts
-Create, Get, List, Update, Delete, List Values, Attach Value
+Create, Get, List, Update, Delete, List Values, Attach to Value, Detach from Value
  
 ##### Values
 Create, Get by Id, Get by FullCode, List, Update, Delete
@@ -16,9 +16,12 @@ Create, Get by Id, Get by FullCode, List, Update, Delete
 Create, Get, List, Update, Delete, Create Issuance, Get Issuance, List Issuances
 
 ##### Transactions
-Checkout, Debit, Credit, Transfer, Reverse, Capture Pending, Void Pending, Get, List
+Checkout, Debit, Credit, Transfer, Reverse, Capture Pending, Void Pending, Get, Get Transaction Chain, List
   
 ##### Currencies
+Create, Get, List, Update, Delete
+
+##### Webhooks
 Create, Get, List, Update, Delete
 
 Note that the Lightrail API supports many other features and we are still working on covering them in this library. For a complete list of Lightrail API features check out the [Lightrail API documentation](https://www.lightrail.com/docs/).

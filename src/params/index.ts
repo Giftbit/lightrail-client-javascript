@@ -40,6 +40,11 @@ export * from "./values/GetValueParams";
 export * from "./values/ListValuesParams";
 export * from "./values/UpdateValueParams";
 
+export * from "./webhooks/CreateWebhookParams";
+export * from "./webhooks/GetWebhookParams";
+export * from "./webhooks/ListWebhooksParams";
+export * from "./webhooks/UpdateWebhookParams";
+
 export * from "./FilterableParams";
 export * from "./LightrailResponse";
 export * from "./PaginationParams";
