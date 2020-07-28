@@ -1,3 +1,5 @@
+import {BalanceRule} from "./BalanceRule";
+
 export type TransactionParty = LightrailTransactionParty | StripeTransactionParty | InternalTransactionParty;
 
 export interface LightrailTransactionParty {
@@ -30,12 +32,13 @@ export interface LightrailTransactionStep {
     valueId: string;
     contactId?: string;
     code?: string;
-    balanceBefore: number;
-    balanceAfter: number;
-    balanceChange: number;
-    usesRemainingBefore: number;
-    usesRemainingAfter: number;
-    usesRemainingChange: number;
+    balanceRule: BalanceRule | null;
+    balanceBefore: number | null;
+    balanceAfter: number | null;
+    balanceChange: number | null;
+    usesRemainingBefore: number | null;
+    usesRemainingAfter: number | null;
+    usesRemainingChange: number | null;
 }
 
 export interface StripeTransactionStep {
