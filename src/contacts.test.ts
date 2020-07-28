@@ -37,8 +37,8 @@ describe("contacts", () => {
         });
     });
 
-    describe("getContacts()", () => {
-        it("gets list", async () => {
+    describe("listContacts()", () => {
+        it("lists contacts", async () => {
             const contacts = await Lightrail.contacts.listContacts();
 
             chai.assert.isNotNull(contacts.body);

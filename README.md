@@ -2,12 +2,14 @@
 
 Lightrail is a modern platform for digital account credits, gift cards, promotions, and points (to learn more, visit [Lightrail](https://www.lightrail.com/)). This is a basic library for developers to easily connect with the Lightrail API using Javascript or Typescript.
 
+This client runs on your server and makes calls to the Lightrail server.
+
 ## Features
 
 The following features are supported in this version:
 
 ##### Contacts
-Create, Get, List, Update, Delete, List Values, Attach Value
+Create, Get, List, Update, Delete, List Values, Attach to Value, Detach from Value
  
 ##### Values
 Create, Get by Id, Get by FullCode, List, Update, Delete
@@ -16,10 +18,13 @@ Create, Get by Id, Get by FullCode, List, Update, Delete
 Create, Get, List, Update, Delete, Create Issuance, Get Issuance, List Issuances
 
 ##### Transactions
-Checkout, Debit, Credit, Transfer, Reverse, Capture Pending, Void Pending, Get, List
+Checkout, Debit, Credit, Transfer, Reverse, Capture Pending, Void Pending, Get, Get Transaction Chain, List
   
 ##### Currencies
 Create, Get, List, Update, Delete
+
+##### Webhooks
+Create, Get, List, Update, Delete, Create Secret, Get Secret, Delete Secret
 
 Note that the Lightrail API supports many other features and we are still working on covering them in this library. For a complete list of Lightrail API features check out the [Lightrail API documentation](https://www.lightrail.com/docs/).
 
@@ -38,6 +43,8 @@ Lightrail.configure({
   apiKey: '<LIGHTRAIL API KEY>'
 })
 ```
+
+The API key you configure should not be shared publicly. Also, it should not be set in the browser or any client side code because it can be viewed and tampered with. The browser cannot be trusted to interact with the Lightrail API directly.
 
 ### Compiling for node with webpack
 
