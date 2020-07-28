@@ -8,4 +8,5 @@ export * from "./RedemptionRule";
 export * from "./Transaction";
 export * from "./Value";
 export * from "./Webhook";
+export * from "./WebhookSecret";
 export * from "../params/PaginatedResponse";

@@ -1,12 +1,10 @@
+import {WebhookSecret} from "./WebhookSecret";
+
 export interface Webhook {
     id: string;
     url: string;
     events: string[];
-    secrets: {
-        id: string;
-        secret: string;
-        createdDate: string;
-    }[];
+    secrets: WebhookSecret[];
     active: boolean;
     createdDate: string;
     updatedDate: string;

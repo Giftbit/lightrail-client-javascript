@@ -105,17 +105,20 @@ describe("webhooks", () => {
         });
     });
 
-    describe("getWebhook(id)", () => {
+    describe("getWebhook()", () => {
         it("gets the expected webhook", async () => {
-            const contact = await Lightrail.webhooks.getWebhook(webhookId);
+            const webhook = await Lightrail.webhooks.getWebhook(webhookId);
 
-            chai.assert.isNotNull(contact);
-            chai.assert.isString(contact.body.id);
-            chai.assert.equal(contact.body.id, webhookId);
+            chai.assert.isNotNull(webhook);
+            chai.assert.isString(webhook.body.id);
+            chai.assert.equal(webhook.body.id, webhookId);
+
+            const webhookByWebhook = await Lightrail.webhooks.getWebhook(webhook.body);
+            chai.assert.deepEqual(webhookByWebhook.body, webhook.body);
         });
     });
 
-    describe("updateWebhook(id, params)", () => {
+    describe("updateWebhook()", () => {
         it("changes url, active", async () => {
             const updatedWebhook = await Lightrail.webhooks.updateWebhook(webhookId, {
                 url: `https://www.example.com/${webhookId}/disabled`,
@@ -127,6 +130,49 @@ describe("webhooks", () => {
             chai.assert.equal(updatedWebhook.body.id, webhookId);
             chai.assert.equal(updatedWebhook.body.url, `https://www.example.com/${webhookId}/disabled`);
             chai.assert.isFalse(updatedWebhook.body.active);
+        });
+    });
+
+    describe("createWebhookSecret()", () => {
+        it("creates a webhook secret", async () => {
+            const webhookSecret = await Lightrail.webhooks.createWebhookSecret(webhookId);
+
+            chai.assert.isNotNull(webhookSecret.body);
+            chai.assert.isString(webhookSecret.body.id);
+            chai.assert.isString(webhookSecret.body.secret);
+
+            const webhook = await Lightrail.webhooks.getWebhook(webhookId);
+            chai.assert.lengthOf(webhook.body.secrets, 2, "assuming the above create works");
+        });
+    });
+
+    describe("getWebhookSecret()", () => {
+        it("get a webhook secret", async () => {
+            const webhook = await Lightrail.webhooks.getWebhook(webhookId);
+
+            for (const webhookSecret of webhook.body.secrets) {
+                const webhookSecretGet = await Lightrail.webhooks.getWebhookSecret(webhook.body, webhookSecret);
+
+                chai.assert.isNotNull(webhookSecretGet.body);
+                chai.assert.isString(webhookSecretGet.body.id);
+                chai.assert.equal(webhookSecretGet.body.id, webhookSecret.id);
+            }
+        });
+    });
+
+    describe("deleteWebhookSecret()", () => {
+        it("deletes a webhook secret", async () => {
+            const webhookBeforeDelete = await Lightrail.webhooks.getWebhook(webhookId);
+            chai.assert.isAbove(webhookBeforeDelete.body.secrets.length, 1, "has at least 1 secret to delete");
+
+            await Lightrail.webhooks.deleteWebhookSecret(webhookBeforeDelete.body, webhookBeforeDelete.body.secrets[0]);
+
+            const deletedWebhookSecret = await Lightrail.webhooks.getWebhookSecret(webhookId, webhookBeforeDelete.body.secrets[0]);
+            chai.assert.isNull(deletedWebhookSecret.body);
+            chai.assert.equal(deletedWebhookSecret.status, 404);
+
+            const webhookAfterDelete = await Lightrail.webhooks.getWebhook(webhookId);
+            chai.assert.equal(webhookAfterDelete.body.secrets.length, webhookBeforeDelete.body.secrets.length - 1);
         });
     });
 

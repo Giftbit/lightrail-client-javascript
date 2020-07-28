@@ -2,11 +2,11 @@ import * as crypto from "crypto";
 import * as lightrail from "./index";
 import {configuration, LightrailRequestError} from "./index";
 import {formatResponse, isSuccessStatus} from "./requestUtils";
-import {Webhook} from "./model";
+import {Webhook, WebhookSecret} from "./model";
 import {
     CreateWebhookParams,
-    CreateWebhookResponse,
-    GetWebhookResponse,
+    CreateWebhookResponse, CreateWebhookSecretResponse,
+    GetWebhookResponse, GetWebhookSecretResponse,
     ListWebhooksResponse,
     UpdateWebhookParams,
     UpdateWebhookResponse
@@ -88,6 +88,38 @@ export async function deleteWebhook(webhook: string | Webhook): Promise<void> {
     throw new LightrailRequestError(resp);
 }
 
+export async function createWebhookSecret(webhook: string | Webhook): Promise<CreateWebhookSecretResponse> {
+    const webhookId = getWebhookId(webhook);
+
+    const resp = await lightrail.request("POST", `webhooks/${encodeURIComponent(webhookId)}/secrets`);
+    if (isSuccessStatus(resp.status)) {
+        return formatResponse(resp);
+    }
+    throw new LightrailRequestError(resp);
+}
+
+export async function getWebhookSecret(webhook: string | Webhook, webhookSecret: string | WebhookSecret): Promise<GetWebhookSecretResponse> {
+    const webhookId = getWebhookId(webhook);
+    const webhookSecretId = getWebhookSecretId(webhookSecret);
+
+    const resp = await lightrail.request("GET", `webhooks/${encodeURIComponent(webhookId)}/secrets/${encodeURIComponent(webhookSecretId)}`);
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
+        return formatResponse(resp);
+    }
+    throw new LightrailRequestError(resp);
+}
+
+export async function deleteWebhookSecret(webhook: string | Webhook, webhookSecret: string | WebhookSecret): Promise<void> {
+    const webhookId = getWebhookId(webhook);
+    const webhookSecretId = getWebhookSecretId(webhookSecret);
+
+    const resp = await lightrail.request("DELETE", `webhooks/${encodeURIComponent(webhookId)}/secrets/${encodeURIComponent(webhookSecretId)}`);
+    if (isSuccessStatus(resp.status) || resp.status === 404) {
+        return;
+    }
+    throw new LightrailRequestError(resp);
+}
+
 /**
  * Get webhookId from the string (as the ID itself) or Webhook object.
  */
@@ -100,5 +132,20 @@ export function getWebhookId(webhook: string | Webhook): string {
         return webhook.id;
     } else {
         throw new Error("webhook must be a string for webhookId or a Webhook object");
+    }
+}
+
+/**
+ * Get webhookSecretId from the string (as the ID itself) or WebhookSecret object.
+ */
+export function getWebhookSecretId(webhookSecret: string | WebhookSecret): string {
+    if (!webhookSecret) {
+        throw new Error("webhookSecret not set");
+    } else if (typeof webhookSecret === "string") {
+        return webhookSecret;
+    } else if (webhookSecret.id) {
+        return webhookSecret.id;
+    } else {
+        throw new Error("webhookSecret must be a string for webhookSecretId or a WebhookSecret object");
     }
 }
