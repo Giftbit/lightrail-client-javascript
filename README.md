@@ -1,6 +1,6 @@
 # Lightrail Client for JavaScript and TypeScript
 
-Lightrail is a modern platform for digital account credits, gift cards, promotions, and points (to learn more, visit [Lightrail](https://www.lightrail.com/)). This is a basic library for developers to easily connect with the Lightrail API using Javascript or Typescript.
+Lightrail is a modern platform for digital account credits, gift cards, promotions, and points (to learn more, visit [Lightrail](https://www.lightrail.com/)). This is a basic library for developers to easily connect with the Lightrail API using Javascript or Typescript.  You can find JS API documentation at https://giftbit.github.io/lightrail-client-javascript/ .
 
 This client runs on your server and makes calls to the Lightrail server.
 
@@ -8,31 +8,25 @@ This client runs on your server and makes calls to the Lightrail server.
 
 The following features are supported in this version:
 
-##### Contacts
-Create, Get, List, Update, Delete, List Values, Attach to Value, Detach from Value
+[Contacts](https://giftbit.github.io/lightrail-client-javascript/modules/_contacts_.html): Create, Get, List, Update, Delete, List Values, Attach to Value, Detach from Value
  
-##### Values
-Create, Get by Id, Get by FullCode, List, Update, Delete
+[Values](https://giftbit.github.io/lightrail-client-javascript/modules/_values_.html): Create, Get by Id, Get by FullCode, List, Update, Delete
   
-##### Programs
-Create, Get, List, Update, Delete, Create Issuance, Get Issuance, List Issuances
+[Programs](https://giftbit.github.io/lightrail-client-javascript/modules/_programs_.html): Create, Get, List, Update, Delete, Create Issuance, Get Issuance, List Issuances
 
-##### Transactions
-Checkout, Debit, Credit, Transfer, Reverse, Capture Pending, Void Pending, Get, Get Transaction Chain, List
+[Transactions](https://giftbit.github.io/lightrail-client-javascript/modules/_transactions_.html): Checkout, Debit, Credit, Transfer, Reverse, Capture Pending, Void Pending, Get, Get Transaction Chain, List
   
-##### Currencies
-Create, Get, List, Update, Delete
+[Currencies](https://giftbit.github.io/lightrail-client-javascript/modules/_currencies_.html): Create, Get, List, Update, Delete
 
-##### Webhooks
-Create, Get, List, Update, Delete, Create Secret, Get Secret, Delete Secret
+[Webhooks](https://giftbit.github.io/lightrail-client-javascript/modules/_webhooks_.html): Create, Get, List, Update, Delete, Create Secret, Get Secret, Delete Secret
 
-Note that the Lightrail API supports many other features and we are still working on covering them in this library. For a complete list of Lightrail API features check out the [Lightrail API documentation](https://www.lightrail.com/docs/).
+For a complete list of Lightrail API features check out the [Lightrail API documentation](https://apidocs.lightrail.com/).
 
 ## Usage
 
 ### Configuration
 
-Before using this client, you'll need to configure it to use your API key:
+Before using this client, you'll need to [configure](https://giftbit.github.io/lightrail-client-javascript/modules/_index_.html#configure) it to use your API key:
 
 ```javascript
 import * as Lightrail from "lightrail-client";
