@@ -97,15 +97,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L118">src/contacts.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L130">src/contacts.ts:130</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> valueAttachedById = <span class="hljs-keyword">await</span> Lightrail.contacts.attachContactToValue(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">valueId</span>: <span class="hljs-string">&quot;hijklmnop&quot;</span>});
-<span class="hljs-keyword">const</span> valueAttachedByCode = <span class="hljs-keyword">await</span> Lightrail.contacts.attachContactToValue(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">code</span>: <span class="hljs-string">&quot;PROMOCODE&quot;</span>});</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/AttachContactToValue">https://apidocs.lightrail.com/#operation/AttachContactToValue</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> valueAttachedById = <span class="hljs-keyword">await</span> Lightrail.contacts.attachContactToValue(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">valueId</span>: <span class="hljs-string">&quot;hijklmnop&quot;</span>});
+<span class="hljs-keyword">const</span> valueAttachedByCode = <span class="hljs-keyword">await</span> Lightrail.contacts.attachContactToValue(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">code</span>: <span class="hljs-string">&quot;PROMOCODE&quot;</span>});</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -130,17 +131,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L33">src/contacts.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L35">src/contacts.ts:35</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> contact = <span class="hljs-keyword">await</span> Lightrail.contacts.createContact({
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/CreateContact">https://apidocs.lightrail.com/#operation/CreateContact</a></p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> contact = <span class="hljs-keyword">await</span> Lightrail.contacts.createContact({
     <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;abcdefg&quot;</span>,
     <span class="hljs-attr">email</span>: <span class="hljs-string">&quot;ex@example.com&quot;</span>
 });</code></pre>
-								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -162,14 +164,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L150">src/contacts.ts:150</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L166">src/contacts.ts:166</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">await</span> Lightrail.contacts.deleteContact(<span class="hljs-string">&quot;abcdefg&quot;</span>});</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/DeleteContact">https://apidocs.lightrail.com/#operation/DeleteContact</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">await</span> Lightrail.contacts.deleteContact(<span class="hljs-string">&quot;abcdefg&quot;</span>});</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -191,14 +194,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L134">src/contacts.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L148">src/contacts.ts:148</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> valueDetached = <span class="hljs-keyword">await</span> Lightrail.contacts.detachContactFromValue(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">valueId</span>: <span class="hljs-string">&quot;hijklmnop&quot;</span>});</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/DetachContactFromValue">https://apidocs.lightrail.com/#operation/DetachContactFromValue</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> valueDetached = <span class="hljs-keyword">await</span> Lightrail.contacts.detachContactFromValue(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">valueId</span>: <span class="hljs-string">&quot;hijklmnop&quot;</span>});</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -223,14 +227,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L53">src/contacts.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L57">src/contacts.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> contact = <span class="hljs-keyword">await</span> Lightrail.contacts.getContact(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/GetaContact">https://apidocs.lightrail.com/#operation/GetaContact</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> contact = <span class="hljs-keyword">await</span> Lightrail.contacts.getContact(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -252,7 +257,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L165">src/contacts.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L181">src/contacts.ts:181</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -282,15 +287,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L70">src/contacts.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L76">src/contacts.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> contacts = <span class="hljs-keyword">await</span> Lightrail.contacts.listContacts({<span class="hljs-attr">limit</span>: <span class="hljs-number">5</span>});
-<span class="hljs-keyword">const</span> contactsLimited = <span class="hljs-keyword">await</span> Lightrail.contacts.listContacts({<span class="hljs-attr">limit</span>: <span class="hljs-number">5</span>});</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/ListContacts">https://apidocs.lightrail.com/#operation/ListContacts</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> contacts = <span class="hljs-keyword">await</span> Lightrail.contacts.listContacts({<span class="hljs-attr">limit</span>: <span class="hljs-number">5</span>});
+<span class="hljs-keyword">const</span> contactsLimited = <span class="hljs-keyword">await</span> Lightrail.contacts.listContacts({<span class="hljs-attr">limit</span>: <span class="hljs-number">5</span>});</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -312,15 +318,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L85">src/contacts.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L93">src/contacts.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> values = <span class="hljs-keyword">await</span> Lightrail.contacts.listContactsValues(<span class="hljs-string">&quot;abcdefg&quot;</span>);
-<span class="hljs-keyword">const</span> valuesLimited = <span class="hljs-keyword">await</span> Lightrail.contacts.listContactsValues(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">limit</span>: <span class="hljs-number">5</span>});</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/ListaContactsValues">https://apidocs.lightrail.com/#operation/ListaContactsValues</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> values = <span class="hljs-keyword">await</span> Lightrail.contacts.listContactsValues(<span class="hljs-string">&quot;abcdefg&quot;</span>);
+<span class="hljs-keyword">const</span> valuesLimited = <span class="hljs-keyword">await</span> Lightrail.contacts.listContactsValues(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">limit</span>: <span class="hljs-number">5</span>});</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -345,14 +352,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L101">src/contacts.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/contacts.ts#L111">src/contacts.ts:111</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> updatedContact = <span class="hljs-keyword">await</span> Lightrail.contacts.updateContact(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">email</span>: <span class="hljs-string">&quot;new.ex@example.com&quot;</span>});</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/UpdateContact">https://apidocs.lightrail.com/#operation/UpdateContact</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> updatedContact = <span class="hljs-keyword">await</span> Lightrail.contacts.updateContact(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">email</span>: <span class="hljs-string">&quot;new.ex@example.com&quot;</span>});</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">

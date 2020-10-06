@@ -94,19 +94,20 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L26">src/currencies.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L28">src/currencies.ts:28</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> currency = <span class="hljs-keyword">await</span> Lightrail.currencies.createCurrency({
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/CreateCurrency">https://apidocs.lightrail.com/#operation/CreateCurrency</a></p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> currency = <span class="hljs-keyword">await</span> Lightrail.currencies.createCurrency({
     <span class="hljs-attr">code</span>: <span class="hljs-string">&quot;USD&quot;</span>,
     <span class="hljs-attr">symbol</span>: <span class="hljs-string">&quot;$&quot;</span>,
     <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;US Dollar&quot;</span>,
     <span class="hljs-attr">decimalPlaces</span>: <span class="hljs-number">2</span>
 });</code></pre>
-								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -128,14 +129,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L110">src/currencies.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L120">src/currencies.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>This will only be possible if the currency has not been used because
-									Transactions cannot be deleted and Transactions must have a valid currency.</p>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/DeleteCurrency">https://apidocs.lightrail.com/#operation/DeleteCurrency</a></p>
 								</div>
+								<p>This will only be possible if the currency has not been used because
+								Transactions cannot be deleted and Transactions must have a valid currency.</p>
 								<p>Example:</p>
 								<pre><code class="language-js"><span class="hljs-keyword">await</span> Lightrail.currencies.deleteCurrency(<span class="hljs-string">&quot;USD&quot;</span>);</code></pre>
 							</div>
@@ -159,14 +161,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L62">src/currencies.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L68">src/currencies.ts:68</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> usd = <span class="hljs-keyword">await</span> Lightrail.currencies.getCurrency(<span class="hljs-string">&quot;USD&quot;</span>);</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/GetCurrency">https://apidocs.lightrail.com/#operation/GetCurrency</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> usd = <span class="hljs-keyword">await</span> Lightrail.currencies.getCurrency(<span class="hljs-string">&quot;USD&quot;</span>);</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -188,7 +191,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L124">src/currencies.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L134">src/currencies.ts:134</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -216,14 +219,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L47">src/currencies.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L51">src/currencies.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> currencies = <span class="hljs-keyword">await</span> Lightrail.currencies.listCurrencies();</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/ListCurrencies">https://apidocs.lightrail.com/#operation/ListCurrencies</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> currencies = <span class="hljs-keyword">await</span> Lightrail.currencies.listCurrencies();</code></pre>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_params_currencies_listcurrenciesparams_.listcurrenciesresponse.html" class="tsd-signature-type">ListCurrenciesResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -239,14 +243,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L83">src/currencies.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/currencies.ts#L91">src/currencies.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> updatedUsd = <span class="hljs-keyword">await</span> Lightrail.currencies.updateCurrency(<span class="hljs-string">&quot;USD&quot;</span>, {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Freedom Dollars&quot;</span>});</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/UpdateCurrency">https://apidocs.lightrail.com/#operation/UpdateCurrency</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> updatedUsd = <span class="hljs-keyword">await</span> Lightrail.currencies.updateCurrency(<span class="hljs-string">&quot;USD&quot;</span>, {<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Freedom Dollars&quot;</span>});</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">

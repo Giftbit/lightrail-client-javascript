@@ -99,16 +99,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L189">src/transactions.ts:189</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L201">src/transactions.ts:201</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> captureTx = <span class="hljs-keyword">await</span> Lightrail.transactions.capturePending(<span class="hljs-string">&quot;hijklmnop&quot;</span> {
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/CapturePending">https://apidocs.lightrail.com/#operation/CapturePending</a></p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> captureTx = <span class="hljs-keyword">await</span> Lightrail.transactions.capturePending(<span class="hljs-string">&quot;hijklmnop&quot;</span> {
    <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;abcdefg&quot;</span>  <span class="hljs-comment">// This is the ID of the capture transaction created.</span>
 );</code></pre>
-								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -133,13 +134,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L52">src/transactions.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L54">src/transactions.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> checkoutTx = <span class="hljs-keyword">await</span> Lightrail.transactions.checkout({
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/Checkout">https://apidocs.lightrail.com/#operation/Checkout</a></p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> checkoutTx = <span class="hljs-keyword">await</span> Lightrail.transactions.checkout({
    <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;abcdefg&quot;</span>,
    <span class="hljs-attr">currency</span>: <span class="hljs-string">&quot;USD&quot;</span>,
    <span class="hljs-attr">lineItems</span>: [
@@ -160,7 +163,6 @@
        }
    ]
 );</code></pre>
-								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -182,13 +184,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L110">src/transactions.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L116">src/transactions.ts:116</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> creditTx = <span class="hljs-keyword">await</span> Lightrail.transactions.credit({
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/Credit">https://apidocs.lightrail.com/#operation/Credit</a></p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> creditTx = <span class="hljs-keyword">await</span> Lightrail.transactions.credit({
    <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;abcdefg&quot;</span>,
    <span class="hljs-attr">currency</span>: <span class="hljs-string">&quot;USD&quot;</span>,
    <span class="hljs-attr">destination</span>: {
@@ -197,7 +201,6 @@
    },
    <span class="hljs-attr">amount</span>: <span class="hljs-number">1000</span>
 );</code></pre>
-								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -219,13 +222,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L81">src/transactions.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L85">src/transactions.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> debitTx = <span class="hljs-keyword">await</span> Lightrail.transactions.debit({
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/Debit">https://apidocs.lightrail.com/#operation/Debit</a></p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> debitTx = <span class="hljs-keyword">await</span> Lightrail.transactions.debit({
    <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;abcdefg&quot;</span>,
    <span class="hljs-attr">currency</span>: <span class="hljs-string">&quot;USD&quot;</span>,
    <span class="hljs-attr">source</span>: {
@@ -234,7 +239,6 @@
    },
    <span class="hljs-attr">amount</span>: <span class="hljs-number">1000</span>
 );</code></pre>
-								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -256,14 +260,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L248">src/transactions.ts:248</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L266">src/transactions.ts:266</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> transaction = <span class="hljs-keyword">await</span> Lightrail.transactions.getTransaction(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/GetaTransaction">https://apidocs.lightrail.com/#operation/GetaTransaction</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> transaction = <span class="hljs-keyword">await</span> Lightrail.transactions.getTransaction(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -285,14 +290,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L265">src/transactions.ts:265</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L285">src/transactions.ts:285</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> transactions = <span class="hljs-keyword">await</span> Lightrail.transactions.getTransactionChain(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/GetTransactionChain">https://apidocs.lightrail.com/#operation/GetTransactionChain</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> transactions = <span class="hljs-keyword">await</span> Lightrail.transactions.getTransactionChain(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -314,7 +320,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L280">src/transactions.ts:280</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L300">src/transactions.ts:300</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -344,15 +350,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L234">src/transactions.ts:234</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L250">src/transactions.ts:250</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> transactions = <span class="hljs-keyword">await</span> Lightrail.transactions.listTransactions();
-<span class="hljs-keyword">const</span> transactionsLimited = <span class="hljs-keyword">await</span> Lightrail.transactions.listTransactions({<span class="hljs-attr">limit</span>: <span class="hljs-number">5</span>});</code></pre>
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/ListTransactions">https://apidocs.lightrail.com/#operation/ListTransactions</a></p>
 								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> transactions = <span class="hljs-keyword">await</span> Lightrail.transactions.listTransactions();
+<span class="hljs-keyword">const</span> transactionsLimited = <span class="hljs-keyword">await</span> Lightrail.transactions.listTransactions({<span class="hljs-attr">limit</span>: <span class="hljs-number">5</span>});</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -374,16 +381,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L166">src/transactions.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L176">src/transactions.ts:176</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> reverseTx = <span class="hljs-keyword">await</span> Lightrail.transactions.reverse(<span class="hljs-string">&quot;hijklmnop&quot;</span> {
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/Reverse">https://apidocs.lightrail.com/#operation/Reverse</a></p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> reverseTx = <span class="hljs-keyword">await</span> Lightrail.transactions.reverse(<span class="hljs-string">&quot;hijklmnop&quot;</span> {
    <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;abcdefg&quot;</span>  <span class="hljs-comment">// This is the ID of the reverse transaction created.</span>
 );</code></pre>
-								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -408,13 +416,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L143">src/transactions.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L151">src/transactions.ts:151</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> transferTx = <span class="hljs-keyword">await</span> Lightrail.transactions.transfer({
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/Transfer">https://apidocs.lightrail.com/#operation/Transfer</a></p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> transferTx = <span class="hljs-keyword">await</span> Lightrail.transactions.transfer({
    <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;abcdefg&quot;</span>,
    <span class="hljs-attr">currency</span>: <span class="hljs-string">&quot;USD&quot;</span>,
    <span class="hljs-attr">source</span>: {
@@ -427,7 +437,6 @@
    },
    <span class="hljs-attr">amount</span>: <span class="hljs-number">1000</span>
 );</code></pre>
-								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -449,16 +458,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L212">src/transactions.ts:212</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/transactions.ts#L226">src/transactions.ts:226</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> voidTx = <span class="hljs-keyword">await</span> Lightrail.transactions.voidPending(<span class="hljs-string">&quot;hijklmnop&quot;</span> {
+									<p>See: <a href="https://apidocs.lightrail.com/#operation/VoidPending">https://apidocs.lightrail.com/#operation/VoidPending</a></p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-js"><span class="hljs-keyword">const</span> voidTx = <span class="hljs-keyword">await</span> Lightrail.transactions.voidPending(<span class="hljs-string">&quot;hijklmnop&quot;</span> {
    <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;abcdefg&quot;</span>  <span class="hljs-comment">// This is the ID of the void transaction created.</span>
 );</code></pre>
-								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
