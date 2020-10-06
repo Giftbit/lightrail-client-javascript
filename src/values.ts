@@ -21,6 +21,18 @@ import * as lightrail from "./index";
 import {Value} from "./model";
 import {ContentType} from "./params/ContentType";
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/CreateValue
+ *
+ * Example:
+ * ```js
+ * const value = await Lightrail.values.createValue({
+ *      id: "abcdefg",
+ *      currency: "USD",
+ *      balance: 500
+ *  });
+ * ```
+ */
 export async function createValue(params: CreateValueParams): Promise<CreateValueResponse> {
     if (!params) {
         throw new Error("params not set");
@@ -36,6 +48,15 @@ export async function createValue(params: CreateValueParams): Promise<CreateValu
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/ListValues
+ *
+ * Example:
+ * ```js
+ * const values = await Lightrail.values.listValues();
+ * const valuesLimited = await Lightrail.values.listValues({limit: 5});
+ * ```
+ */
 export async function listValues(params?: ListValuesParams, contentType: ContentType = "application/json"): Promise<ListValuesResponse> {
     const resp = await lightrail.request("GET", "values").set("accept", contentType).query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
@@ -45,6 +66,14 @@ export async function listValues(params?: ListValuesParams, contentType: Content
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/GetValue
+ *
+ * Example:
+ * ```js
+ * const value = await Lightrail.values.getValue("abcdefg");
+ * ```
+ */
 export async function getValue(value: string | Value, params?: GetValueParams): Promise<GetValueResponse> {
     const valueId = getValueId(value);
 
@@ -56,6 +85,14 @@ export async function getValue(value: string | Value, params?: GetValueParams): 
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/UpdateValue
+ *
+ * Example:
+ * ```js
+ * const updatedValue = await Lightrail.values.updateValue("abcdefg", {frozen: true});
+ * ```
+ */
 export async function updateValue(value: string | Value, params: UpdateValueParams): Promise<UpdateValueResponse> {
     const valueId = getValueId(value);
 
@@ -67,6 +104,14 @@ export async function updateValue(value: string | Value, params: UpdateValuePara
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/ChangeValueCode
+ *
+ * Example:
+ * ```js
+ * const updatedValue = await Lightrail.values.changeValuesCode("abcdefg", {code: "PROMOCODE"});
+ * ```
+ */
 export async function changeValuesCode(value: string | Value, params: ChangeValuesCodeParams): Promise<ChangeValuesCodeResponse> {
     const valueId = getValueId(value);
 
@@ -78,6 +123,12 @@ export async function changeValuesCode(value: string | Value, params: ChangeValu
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * Example:
+ * ```js
+ * await Lightrail.values.deleteValue("abcdefg");
+ * ```
+ */
 export async function deleteValue(value: string | Value): Promise<DeleteValueResponse> {
     const valueId = getValueId(value);
 
@@ -89,6 +140,14 @@ export async function deleteValue(value: string | Value): Promise<DeleteValueRes
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/ListValueTransactions
+ *
+ * Example:
+ * ```js
+ * const transactions = await Lightrail.values.listValuesTransactions("abcdefg");
+ * ```
+ */
 export async function listValuesTransactions(value: string | Value, params?: ListTransactionsParams): Promise<ListTransactionsResponse> {
     const valueId = getValueId(value);
 
@@ -100,6 +159,14 @@ export async function listValuesTransactions(value: string | Value, params?: Lis
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/ListValueAttachedContacts
+ *
+ * Example:
+ * ```js
+ * const contacts = await Lightrail.values.listValuesAttachedContacts("abcdefg");
+ * ```
+ */
 export async function listValuesAttachedContacts(value: string | Value, params?: ListContactsParams): Promise<ListContactsResponse> {
     const valueId = getValueId(value);
 
@@ -112,6 +179,7 @@ export async function listValuesAttachedContacts(value: string | Value, params?:
 }
 
 /**
+ * @internal
  * Get contactId from the string (as the ID itself) or Contact object.
  */
 export function getValueId(value: string | Value): string {

@@ -12,6 +12,15 @@ import {
     UpdateWebhookResponse
 } from "./params";
 
+/**
+ * Example:
+ * ```js
+ * const signature = "abcdefg";  // webhook signature
+ * const payload = "{}";  // webhook payload JSON string
+ * const secret = "the secret stored in your system";
+ * const verified = Lightrail.webhooks.verifySignature(signature, payload, secret);
+ * ```
+ */
 export function verifySignature(signatureHeader: string, payload: string, webhookSecret?: string): boolean {
     const secret = webhookSecret ? webhookSecret : configuration.webhookSecret;
     if (!signatureHeader) {
@@ -34,6 +43,18 @@ export function verifySignature(signatureHeader: string, payload: string, webhoo
     return eventSignatures.reduce((prev, cur) => prev || (cur.length === signature.length && crypto.timingSafeEqual(Buffer.from(cur), Buffer.from(signature))), false);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/CreateWebhook
+ *
+ * Example:
+ * ```js
+ * const webhook = await Lightrail.webhooks.createWebhook({
+ *     id: "abcdefg",
+ *     url: "https://www.example.com/webhook",
+ *     events: ["*"]
+ * });
+ * ```
+ */
 export async function createWebhook(params: CreateWebhookParams): Promise<CreateWebhookResponse> {
     if (!params) {
         throw new Error("params not set");
@@ -48,6 +69,14 @@ export async function createWebhook(params: CreateWebhookParams): Promise<Create
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/GetWebhook
+ *
+ * Example:
+ * ```js
+ * const webhook = await Lightrail.webhooks.getWebhook("abcdefg");
+ * ```
+ */
 export async function getWebhook(webhook: string | Webhook): Promise<GetWebhookResponse> {
     const webhookId = getWebhookId(webhook);
 
@@ -58,6 +87,14 @@ export async function getWebhook(webhook: string | Webhook): Promise<GetWebhookR
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/ListWebhooks
+ *
+ * Example:
+ * ```js
+ * const webhooks = await Lightrail.webhooks.listWebhooks();
+ * ```
+ */
 export async function listWebhooks(): Promise<ListWebhooksResponse> {
     const resp = await lightrail.request("GET", "webhooks");
     if (isSuccessStatus(resp.status)) {
@@ -66,6 +103,14 @@ export async function listWebhooks(): Promise<ListWebhooksResponse> {
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/UpdateWebhook
+ *
+ * Example:
+ * ```js
+ * const updatedWebhook = await Lightrail.webhooks.updateWebhook("abcdefg", {url: "https://www.example.com/webhookUpdated"});
+ * ```
+ */
 export async function updateWebhook(webhook: string | Webhook, params: UpdateWebhookParams): Promise<UpdateWebhookResponse> {
     const webhookId = getWebhookId(webhook);
 
@@ -77,6 +122,14 @@ export async function updateWebhook(webhook: string | Webhook, params: UpdateWeb
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/DeleteWebhook
+ *
+ * Example:
+ * ```js
+ * await Lightrail.webhooks.deleteWebhook("abcdefg");
+ * ```
+ */
 export async function deleteWebhook(webhook: string | Webhook): Promise<void> {
     const webhookId = getWebhookId(webhook);
 
@@ -88,6 +141,14 @@ export async function deleteWebhook(webhook: string | Webhook): Promise<void> {
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/CreateSecret
+ *
+ * Example:
+ * ```js
+ * const webhookSecret = await Lightrail.webhooks.createWebhookSecret("abcdefg");
+ * ```
+ */
 export async function createWebhookSecret(webhook: string | Webhook): Promise<CreateWebhookSecretResponse> {
     const webhookId = getWebhookId(webhook);
 
@@ -98,6 +159,14 @@ export async function createWebhookSecret(webhook: string | Webhook): Promise<Cr
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/GetSecret
+ *
+ * Example:
+ * ```js
+ * const webhookSecret = await Lightrail.webhooks.getWebhookSecret("abcdefg", "hijklmnop");
+ * ```
+ */
 export async function getWebhookSecret(webhook: string | Webhook, webhookSecret: string | WebhookSecret): Promise<GetWebhookSecretResponse> {
     const webhookId = getWebhookId(webhook);
     const webhookSecretId = getWebhookSecretId(webhookSecret);
@@ -109,6 +178,14 @@ export async function getWebhookSecret(webhook: string | Webhook, webhookSecret:
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/DeleteSecret
+ *
+ * Example:
+ * ```js
+ * await Lightrail.webhooks.deleteWebhookSecret("abcdefg", "hijklmnop");
+ * ```
+ */
 export async function deleteWebhookSecret(webhook: string | Webhook, webhookSecret: string | WebhookSecret): Promise<void> {
     const webhookId = getWebhookId(webhook);
     const webhookSecretId = getWebhookSecretId(webhookSecret);
@@ -121,6 +198,7 @@ export async function deleteWebhookSecret(webhook: string | Webhook, webhookSecr
 }
 
 /**
+ * @internal
  * Get webhookId from the string (as the ID itself) or Webhook object.
  */
 export function getWebhookId(webhook: string | Webhook): string {
@@ -136,6 +214,7 @@ export function getWebhookId(webhook: string | Webhook): string {
 }
 
 /**
+ * @internal
  * Get webhookSecretId from the string (as the ID itself) or WebhookSecret object.
  */
 export function getWebhookSecretId(webhookSecret: string | WebhookSecret): string {

@@ -23,6 +23,34 @@ import {
 } from "./params";
 import {Transaction} from "./model";
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/Checkout
+ *
+ * Example:
+ * ```js
+ * const checkoutTx = await Lightrail.transactions.checkout({
+ *    id: "abcdefg",
+ *    currency: "USD",
+ *    lineItems: [
+ *        {
+ *            productId: "pedals",
+ *            unitPrice: 100000,
+ *            taxRate: 0
+ *        }
+ *    ],
+ *    sources: [
+ *        {
+ *            rail: "lightrail",
+ *            code: "PROMOCODE"
+ *        },
+ *        {
+ *            rail: "stripe",
+ *            source: "tok_visa"
+ *        }
+ *    ]
+ * );
+ * ```
+ */
 export async function checkout(params: CheckoutParams): Promise<CheckoutResponse> {
     if (!params) {
         throw new Error("checkout params not set");
@@ -38,6 +66,22 @@ export async function checkout(params: CheckoutParams): Promise<CheckoutResponse
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/Debit
+ *
+ * Example:
+ * ```js
+ * const debitTx = await Lightrail.transactions.debit({
+ *    id: "abcdefg",
+ *    currency: "USD",
+ *    source: {
+ *        rail: "lightrail",
+ *        valueId: "hijklmnop"
+ *    },
+ *    amount: 1000
+ * );
+ * ```
+ */
 export async function debit(params: DebitParams): Promise<DebitResponse> {
     if (!params) {
         throw new Error("debit params not set");
@@ -53,6 +97,22 @@ export async function debit(params: DebitParams): Promise<DebitResponse> {
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/Credit
+ *
+ * Example:
+ * ```js
+ * const creditTx = await Lightrail.transactions.credit({
+ *    id: "abcdefg",
+ *    currency: "USD",
+ *    destination: {
+ *        rail: "lightrail",
+ *        valueId: "hijklmnop"
+ *    },
+ *    amount: 1000
+ * );
+ * ```
+ */
 export async function credit(params: CreditParams): Promise<CreditResponse> {
     if (!params) {
         throw new Error("credit params not set");
@@ -68,6 +128,26 @@ export async function credit(params: CreditParams): Promise<CreditResponse> {
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/Transfer
+ *
+ * Example:
+ * ```js
+ * const transferTx = await Lightrail.transactions.transfer({
+ *    id: "abcdefg",
+ *    currency: "USD",
+ *    source: {
+ *        rail: "lightrail",
+ *        valueId: "hijklmnop"
+ *    },
+ *    destination: {
+ *        rail: "lightrail",
+ *        valueId: "qrstuv"
+ *    },
+ *    amount: 1000
+ * );
+ * ```
+ */
 export async function transfer(params: TransferParams): Promise<TransferResponse> {
     if (!params) {
         throw new Error("transfer params not set");
@@ -83,6 +163,16 @@ export async function transfer(params: TransferParams): Promise<TransferResponse
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/Reverse
+ *
+ * Example:
+ * ```js
+ * const reverseTx = await Lightrail.transactions.reverse("hijklmnop" {
+ *    id: "abcdefg"  // This is the ID of the reverse transaction created.
+ * );
+ * ```
+ */
 export async function reverse(transactionToReverse: string | Transaction, params: ReverseParams): Promise<ReverseResponse> {
     if (!params) {
         throw new Error("reverse params not set");
@@ -98,6 +188,16 @@ export async function reverse(transactionToReverse: string | Transaction, params
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/CapturePending
+ *
+ * Example:
+ * ```js
+ * const captureTx = await Lightrail.transactions.capturePending("hijklmnop" {
+ *    id: "abcdefg"  // This is the ID of the capture transaction created.
+ * );
+ * ```
+ */
 export async function capturePending(transactionToCapture: string | Transaction, params: CapturePendingParams): Promise<CapturePendingResponse> {
     if (!params) {
         throw new Error("capture params not set");
@@ -113,6 +213,16 @@ export async function capturePending(transactionToCapture: string | Transaction,
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/VoidPending
+ *
+ * Example:
+ * ```js
+ * const voidTx = await Lightrail.transactions.voidPending("hijklmnop" {
+ *    id: "abcdefg"  // This is the ID of the void transaction created.
+ * );
+ * ```
+ */
 export async function voidPending(transactionToVoid: string | Transaction, params: VoidPendingParams): Promise<VoidPendingResponse> {
     if (!params) {
         throw new Error("void params not set");
@@ -128,6 +238,15 @@ export async function voidPending(transactionToVoid: string | Transaction, param
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/ListTransactions
+ *
+ * Example:
+ * ```js
+ * const transactions = await Lightrail.transactions.listTransactions();
+ * const transactionsLimited = await Lightrail.transactions.listTransactions({limit: 5});
+ * ```
+ */
 export async function listTransactions(params?: ListTransactionsParams): Promise<ListTransactionsResponse> {
     const resp = await lightrail.request("GET", "transactions").query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
@@ -136,6 +255,14 @@ export async function listTransactions(params?: ListTransactionsParams): Promise
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/GetaTransaction
+ *
+ * Example:
+ * ```js
+ * const transaction = await Lightrail.transactions.getTransaction("abcdefg");
+ * ```
+ */
 export async function getTransaction(transaction: string | Transaction): Promise<GetTransactionResponse> {
     const transactionId = getTransactionId(transaction);
 
@@ -147,6 +274,14 @@ export async function getTransaction(transaction: string | Transaction): Promise
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/GetTransactionChain
+ *
+ * Example:
+ * ```js
+ * const transactions = await Lightrail.transactions.getTransactionChain("abcdefg");
+ * ```
+ */
 export async function getTransactionChain(transaction: string | Transaction): Promise<GetTransactionChainResponse> {
     const transactionId = getTransactionId(transaction);
 
@@ -159,6 +294,7 @@ export async function getTransactionChain(transaction: string | Transaction): Pr
 }
 
 /**
+ * @internal
  * Get transactionId from the string (as the ID itself) or Transaction object.
  */
 export function getTransactionId(transaction: string | Transaction): string {
