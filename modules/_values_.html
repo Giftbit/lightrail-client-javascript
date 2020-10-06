@@ -97,9 +97,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L80">src/values.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L104">src/values.ts:104</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Example:</p>
+									<pre><code>const updatedValue = await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.change<span class="hljs-constructor">ValuesCode(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-params">code</span>: <span class="hljs-string">&quot;PROMO_CODE&quot;</span>})</span>;</code></pre>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -129,10 +135,10 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Example:</p>
-									<pre><code><span class="hljs-keyword">const</span> value = <span class="hljs-keyword">await</span> Lightrail.values.createValue({
-     <span class="hljs-attribute">id:</span><span class="hljs-string"> uuid.v4</span>(),
-     <span class="hljs-attribute">currency</span>: <span class="hljs-string">&quot;USD&quot;</span>,
-     <span class="hljs-attribute">balance</span>: <span class="hljs-number">500</span>
+									<pre><code><span class="hljs-keyword">const</span> <span class="hljs-keyword">value</span> = <span class="hljs-keyword">await</span> Lightrail.values.createValue({
+     id: <span class="hljs-string">&quot;abcdefg&quot;</span>,
+     currency: <span class="hljs-string">&quot;USD&quot;</span>,
+     balance: <span class="hljs-number">500</span>
  });</code></pre>
 								</div>
 							</div>
@@ -156,9 +162,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L91">src/values.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L121">src/values.ts:121</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Example:</p>
+									<pre><code>await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.delete<span class="hljs-constructor">Value(<span class="hljs-string">&quot;abcdefg&quot;</span>)</span>;</code></pre>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -179,9 +191,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L58">src/values.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L70">src/values.ts:70</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Example:</p>
+									<pre><code><span class="hljs-keyword">const</span> <span class="hljs-keyword">value</span> = <span class="hljs-keyword">await</span> Lightrail.values.getValue(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -205,7 +223,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L127">src/values.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L169">src/values.ts:169</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -233,9 +251,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L49">src/values.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L55">src/values.ts:55</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Example:</p>
+									<pre><code>const values = await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.<span class="hljs-built_in">list</span><span class="hljs-constructor">Values()</span>;</code></pre>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -259,9 +283,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L113">src/values.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L155">src/values.ts:155</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Example:</p>
+									<pre><code>const contacts = await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.<span class="hljs-built_in">list</span><span class="hljs-constructor">ValuesAttachedContacts(<span class="hljs-string">&quot;abcdefg&quot;</span>)</span>;</code></pre>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -285,9 +315,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L102">src/values.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L138">src/values.ts:138</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Example:</p>
+									<pre><code>const transactions = await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.<span class="hljs-built_in">list</span><span class="hljs-constructor">ValuesTransactions(<span class="hljs-string">&quot;abcdefg&quot;</span>)</span>;</code></pre>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -311,9 +347,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L69">src/values.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/63ed573/src/values.ts#L87">src/values.ts:87</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Example:</p>
+									<pre><code>const updatedValue = await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.update<span class="hljs-constructor">Value(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-params">frozen</span>: <span class="hljs-params">true</span>})</span>;</code></pre>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
