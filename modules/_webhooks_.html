@@ -412,10 +412,10 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Example:</p>
-									<pre><code class="language-js"><span class="hljs-keyword">const</span> secret = <span class="hljs-string">&quot;your secret stored in your system&quot;</span>;
-<span class="hljs-keyword">const</span> payload = <span class="hljs-string">&quot;webhook payload&quot;</span>;
-<span class="hljs-keyword">const</span> signature = <span class="hljs-string">&quot;webhook signature&quot;</span>;
-<span class="hljs-keyword">const</span> verified = Lightrail.webhooks.verifySignature(goodSignature, payload, secret);</code></pre>
+									<pre><code class="language-js"><span class="hljs-keyword">const</span> signature = <span class="hljs-string">&quot;abcdefg&quot;</span>;  <span class="hljs-comment">// webhook signature</span>
+<span class="hljs-keyword">const</span> payload = <span class="hljs-string">&quot;{}&quot;</span>;  <span class="hljs-comment">// webhook payload JSON string</span>
+<span class="hljs-keyword">const</span> secret = <span class="hljs-string">&quot;the secret stored in your system&quot;</span>;
+<span class="hljs-keyword">const</span> verified = Lightrail.webhooks.verifySignature(signature, payload, secret);</code></pre>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
