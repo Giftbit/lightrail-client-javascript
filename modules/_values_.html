@@ -103,7 +103,7 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Example:</p>
-									<pre><code>const updatedValue = await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.change<span class="hljs-constructor">ValuesCode(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-params">code</span>: <span class="hljs-string">&quot;PROMO_CODE&quot;</span>})</span>;</code></pre>
+									<pre><code class="language-js"><span class="hljs-keyword">const</span> updatedValue = <span class="hljs-keyword">await</span> Lightrail.values.changeValuesCode(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">code</span>: <span class="hljs-string">&quot;PROMO_CODE&quot;</span>});</code></pre>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -135,10 +135,10 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Example:</p>
-									<pre><code><span class="hljs-keyword">const</span> <span class="hljs-keyword">value</span> = <span class="hljs-keyword">await</span> Lightrail.values.createValue({
-     id: <span class="hljs-string">&quot;abcdefg&quot;</span>,
-     currency: <span class="hljs-string">&quot;USD&quot;</span>,
-     balance: <span class="hljs-number">500</span>
+									<pre><code class="language-js"><span class="hljs-keyword">const</span> value = <span class="hljs-keyword">await</span> Lightrail.values.createValue({
+     <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;abcdefg&quot;</span>,
+     <span class="hljs-attr">currency</span>: <span class="hljs-string">&quot;USD&quot;</span>,
+     <span class="hljs-attr">balance</span>: <span class="hljs-number">500</span>
  });</code></pre>
 								</div>
 							</div>
@@ -168,7 +168,7 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Example:</p>
-									<pre><code>await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.delete<span class="hljs-constructor">Value(<span class="hljs-string">&quot;abcdefg&quot;</span>)</span>;</code></pre>
+									<pre><code class="language-js"><span class="hljs-keyword">await</span> Lightrail.values.deleteValue(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -197,7 +197,7 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Example:</p>
-									<pre><code><span class="hljs-keyword">const</span> <span class="hljs-keyword">value</span> = <span class="hljs-keyword">await</span> Lightrail.values.getValue(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
+									<pre><code class="language-js"><span class="hljs-keyword">const</span> value = <span class="hljs-keyword">await</span> Lightrail.values.getValue(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -257,7 +257,7 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Example:</p>
-									<pre><code>const values = await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.<span class="hljs-built_in">list</span><span class="hljs-constructor">Values()</span>;</code></pre>
+									<pre><code class="language-js"><span class="hljs-keyword">const</span> values = <span class="hljs-keyword">await</span> Lightrail.values.listValues();</code></pre>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -289,7 +289,7 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Example:</p>
-									<pre><code>const contacts = await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.<span class="hljs-built_in">list</span><span class="hljs-constructor">ValuesAttachedContacts(<span class="hljs-string">&quot;abcdefg&quot;</span>)</span>;</code></pre>
+									<pre><code class="language-js"><span class="hljs-keyword">const</span> contacts = <span class="hljs-keyword">await</span> Lightrail.values.listValuesAttachedContacts(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -321,7 +321,7 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Example:</p>
-									<pre><code>const transactions = await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.<span class="hljs-built_in">list</span><span class="hljs-constructor">ValuesTransactions(<span class="hljs-string">&quot;abcdefg&quot;</span>)</span>;</code></pre>
+									<pre><code class="language-js"><span class="hljs-keyword">const</span> transactions = <span class="hljs-keyword">await</span> Lightrail.values.listValuesTransactions(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -353,7 +353,7 @@
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Example:</p>
-									<pre><code>const updatedValue = await <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Lightrail</span>.</span></span>values.update<span class="hljs-constructor">Value(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-params">frozen</span>: <span class="hljs-params">true</span>})</span>;</code></pre>
+									<pre><code class="language-js"><span class="hljs-keyword">const</span> updatedValue = <span class="hljs-keyword">await</span> Lightrail.values.updateValue(<span class="hljs-string">&quot;abcdefg&quot;</span>, {<span class="hljs-attr">frozen</span>: <span class="hljs-literal">true</span>});</code></pre>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
