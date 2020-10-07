@@ -21,6 +21,17 @@ import {
     DetachContactFromValueResponse
 } from "./params/contacts/DetachContactFromValueParams";
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/CreateContact
+ *
+ * Example:
+ * ```js
+ * const contact = await Lightrail.contacts.createContact({
+ *     id: "abcdefg",
+ *     email: "ex@example.com"
+ * });
+ * ```
+ */
 export async function createContact(params: CreateContactParams): Promise<CreateContactResponse> {
     if (!params) {
         throw new Error("params not set");
@@ -35,6 +46,14 @@ export async function createContact(params: CreateContactParams): Promise<Create
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/GetaContact
+ *
+ * Example:
+ * ```js
+ * const contact = await Lightrail.contacts.getContact("abcdefg");
+ * ```
+ */
 export async function getContact(contact: string | Contact): Promise<GetContactResponse> {
     const contactId = getContactId(contact);
 
@@ -45,6 +64,15 @@ export async function getContact(contact: string | Contact): Promise<GetContactR
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/ListContacts
+ *
+ * Example:
+ * ```js
+ * const contacts = await Lightrail.contacts.listContacts({limit: 5});
+ * const contactsLimited = await Lightrail.contacts.listContacts({limit: 5});
+ * ```
+ */
 export async function listContacts(params?: ListContactsParams): Promise<ListContactsResponse> {
     const resp = await lightrail.request("GET", "contacts").query(formatFilterParams(params));
     if (isSuccessStatus(resp.status)) {
@@ -53,6 +81,15 @@ export async function listContacts(params?: ListContactsParams): Promise<ListCon
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/ListaContactsValues
+ *
+ * Example:
+ * ```js
+ * const values = await Lightrail.contacts.listContactsValues("abcdefg");
+ * const valuesLimited = await Lightrail.contacts.listContactsValues("abcdefg", {limit: 5});
+ * ```
+ */
 export async function listContactsValues(contact: string | Contact, params?: ListContactsValuesParams): Promise<ListContactsValuesResponse> {
     const contactId = getContactId(contact);
 
@@ -63,6 +100,14 @@ export async function listContactsValues(contact: string | Contact, params?: Lis
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/UpdateContact
+ *
+ * Example:
+ * ```js
+ * const updatedContact = await Lightrail.contacts.updateContact("abcdefg", {email: "new.ex@example.com"});
+ * ```
+ */
 export async function updateContact(contact: string | Contact, params: UpdateContactParams): Promise<UpdateContactResponse> {
     const contactId = getContactId(contact);
 
@@ -73,6 +118,15 @@ export async function updateContact(contact: string | Contact, params: UpdateCon
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/AttachContactToValue
+ *
+ * Example:
+ * ```js
+ * const valueAttachedById = await Lightrail.contacts.attachContactToValue("abcdefg", {valueId: "hijklmnop"});
+ * const valueAttachedByCode = await Lightrail.contacts.attachContactToValue("abcdefg", {code: "PROMOCODE"});
+ * ```
+ */
 export async function attachContactToValue(contact: string | Contact, params: AttachContactToValueParams): Promise<AttachContactToValueResponse> {
     const contactId = getContactId(contact);
 
@@ -83,6 +137,14 @@ export async function attachContactToValue(contact: string | Contact, params: At
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/DetachContactFromValue
+ *
+ * Example:
+ * ```js
+ * const valueDetached = await Lightrail.contacts.detachContactFromValue("abcdefg", {valueId: "hijklmnop"});
+ * ```
+ */
 export async function detachContactFromValue(contact: string | Contact, params: DetachContactFromValueParams): Promise<DetachContactFromValueResponse> {
     const contactId = getContactId(contact);
 
@@ -93,6 +155,14 @@ export async function detachContactFromValue(contact: string | Contact, params: 
     throw new LightrailRequestError(resp);
 }
 
+/**
+ * See: https://apidocs.lightrail.com/#operation/DeleteContact
+ *
+ * Example:
+ * ```js
+ * await Lightrail.contacts.deleteContact("abcdefg"});
+ * ```
+ */
 export async function deleteContact(contact: string | Contact): Promise<DeleteContactResponse> {
     const contactId = getContactId(contact);
 
@@ -105,6 +175,7 @@ export async function deleteContact(contact: string | Contact): Promise<DeleteCo
 }
 
 /**
+ * @internal
  * Get contactId from the string (as the ID itself) or Contact object.
  */
 export function getContactId(contact: string | Contact): string {
