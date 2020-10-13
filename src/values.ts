@@ -2,6 +2,7 @@ import {
     ChangeValuesCodeParams,
     ChangeValuesCodeResponse,
     CreateValueParams,
+    CreateValueQueryParams,
     CreateValueResponse,
     DeleteValueResponse,
     GetValueParams,
@@ -31,16 +32,22 @@ import {ContentType} from "./params/ContentType";
  *      currency: "USD",
  *      balance: 500
  *  });
+ *  const valueWithGeneratedCode = await Lightrail.values.createValue({
+ *      id: "hijklmnop",
+ *      currency: "USD",
+ *      balance: 500,
+ *      generateCode: {}
+ *  }, {codeCode: true});
  * ```
  */
-export async function createValue(params: CreateValueParams): Promise<CreateValueResponse> {
+export async function createValue(params: CreateValueParams, queryParams?: CreateValueQueryParams): Promise<CreateValueResponse> {
     if (!params) {
         throw new Error("params not set");
     } else {
         validateRequiredParams(["id", "currency"], params);
     }
 
-    const resp = await lightrail.request("POST", "values").send(params);
+    const resp = await lightrail.request("POST", "values").send(params).query(queryParams);
     if (isSuccessStatus(resp.status)) {
         return formatResponse(resp);
     }
