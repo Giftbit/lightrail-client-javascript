@@ -75,7 +75,6 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_values_.html#createvalue" class="tsd-kind-icon">create<wbr>Value</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_values_.html#deletevalue" class="tsd-kind-icon">delete<wbr>Value</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_values_.html#getvalue" class="tsd-kind-icon">get<wbr>Value</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_values_.html#getvalueid" class="tsd-kind-icon">get<wbr>Value<wbr>Id</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_values_.html#listvalues" class="tsd-kind-icon">list<wbr>Values</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_values_.html#listvaluesattachedcontacts" class="tsd-kind-icon">list<wbr>Values<wbr>Attached<wbr>Contacts</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_values_.html#listvaluestransactions" class="tsd-kind-icon">list<wbr>Values<wbr>Transactions</a></li>
@@ -97,7 +96,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/9209f18/src/values.ts#L122">src/values.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/d16d0f8/src/values.ts#L124">src/values.ts:124</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -130,7 +129,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/9209f18/src/values.ts#L43">src/values.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/d16d0f8/src/values.ts#L43">src/values.ts:43</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -173,7 +172,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/9209f18/src/values.ts#L139">src/values.ts:139</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/d16d0f8/src/values.ts#L141">src/values.ts:141</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -202,13 +201,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/9209f18/src/values.ts#L84">src/values.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/d16d0f8/src/values.ts#L86">src/values.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>See: <a href="https://apidocs.lightrail.com/#operation/GetValue">https://apidocs.lightrail.com/#operation/GetValue</a></p>
+									<p>Get Value by ID.</p>
 								</div>
+								<p>See: <a href="https://apidocs.lightrail.com/#operation/GetValue">https://apidocs.lightrail.com/#operation/GetValue</a></p>
 								<p>Example:</p>
 								<pre><code class="language-js"><span class="hljs-keyword">const</span> value = <span class="hljs-keyword">await</span> Lightrail.values.getValue(<span class="hljs-string">&quot;abcdefg&quot;</span>);</code></pre>
 							</div>
@@ -226,36 +226,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="getvalueid" class="tsd-anchor"></a>
-					<h3>get<wbr>Value<wbr>Id</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<wbr>Id<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_model_value_.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/9209f18/src/values.ts#L192">src/values.ts:192</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>internal</dt>
-									<dd><p>Get contactId from the string (as the ID itself) or Contact object.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>value: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_model_value_.value.html" class="tsd-signature-type">Value</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="listvalues" class="tsd-anchor"></a>
 					<h3>list<wbr>Values</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -265,7 +235,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/9209f18/src/values.ts#L67">src/values.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/d16d0f8/src/values.ts#L67">src/values.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -299,7 +269,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/9209f18/src/values.ts#L177">src/values.ts:177</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/d16d0f8/src/values.ts#L179">src/values.ts:179</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -332,7 +302,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/9209f18/src/values.ts#L158">src/values.ts:158</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/d16d0f8/src/values.ts#L160">src/values.ts:160</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -365,7 +335,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/9209f18/src/values.ts#L103">src/values.ts:103</a></li>
+									<li>Defined in <a href="https://github.com/Giftbit/lightrail-client-javascript/blob/d16d0f8/src/values.ts#L105">src/values.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -414,9 +384,6 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_values_.html#getvalue" class="tsd-kind-icon">get<wbr>Value</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_values_.html#getvalueid" class="tsd-kind-icon">get<wbr>Value<wbr>Id</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_values_.html#listvalues" class="tsd-kind-icon">list<wbr>Values</a>
