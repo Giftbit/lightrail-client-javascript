@@ -74,6 +74,8 @@ export async function listValues(params?: ListValuesParams, contentType: Content
 }
 
 /**
+ * Get Value by ID.
+ *
  * See: https://apidocs.lightrail.com/#operation/GetValue
  *
  * Example:

@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "docs": "rimraf ./docs && typedoc src/ --out docs --mode modules --module commonjs --target es6 --excludePrivate --excludeNotExported --exclude '**/*.test.ts' --name 'Lightrail Client for JavaScript and TypeScript' && touch ./docs/.nojekyll && gh-pages -d docs -t",
+    "docs": "rimraf ./docs && typedoc src/ --out docs --mode modules --module commonjs --target es6 --excludePrivate --excludeNotExported --stripInternal --exclude '**/*.test.ts' --name 'Lightrail Client for JavaScript and TypeScript' && touch ./docs/.nojekyll && gh-pages -d docs -t",
     "clean": "rimraf ./dist",
     "lint": "eslint . --ext .ts,.tsx",
     "prepublishOnly": "npm run clean && npm run build && npm run lint && npm run test && npm run docs",
