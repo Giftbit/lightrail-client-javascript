@@ -44,7 +44,7 @@ describe("values", () => {
     };
 
     describe("createValue(value)", () => {
-        it("creates the expected value", async () => {
+        it("creates a value", async () => {
             const value = await Lightrail.values.createValue(testValue);
 
             chai.assert.isNotNull(value);
@@ -53,10 +53,8 @@ describe("values", () => {
                     "startDate", "endDate", "createdBy", "createdDate", "updatedDate", "code", "issuanceId", "updatedContactIdDate", "canceled", "programId",
                 ] as any);
         });
-    });
 
-    describe("createValue(value) all properties", () => {
-        it("creates the expected value", async () => {
+        it("creates a value with a balance rule", async () => {
             const request = {
                 id: uuid.v4().substring(0, 24),
                 currency: "USD",
@@ -69,6 +67,22 @@ describe("values", () => {
             const value = await Lightrail.values.createValue(request);
             chai.assert.isNotNull(value);
             chai.assert.deepEqual(value.body.balanceRule, request.balanceRule);
+        });
+
+        it("creates a value with a generated code and can show code", async () => {
+            const request = {
+                id: uuid.v4().substring(0, 24),
+                currency: "USD",
+                balance: 500,
+                generateCode: {
+                    length: 24,
+                    charset: "iIl1|" // Worst. Code. Ever.
+                }
+            };
+
+            const value = await Lightrail.values.createValue(request, {showCode: true});
+            chai.assert.isNotNull(value);
+            chai.assert.match(value.body.code, /^[iIl1|]{24}$/);
         });
     });
 

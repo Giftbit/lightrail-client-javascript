@@ -1,6 +1,6 @@
 export type CodeGenerationParams = {} | {
     length: number;
-    characters?: string;
+    charset?: string;
     prefix?: string;
     suffix?: string;
 };
